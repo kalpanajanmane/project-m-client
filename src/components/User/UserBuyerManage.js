@@ -661,7 +661,7 @@ function UserBuyerManage() {
 
 						<input
 							type='text'
-							required
+							//required
 							className='admin-buyer-manage-form-input'
 							placeholder='Company GST Number'
 							{...formik.getFieldProps('buyercompanygstno')}

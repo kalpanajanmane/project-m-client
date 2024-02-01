@@ -174,7 +174,7 @@ function SellerManage() {
             />
             <input
               type='text'
-              required
+              //required
               className='seller-manage-form-input'
               placeholder='Company GST Number'
               value={selectedSellerData.sellercompanygstno || ''}

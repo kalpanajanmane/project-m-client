@@ -172,7 +172,7 @@ function BuyerManage() {
           />
           <input
             type='text'
-            required
+           // required
             className='buyer-manage-form-input'
             placeholder='Company GST Number'
             value={selectedBuyerData.buyercompanygstno || ''}

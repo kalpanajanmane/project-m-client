@@ -681,7 +681,7 @@ function StaffSellerManage() {
 
 						<input
 							type='text'
-							required
+							//required
 							className='admin-seller-manage-form-input'
 							placeholder='Company GST Number'
 							{...formik.getFieldProps('sellercompanygstno')}

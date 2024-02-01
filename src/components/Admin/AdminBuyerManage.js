@@ -103,12 +103,12 @@ function AdminBuyerManage() {
 			// buyerid: Yup.string().required('Buyer ID is required'),
 			buyercompanyname: Yup.string().required('Company Name is required'),
 			//buyercompanygstno: Yup.string()
-				//.required('GST No is required')
-				//.matches(
-				//	/^[A-Z0-9]{15}$/,
-				//	'GST No must be 15 characters long and contain only uppercase letters and numerics'
-				),
-		
+			//.required('GST No is required')
+			//.matches(
+			//	/^[A-Z0-9]{15}$/,
+			//	'GST No must be 15 characters long and contain only uppercase letters and numerics'
+			// ),
+
 			buyercompanyaddress: Yup.string().required('Company Address is required'),
 			buyercompanystatename: Yup.string().required(
 				'Company State Name is required'
@@ -637,7 +637,6 @@ function AdminBuyerManage() {
 						{formik.touched.buyerid && formik.errors.buyerid ? (
 							<div className='error-message'>{formik.errors.buyerid}</div>
 						) : null} */}
-
 						<input
 							type='text'
 							required
@@ -651,7 +650,6 @@ function AdminBuyerManage() {
 								{formik.errors.buyercompanyname}
 							</div>
 						) : null}
-
 						<input
 							type='text'
 							//required
@@ -659,13 +657,14 @@ function AdminBuyerManage() {
 							placeholder='Company GST Number'
 							{...formik.getFieldProps('buyercompanygstno')}
 						/>
-						/* {formik.touched.buyercompanygstno &&
+						/*{' '}
+						{formik.touched.buyercompanygstno &&
 						formik.errors.buyercompanygstno ? (
 							<div className='error-message'>
 								{formik.errors.buyercompanygstno}
 							</div>
-						) : null}*/
-
+						) : null}
+						*/
 						<input
 							type='text'
 							required
@@ -679,7 +678,6 @@ function AdminBuyerManage() {
 								{formik.errors.buyercompanyaddress}
 							</div>
 						) : null}
-
 						<select
 							required
 							className='admin-buyer-manage-form-input'
@@ -700,7 +698,6 @@ function AdminBuyerManage() {
 								{formik.errors.buyercompanystatename}
 							</div>
 						) : null}
-
 						<input
 							type='text'
 							pattern='[0-9]*'
@@ -717,7 +714,6 @@ function AdminBuyerManage() {
 								{formik.errors.buyercompanystatecode}
 							</div>
 						) : null}
-
 						<br />
 						<button type='submit' className='admin-buyer-manage-form-button'>
 							{selectedBuyerId ? 'Update' : 'Add'}

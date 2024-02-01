@@ -103,7 +103,7 @@ function AdminBuyerManage() {
 			// buyerid: Yup.string().required('Buyer ID is required'),
 			buyercompanyname: Yup.string().required('Company Name is required'),
 			buyercompanygstno: Yup.string()
-				.required('GST No is required')
+				//.required('GST No is required')
 				.matches(
 					/^[A-Z0-9]{15}$/,
 					'GST No must be 15 characters long and contain only uppercase letters and numerics'

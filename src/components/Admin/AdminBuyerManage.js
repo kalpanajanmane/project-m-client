@@ -660,9 +660,9 @@ function AdminBuyerManage() {
 						/>
 						{formik.touched.buyercompanygstno &&
 						formik.errors.buyercompanygstno ? (
-							<div className='error-message'>
+						/*	<div className='error-message'>
 								{formik.errors.buyercompanygstno}
-							</div>
+							</div>*/
 						) : null}
 
 						<input

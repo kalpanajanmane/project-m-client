@@ -188,7 +188,7 @@ function BuyerManage() {
           />
           <input
             type='text'
-            required
+           // required
             className='buyer-manage-form-input'
             placeholder='Company State Name'
             value={selectedBuyerData.buyercompanystatename || ''}

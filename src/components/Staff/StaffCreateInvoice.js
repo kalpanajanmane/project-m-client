@@ -207,8 +207,12 @@ function StaffCreateInvoice() {
 					console.log('Invoice created successfully:', data);
 					toast.success('Invoice created successfully');
 					setUrl(data._id);
-					setView(true);
-					setIsModalOpen(true);
+
+					// Introduce a delay of 4 seconds before setting setIsModalOpen
+					setTimeout(() => {
+						setView(true);
+						setIsModalOpen(true);
+					}, 4000);
 				} else {
 					toast.error('Invoice creation failed');
 				}

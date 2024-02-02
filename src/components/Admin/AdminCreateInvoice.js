@@ -189,11 +189,9 @@ function AdminCreateInvoice() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// console.log(dataToSend);
 
 		// Check the length of items in dataToSend
 		if (dataToSend && dataToSend.consignmentdetails.itemdetails.length >= 1) {
-			// console.log(dataToSend);
 			try {
 				const response = await fetch(`${API}invoice`, {
 					method: 'POST',
@@ -207,8 +205,12 @@ function AdminCreateInvoice() {
 					console.log('Invoice created successfully:', data);
 					toast.success('Invoice created successfully');
 					setUrl(data._id);
-					setView(true);
-					setIsModalOpen(true);
+
+					// Introduce a delay of 4 seconds before setting setIsModalOpen
+					setTimeout(() => {
+						setView(true);
+						setIsModalOpen(true);
+					}, 4000);
 				} else {
 					toast.error('Invoice creation failed');
 				}
@@ -217,7 +219,6 @@ function AdminCreateInvoice() {
 			}
 		} else {
 			// Show an alert if the length is not greater than 1
-			// alert('Please add items before creating invoice.');
 			toast.info(
 				'Please add Items in Consignment Details before creating invoice.'
 			);

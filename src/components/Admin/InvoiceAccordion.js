@@ -32,26 +32,6 @@ const InvoiceAccordion = ({ invoice, code }) => {
 
 	const handleOriginalCopy = () => {
 		const linkToCopy = `${ViewURLOriginal}`;
-		axios({
-			method: "get",
-			url: "https://cutt.ly/api/api.php",
-			headers: [
-				{ "key": "Access-Control-Allow-Credentials", "value": "true" },
-				{ "key": "Access-Control-Allow-Origin", "value": "*" },
-				{ "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-				{ "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
-			  ],
-			params: {
-			  key: "cca6beb8678c86f36e42d2f0b013c5265e254",
-			  short: pdfUrlOriginal
-			}
-		  })
-			.then((res) => {
-			  console.log(res);
-			})
-			.catch((err) => {
-			  console.log(err);
-			});
 		try {
 			copy(linkToCopy);
 			alert('Link copied to clipboard!');

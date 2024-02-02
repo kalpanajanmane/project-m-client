@@ -227,13 +227,13 @@ function UserCreateInvoice() {
 	const validationSchema = Yup.object().shape({
 		vehicledetails: Yup.object().shape({
 			drivernumber: Yup.string()
-				.matches(/[0-9]{10}/, 'Invalid mobile number, Please enter 10-digits')
+				// .matches(/[0-9]{10}/, 'Invalid mobile number, Please enter 10-digits')
 				.required('Driver Number is required'),
 			vechiclenumber: Yup.string()
-				.matches(
-					/^[A-Za-z]{2}\d{2}[A-Za-z]{2}\d{4}$/,
-					'Invalid vehicle number. Please use the format: AB12CD3456'
-				)
+				// .matches(
+				// 	/^[A-Za-z]{2}\d{2}[A-Za-z]{2}\d{4}$/,
+				// 	'Invalid vehicle number. Please use the format: AB12CD3456'
+				// )
 				.required('Vehicle Number is required'),
 
 			vechiclemodel: Yup.string().required('Vehicle Model is required'),
@@ -493,7 +493,7 @@ function UserCreateInvoice() {
 			!addedConsignment.itemquantity ||
 			!addedConsignment.itemhsn ||
 			!addedConsignment.itemprice ||
-			!addedConsignment.itemtaxrate 
+			!addedConsignment.itemtaxrate
 			// !addedConsignment.itemweight
 		) {
 			return;
@@ -1091,8 +1091,8 @@ function UserCreateInvoice() {
 									id='drivernumber'
 									name='vehicledetails.drivernumber'
 									type='tel'
-									maxLength={10}
-									pattern='[0-9]{10}'
+									// maxLength={10}
+									// pattern='[0-9]{10}'
 									placeholder='Enter 10-digit mobile number without +91'
 									required
 									onChange={(e) => {
@@ -1213,7 +1213,7 @@ function UserCreateInvoice() {
 								<th className='admin-create-invoice-table-row-th'>
 									Item Tax Rate
 								</th>
-{/*
+								{/*
 <th className='admin-create-invoice-table-row-th'>
 									Item Weight
 								</th>
@@ -1278,7 +1278,7 @@ function UserCreateInvoice() {
 										name='itemtaxrate'
 									/>
 								</td>
-{/*
+								{/*
 								<td className='admin-create-invoice-table-row-body-td'>
 									<input
 										className='admin-create-invoice-table-consigment-input'
@@ -1299,7 +1299,7 @@ function UserCreateInvoice() {
 											!addedConsignment.itemquantity ||
 											!addedConsignment.itemhsn ||
 											!addedConsignment.itemprice ||
-											!addedConsignment.itemtaxrate 
+											!addedConsignment.itemtaxrate
 										}
 									>
 										<img
@@ -1321,7 +1321,7 @@ function UserCreateInvoice() {
 										{item.itemname}
 									</td>
 									<td className='admin-create-invoice-table-consignment-value color'>
-  										{item.itemdesc.substring(0, 10)}
+										{item.itemdesc.substring(0, 10)}
 									</td>
 									<td className='admin-create-invoice-table-consigment-value'>
 										{item.itemquantity}
@@ -1334,7 +1334,7 @@ function UserCreateInvoice() {
 									</td>
 									<td className='admin-create-invoice-table-consigment-value'>
 										{item.itemtaxrate}
-									</td>							
+									</td>
 
 									<td className='admin-create-invoice-table-consigment-value'>
 										<button

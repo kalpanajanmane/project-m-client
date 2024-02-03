@@ -56,7 +56,7 @@ function StaffConsignmentManage() {
 			itemhsn: Yup.number().required('Item HSN is required'),
 			itemprice: Yup.number().required('Item Price is required'),
 			itemtaxrate: Yup.number().required('Item Tax Rate is required'),
-			itemdesc: Yup.string().required('Item Description is required'),
+			// itemdesc: Yup.string().required('Item Description is required'),
 			// itemweight: Yup.number().required('Item Weight is required'),
 		}),
 		onSubmit: (values) => {
@@ -313,7 +313,7 @@ function StaffConsignmentManage() {
 													}}
 												/>
 											</button>
-{/*
+											{/*
 											<button
 												style={{
 													background: 'none',
@@ -376,7 +376,7 @@ function StaffConsignmentManage() {
 
 						<input
 							type='text'
-							required
+							// required
 							className='admin-consignment-manage-form-input'
 							placeholder='Item Description'
 							{...formik.getFieldProps('itemdesc')}

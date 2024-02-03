@@ -833,7 +833,9 @@ function AdminReports() {
 					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						typeof item.itemquantity === 'number' &&
 						typeof dataItem.loadingdetails.transportationcost === 'number'
-							? item.itemquantity * dataItem.loadingdetails.transportationcost
+							? (
+									item.itemquantity * dataItem.loadingdetails.transportationcost
+							  ).toFixed(2)
 							: 'N/A'
 					}</td>`
 				);
@@ -853,7 +855,9 @@ function AdminReports() {
 		newWindow.document.write('</table>');
 		// Display the total amount using h2 after the table
 		newWindow.document.write(
-			`<h3 style="text-align: center; font-size: 20px; margin-top: 20px;">Total Amount to be Paid: ${totalAmount}</h3>`
+			`<h3 style="text-align: center; font-size: 20px; margin-top: 20px;">Total Amount to be Paid: ${totalAmount.toFixed(
+				2
+			)}</h3>`
 		);
 
 		newWindow.document.write('</body></html>');
@@ -2115,7 +2119,7 @@ function AdminReports() {
 																	? invoice.loadingdetails.transportationcost
 																	: 'N/A'}
 															</td>
-{/*
+															{/*
 															<td className='reports-data-body-table-item-body-row-item'>
 													{
 item.itemtaxrate ? item.itemtaxrate : 'N/A' 
@@ -2131,10 +2135,13 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 																{typeof item.itemquantity === 'number' &&
 																typeof invoice.loadingdetails
 																	.transportationcost === 'number'
-																	? item.itemquantity *
-																	  invoice.loadingdetails.transportationcost
+																	? (
+																			item.itemquantity *
+																			invoice.loadingdetails.transportationcost
+																	  ).toFixed(2)
 																	: 'N/A'}
 															</td>
+
 															<td className='reports-data-body-table-item-body-row-item'>
 																<button
 																	style={{

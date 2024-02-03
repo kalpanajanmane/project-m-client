@@ -611,7 +611,7 @@ function StaffCreateInvoice() {
 		' ' +
 		dataToSend.loadingdetails.startpoint.toUpperCase() +
 		' ' +
-		dataToSend.vehicledetails.vechiclenumber.substring(8, 12);
+		dataToSend.vehicledetails?.vechiclenumber.replace(/\s/g, '').slice(-4);
 
 	const handleCodeCopy = () => {
 		const linkToCopy = `${code}`;

@@ -7,7 +7,7 @@ import C from '../images/C.png';
 import Close from '../images/cross_icon.jpg';
 import AdminNavbar from './AdminNavbar';
 import Select from 'react-select';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
@@ -576,9 +576,18 @@ function AdminCreateInvoice() {
 		setSelectedParty(selectedParty);
 	};
 
-	const openPdfViewer = () => {
-		navigate(`/pdf/${url}`);
-	};
+	// const openPdfViewer = () => {
+	// 	navigate(`/pdf/${url}`);
+	// };
+	// const openPdfViewer = () => {
+	// 	const newWindow = window.open(`/pdf/${url}`, '_blank');
+	// 	if (newWindow) {
+	// 		newWindow.focus();
+	// 	} else {
+	// 		// Handle the case where the popup was blocked
+	// 		console.error('Popup blocked. Please enable popups for this site.');
+	// 	}
+	// };
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const closePdfViewer = () => {
@@ -1677,11 +1686,20 @@ function AdminCreateInvoice() {
 										onClick={() => closePdfViewer()}
 									/>
 									<div className='modal-btn-div'>
-										<button
+										{/* <button
 											className='modal-btn'
 											onClick={() => openPdfViewer()}
 										>
 											View Invoice
+										</button> */}
+										<button type='button' className='modal-btn'>
+											<Link
+												to={`/pdf/${url}`}
+												target='_blank'
+												style={{ textDecoration: 'none', color: 'white' }}
+											>
+												View Invoice
+											</Link>
 										</button>
 										<button
 											className='modal-btn'

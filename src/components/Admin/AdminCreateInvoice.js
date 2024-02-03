@@ -1699,10 +1699,9 @@ function AdminCreateInvoice() {
 										<p>{dataToSend.boardingdetails?.partyref}</p>
 										<p>{dataToSend.loadingdetails?.startpoint.toUpperCase()}</p>
 										<p>
-											{dataToSend.vehicledetails?.vechiclenumber.substring(
-												8,
-												12
-											)}
+											{dataToSend.vehicledetails?.vechiclenumber
+												.replace(/\s/g, '')
+												.slice(-4)}
 										</p>
 										<button
 											type='button'

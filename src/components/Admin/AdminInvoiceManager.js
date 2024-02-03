@@ -280,7 +280,9 @@ function AdminInvoiceManagement() {
 												  ' ' +
 												  invoice.loadingdetails.startpoint.toUpperCase() +
 												  ' ' +
-												  invoice.vehicledetails.vechiclenumber.substring(8, 12)
+												  invoice.vehicledetails?.vechiclenumber
+														.replace(/\s/g, '')
+														.slice(-4)
 												: 'N/A'}
 										</td>
 
@@ -302,7 +304,9 @@ function AdminInvoiceManagement() {
 													' ' +
 													invoice.loadingdetails.startpoint.toUpperCase() +
 													' ' +
-													invoice.vehicledetails.vechiclenumber.substring(8, 12)
+													invoice.vehicledetails?.vechiclenumber
+														.replace(/\s/g, '')
+														.slice(-4)
 												}
 											/>
 											{/* {isAccordionOpen && (

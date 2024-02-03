@@ -270,7 +270,7 @@ function AdminConsignmentManage() {
 										<td className='admin-consignment-manage-data-table-data'>
 											{item.itemdesc && item.itemdesc
 												? item.itemdesc.substring(0, 15)
-												: 'N/A'}
+												: ''}
 										</td>
 										<td className='admin-consignment-manage-data-table-data'>
 											{item.itemquantity && item.itemquantity

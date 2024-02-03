@@ -40,6 +40,9 @@ function Staffdashboard() {
 									LOGOUT
 									<img className='admin-logout-icon' src={mu} alt='icon' />
 								</button>
+								<div className='active-user'>
+									ActiveUser: {auth.staff.staffname}
+								</div>
 							</div>
 						</div>
 					</div>

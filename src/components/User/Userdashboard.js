@@ -40,6 +40,9 @@ function Userdashboard() {
 									LOGOUT
 									<img className='admin-logout-icon' src={mu} alt='icon' />
 								</button>
+								<div className='active-user'>
+									ActiveUser: {auth.user.username}
+								</div>
 							</div>
 						</div>
 					</div>

@@ -8,6 +8,14 @@
     letter-spacing: -0.939px;
     text-align: center;
 }
+
+.active-user {
+    display: flex;
+    justify-content: end;
+    margin-right: 25px;
+    margin-top: 0px;
+    font-size: 18px;
+}
 .user-dashboard-buttons-row{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -99,6 +107,14 @@
         font-weight: 500;
         line-height: normal;
         letter-spacing: -0.361px;
+    }
+
+    .active-user {
+        display: flex;
+        justify-content: end;
+        margin-right: 25px;
+        margin-top: 0px;
+        font-size: 10px;
     }
     .user-card-box {
         display: flex;

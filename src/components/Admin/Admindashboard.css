@@ -78,6 +78,7 @@
     background-color: #fff;
     color: #000;
     padding-top: 10px;
+    cursor: pointer;
 }
 
 /* Tablet styles - 1600px width and below */

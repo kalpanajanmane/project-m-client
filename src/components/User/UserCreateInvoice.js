@@ -7,7 +7,7 @@ import C from '../images/C.png';
 import Close from '../images/cross_icon.jpg';
 import UserNavbar from './UserNavbar';
 import Select from 'react-select';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
@@ -579,9 +579,9 @@ function UserCreateInvoice() {
 		setSelectedParty(selectedParty);
 	};
 
-	const openPdfViewer = () => {
-		navigate(`/pdf/${url}`);
-	};
+	// const openPdfViewer = () => {
+	// 	navigate(`/pdf/${url}`);
+	// };
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const closePdfViewer = () => {
@@ -1679,11 +1679,20 @@ function UserCreateInvoice() {
 										onClick={() => closePdfViewer()}
 									/>
 									<div className='modal-btn-div'>
-										<button
+										{/* <button
 											className='modal-btn'
 											onClick={() => openPdfViewer()}
 										>
 											View Invoice
+										</button> */}
+										<button type='button' className='modal-btn'>
+											<Link
+												to={`/pdf/${url}`}
+												target='_blank'
+												style={{ textDecoration: 'none', color: 'white' }}
+											>
+												View Invoice
+											</Link>
 										</button>
 										<button
 											className='modal-btn'

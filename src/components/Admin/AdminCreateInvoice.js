@@ -594,6 +594,11 @@ function AdminCreateInvoice() {
 		setIsModalOpen(false);
 	};
 
+	const handleDownload = () => {
+		window.location = `${API}download/${url}`;
+		// console.log(url);
+	};
+
 	const handleCopy = () => {
 		const linkToCopy = `${ViewURLOriginal}`; // Replace with the actual link or variable
 
@@ -1700,6 +1705,13 @@ function AdminCreateInvoice() {
 											>
 												View Invoice
 											</Link>
+										</button>
+										<button
+											className='modal-btn'
+											type='button'
+											onClick={handleDownload}
+										>
+											Download
 										</button>
 										<button
 											className='modal-btn'

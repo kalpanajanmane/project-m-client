@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from "axios";
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import './AdminInvoiceManager.css';
@@ -13,22 +14,25 @@ const InvoiceAccordion = ({ invoice, code }) => {
 	const selectedCode = code;
 
 	const pdfUrlOriginal = `${API}download/${selectedInvoiceId}`;
-	const ViewURLOriginal = `https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrlOriginal)}&embedded=true`;
+	const ViewURLOriginal = `https://docs.google.com/viewer?url=${encodeURIComponent(
+		pdfUrlOriginal
+	)}&embedded=true`;
 
 	const toggleAccordion = () => {
 		setAccordionOpen(!isAccordionOpen);
 	};
+	const pdfUrl = `${selectedInvoiceId}`;
 
-	const handleOriginalInvoice = () => {
-		const expirationTimestamp = Date.now() + 5 * 24 * 60 * 60 * 1000;
-		const id = selectedInvoiceId;
-		console.log(`${API}/download/${id}`);
-		const pdfUrl = `${id}/${expirationTimestamp}`;
-		// Assuming 'navigate' is a function for navigating in your application
-		// You may need to replace it with the appropriate navigation logic
-		navigate(`/pdf/${pdfUrl}`);
-		console.log('Handling Original Invoice');
-	};
+	// const handleOriginalInvoice = () => {
+	// 	const expirationTimestamp = Date.now() + 5 * 24 * 60 * 60 * 1000;
+	// 	const id = selectedInvoiceId;
+	// 	console.log(`${API}/download/${id}`);
+	// 	const pdfUrl = `${id}/${expirationTimestamp}`;
+	// 	// Assuming 'navigate' is a function for navigating in your application
+	// 	// You may need to replace it with the appropriate navigation logic
+	// 	navigate(`/pdf/${pdfUrl}`);
+	// 	console.log('Handling Original Invoice');
+	// };
 
 	const handleOriginalCopy = () => {
 		const linkToCopy = `${ViewURLOriginal}`;
@@ -67,8 +71,14 @@ const InvoiceAccordion = ({ invoice, code }) => {
 				{isAccordionOpen && (
 					<div className='accordion-popover'>
 						<div className='modal-btn-div-pdf-inv'>
-							<button className='modal-btn-inv' onClick={handleOriginalInvoice}>
-								View Invoice
+							<button className='modal-btn-inv'>
+								<Link
+									style={{ textDecoration: 'none', color: 'black' }}
+									to={`/pdf/${pdfUrl}`}
+									target='_blank'
+								>
+									View Invoice
+								</Link>
 							</button>
 							<button className='modal-btn-inv' onClick={handleOriginalCopy}>
 								Copy Link

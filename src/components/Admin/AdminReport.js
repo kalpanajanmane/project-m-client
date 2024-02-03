@@ -701,6 +701,9 @@ function AdminReports() {
 			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Date</th>'
 		);
 		newWindow.document.write(
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Invoice ID</th>'
+		);
+		newWindow.document.write(
 			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Agent</th>'
 		);
 		newWindow.document.write(
@@ -745,7 +748,7 @@ function AdminReports() {
 				newWindow.document.write('<tr>');
 
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.invoicedetails && dataItem.invoicedetails.invoicedate
 							? new Date(
 									dataItem.invoicedetails.invoicedate
@@ -758,61 +761,68 @@ function AdminReports() {
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+						dataItem.invoicedetails && dataItem.invoicedetails.invoiceid
+							? dataItem.invoicedetails.invoiceid
+							: 'N/A'
+					}</td>`
+				);
+				newWindow.document.write(
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.sellerdetails && dataItem.sellerdetails.sellercompanyname
 							? dataItem.sellerdetails.sellercompanyname.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.buyerdetails && dataItem.buyerdetails.buyercompanyname
 							? dataItem.buyerdetails.buyercompanyname.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.loadingdetails && dataItem.loadingdetails.startpoint
 							? dataItem.loadingdetails.startpoint.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.loadingdetails && dataItem.loadingdetails.endpoint
 							? dataItem.loadingdetails.endpoint.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.vehicledetails && dataItem.vehicledetails.vechiclenumber
 							? dataItem.vehicledetails.vechiclenumber.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						item.itemquantity ? item.itemquantity : 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.boardingdetails && dataItem.boardingdetails.partyref
 							? dataItem.boardingdetails.partyref.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.invoicedetails && dataItem.invoicedetails.invoicemakername
 							? dataItem.invoicedetails.invoicemakername.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.loadingdetails &&
 						dataItem.loadingdetails.transportationcost
 							? dataItem.loadingdetails.transportationcost
@@ -820,17 +830,17 @@ function AdminReports() {
 					}</td>`
 				);
 				// newWindow.document.write(
-				// 	`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 				// 		item.itemweight ? item.itemweight : 'N/A'
 				// 	}</td>`
 				// );
 				// newWindow.document.write(
-				// 	`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 				// 		item.itemtaxrate ? item.itemtaxrate : 'N/A'
 				// 	}</td>`
 				// );
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						typeof item.itemquantity === 'number' &&
 						typeof dataItem.loadingdetails.transportationcost === 'number'
 							? (
@@ -1985,6 +1995,9 @@ function AdminReports() {
 													Date
 												</th>
 												<th className='reports-data-body-table-load-head-row-item'>
+													Invoice ID
+												</th>
+												<th className='reports-data-body-table-load-head-row-item'>
 													Agent
 												</th>
 												<th className='reports-data-body-table-load-head-row-item'>
@@ -2045,6 +2058,12 @@ function AdminReports() {
 																			month: '2-digit',
 																			year: 'numeric',
 																	  })
+																	: 'N/A'}
+															</td>
+															<td className='reports-data-body-table-load-body-row-item'>
+																{invoice.invoicedetails &&
+																invoice.invoicedetails.invoiceid
+																	? invoice.invoicedetails.invoiceid
 																	: 'N/A'}
 															</td>
 															<td className='reports-data-body-table-load-body-row-item'>

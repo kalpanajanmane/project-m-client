@@ -698,43 +698,43 @@ function UserReports() {
 		// Table header
 		newWindow.document.write('<tr style="background-color: #fcec03;">');
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Date</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Date</th>'
 		);
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Agent</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Agent</th>'
 		);
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Buyer</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Buyer</th>'
 		);
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Load From</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Load From</th>'
 		);
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Destination</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Destination</th>'
 		);
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Motor Vehicle No</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Motor Vehicle No</th>'
 		);
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Total Qty</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Total Qty</th>'
 		);
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Ref. Code</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Ref. Code</th>'
 		);
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Bill Maker Name</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Bill Maker Name</th>'
 		);
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Transportaion Cost</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Transportaion Cost</th>'
 		);
 		// newWindow.document.write(
-		// 	'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Item Weight</th>'
+		// 	'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Item Weight</th>'
 		// );
 		// newWindow.document.write(
-		// 	'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Item Rate</th>'
+		// 	'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Item Rate</th>'
 		// );
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Total</th>'
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Total</th>'
 		);
 		newWindow.document.write('</tr>');
 
@@ -745,7 +745,7 @@ function UserReports() {
 				newWindow.document.write('<tr>');
 
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.invoicedetails && dataItem.invoicedetails.invoicedate
 							? new Date(
 									dataItem.invoicedetails.invoicedate
@@ -758,61 +758,61 @@ function UserReports() {
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.sellerdetails && dataItem.sellerdetails.sellercompanyname
 							? dataItem.sellerdetails.sellercompanyname.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.buyerdetails && dataItem.buyerdetails.buyercompanyname
 							? dataItem.buyerdetails.buyercompanyname.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.loadingdetails && dataItem.loadingdetails.startpoint
 							? dataItem.loadingdetails.startpoint.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.loadingdetails && dataItem.loadingdetails.endpoint
 							? dataItem.loadingdetails.endpoint.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.vehicledetails && dataItem.vehicledetails.vechiclenumber
 							? dataItem.vehicledetails.vechiclenumber.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						item.itemquantity ? item.itemquantity : 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.boardingdetails && dataItem.boardingdetails.partyref
 							? dataItem.boardingdetails.partyref.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.invoicedetails && dataItem.invoicedetails.invoicemakername
 							? dataItem.invoicedetails.invoicemakername.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.loadingdetails &&
 						dataItem.loadingdetails.transportationcost
 							? dataItem.loadingdetails.transportationcost
@@ -820,17 +820,17 @@ function UserReports() {
 					}</td>`
 				);
 				// newWindow.document.write(
-				// 	`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+				// 	`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 				// 		item.itemweight ? item.itemweight : 'N/A'
 				// 	}</td>`
 				// );
 				// newWindow.document.write(
-				// 	`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+				// 	`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 				// 		item.itemtaxrate ? item.itemtaxrate : 'N/A'
 				// 	}</td>`
 				// );
 				newWindow.document.write(
-					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						typeof item.itemquantity === 'number' &&
 						typeof dataItem.loadingdetails.transportationcost === 'number'
 							? (

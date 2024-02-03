@@ -50,7 +50,7 @@ function AdminStaffManage() {
 			staffname: '',
 			staffemail: '',
 			staffpassword: '',
-			staffphone: '',
+			// staffphone: '',
 			staffaccess: '',
 			staffofficebranch: '',
 		},
@@ -60,9 +60,9 @@ function AdminStaffManage() {
 				.email('Invalid email address')
 				.required('Email is required'),
 			staffpassword: Yup.string().required('Password is required'),
-			staffphone: Yup.string()
-				.matches(/^[0-9]+$/, 'Invalid phone number')
-				.required('Phone is required'),
+			// staffphone: Yup.string()
+			// 	.matches(/^[0-9]+$/, 'Invalid phone number')
+			// 	.required('Phone is required'),
 			staffaccess: Yup.string().required('Access is required'),
 			staffofficebranch: Yup.string().required('Office Branch is required'),
 		}),
@@ -176,9 +176,9 @@ function AdminStaffManage() {
 									<th className='admin-staff-manager-data-table-header'>
 										Email
 									</th>
-									<th className='admin-staff-manager-data-table-header'>
+									{/* <th className='admin-staff-manager-data-table-header'>
 										Phone
-									</th>
+									</th> */}
 									<th className='admin-staff-manager-data-table-header'>
 										Office Branch
 									</th>
@@ -205,9 +205,9 @@ function AdminStaffManage() {
 										<td className='admin-staff-manager-data-table-data'>
 											{staff.staffemail.substring(0, 18)}
 										</td>
-										<td className='admin-staff-manager-data-table-data'>
+										{/* <td className='admin-staff-manager-data-table-data'>
 											{staff.staffphone}
-										</td>
+										</td> */}
 										<td className='admin-staff-manager-data-table-data'>
 											{staff.staffofficebranch.substring(0, 12)}
 										</td>
@@ -314,7 +314,7 @@ function AdminStaffManage() {
 							<div className='error-message'>{formik.errors.staffpassword}</div>
 						) : null}
 
-						<input
+						{/* <input
 							type='tel'
 							required
 							maxLength='10'
@@ -324,7 +324,7 @@ function AdminStaffManage() {
 						/>
 						{formik.touched.staffphone && formik.errors.staffphone ? (
 							<div className='error-message'>{formik.errors.staffphone}</div>
-						) : null}
+						) : null} */}
 
 						<select
 							required

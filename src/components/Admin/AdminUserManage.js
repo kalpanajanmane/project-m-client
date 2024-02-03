@@ -17,9 +17,9 @@ const validationSchema = Yup.object().shape({
 		.email('Invalid email format')
 		.required('Email is required'),
 	userpassword: Yup.string().required('Password is required'),
-	userphone: Yup.string()
-		.matches(/^\d{10}$/, 'Invalid phone number format')
-		.required('Phone number is required'),
+	// userphone: Yup.string()
+	// 	.matches(/^\d{10}$/, 'Invalid phone number format')
+	// 	.required('Phone number is required'),
 	useraccess: Yup.string().required('User access is required'),
 });
 
@@ -34,7 +34,7 @@ function AdminUserManage() {
 			username: '',
 			useremail: '',
 			userpassword: '',
-			userphone: '',
+			// userphone: '',
 			useraccess: '',
 		},
 		validationSchema: validationSchema,
@@ -77,7 +77,7 @@ function AdminUserManage() {
 			username: selectedUser.username || '',
 			useremail: selectedUser.useremail || '',
 			userpassword: selectedUser.userpassword || '',
-			userphone: selectedUser.userphone || '',
+			// userphone: selectedUser.userphone || '',
 			useraccess: selectedUser.useraccess || '',
 		});
 
@@ -167,7 +167,7 @@ function AdminUserManage() {
 										Username
 									</th>
 									<th className='admin-user-manage-data-table-header'>Email</th>
-									<th className='admin-user-manage-data-table-header'>Phone</th>
+									{/* <th className='admin-user-manage-data-table-header'>Phone</th> */}
 									<th className='admin-user-manage-data-table-header'>
 										Access
 									</th>
@@ -191,9 +191,9 @@ function AdminUserManage() {
 										<td className='admin-user-manage-data-table-data'>
 											{user.useremail.substring(0, 18)}
 										</td>
-										<td className='admin-user-manage-data-table-data'>
+										{/* <td className='admin-user-manage-data-table-data'>
 											{user.userphone}
-										</td>
+										</td> */}
 										<td className='admin-user-manage-data-table-data'>
 											{user.useraccess.substring(0, 12)}
 										</td>
@@ -301,7 +301,7 @@ function AdminUserManage() {
 						{formik.touched.userpassword && formik.errors.userpassword && (
 							<div className='error-message'>{formik.errors.userpassword}</div>
 						)}
-						<input
+						{/* <input
 							type='tel'
 							required
 							maxLength='10'
@@ -314,7 +314,7 @@ function AdminUserManage() {
 						/>
 						{formik.touched.userphone && formik.errors.userphone && (
 							<div className='error-message'>{formik.errors.userphone}</div>
-						)}
+						)} */}
 						<select
 							required
 							className='admin-staff-manager-form-input'

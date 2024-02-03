@@ -75,7 +75,7 @@ const InvoiceAccordion = ({ invoice, code }) => {
 				{isAccordionOpen && (
 					<div className='accordion-popover'>
 						<div className='modal-btn-div-pdf-inv'>
-							{/* <button className='modal-btn-inv'>
+							 <button className='modal-btn-inv'>
 								<Link
 									style={{ textDecoration: 'none', color: 'black' }}
 									to={`/pdf/${pdfUrl}`}
@@ -83,7 +83,7 @@ const InvoiceAccordion = ({ invoice, code }) => {
 								>
 									View Invoice
 								</Link>
-							</button> */}
+							</button> 
 							<button className='modal-btn-inv' onClick={handleInvoiceDownload}>
 								Download
 							</button>

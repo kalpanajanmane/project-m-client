@@ -468,7 +468,7 @@ function StaffSellerManage() {
 				<div className='admin-seller-manage-data'>
 					<div className='admin-seller-manage-data-header'>
 						<h1 className='admin-seller-manage-data-title'>ALL CONSIGNEES</h1>
-          {/*
+						{/*
 						<div className='admin-seller-manage-file-upload'>
 							<input
 								className='admin-seller-manage-file-upload-input'
@@ -596,7 +596,7 @@ function StaffSellerManage() {
 													}}
 												/>
 											</button>
-{/*
+											{/*
 											<button
 												style={{
 													background: 'none',
@@ -752,7 +752,7 @@ function StaffSellerManage() {
 					</form>
 				</div>
 			</div>
-			<ToastContainer position='top-right' autoClose={3000} />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

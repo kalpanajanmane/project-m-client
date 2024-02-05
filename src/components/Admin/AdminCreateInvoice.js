@@ -21,7 +21,7 @@ function AdminCreateInvoice() {
 	const [view, setView] = useState(false);
 	const [url, setUrl] = useState([]);
 	const [pdfUrl, setPdfUrl] = useState([]);
-	console.log(pdfUrl);
+
 	const [companies, setCompanies] = useState([]);
 	const [selectedCompany, setSelectedCompany] = useState({});
 
@@ -213,7 +213,7 @@ function AdminCreateInvoice() {
 					setTimeout(() => {
 						setView(true);
 						setIsModalOpen(true);
-					}, 4000);
+					}, 3000);
 				} else {
 					toast.error('Invoice creation failed');
 				}
@@ -622,12 +622,12 @@ function AdminCreateInvoice() {
 		const linkToCopy = `${code}`;
 		try {
 			copy(linkToCopy);
-			alert('Code copied to clipboard!');
-			// toast.success('Link copied to clipboard!');
+			// alert('Code copied to clipboard!');
+			toast.success('Code copied to clipboard!');
 		} catch (error) {
 			console.error('Unable to copy to clipboard.', error);
-			alert('Error copying to clipboard. Please try again.');
-			// toast.error('Error copying to clipboard. Please try again.');
+			// alert('Error copying to clipboard. Please try again.');
+			toast.error('Error copying to clipboard. Please try again.');
 		}
 	};
 
@@ -1704,7 +1704,7 @@ function AdminCreateInvoice() {
 					</div>
 				</div>
 			</form>
-			<ToastContainer position='top-right' autoClose={3000} />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

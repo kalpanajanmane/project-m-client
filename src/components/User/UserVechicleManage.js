@@ -412,7 +412,7 @@ function UserLoadingManage() {
 									<th className='admin-loading-manage-data-table-header'>
 										Rate
 									</th>
-                  {/*
+									{/*
 									<th className='admin-loading-manage-data-table-header'>
 										Action
 									</th>
@@ -436,7 +436,8 @@ function UserLoadingManage() {
 										</td>
 										<td className='admin-loading-manage-data-table-data'>
 											{loading.rate}
-										</td>{/*
+										</td>
+										{/*
 										<td className='admin-loading-manage-data-table-data'>
 											<button
 												style={{
@@ -576,7 +577,7 @@ function UserLoadingManage() {
 									<th className='admin-state-manage-data-table-header'>
 										State Code
 									</th>
-{/*
+									{/*
 									<th className='admin-state-manage-data-table-header'>
 										Action
 									</th>
@@ -598,7 +599,8 @@ function UserLoadingManage() {
 										</td>
 										<td className='admin-state-manage-data-table-data'>
 											{state.statecode}
-										</td>{/*
+										</td>
+										{/*
 										<td className='admin-state-manage-data-table-data'>
 											<button
 												style={{
@@ -713,7 +715,7 @@ function UserLoadingManage() {
 					<h1 className='admin-party-ref-manage-data-title'>
 						ALL PARTY REFERENCES
 					</h1>
-          {/*
+					{/*
 					<div className='admin-buyer-manage-file-upload'>
 						<input
 							className='admin-buyer-manage-file-upload-input'
@@ -771,7 +773,7 @@ function UserLoadingManage() {
 									<th className='admin-party-ref-manage-data-table-header'>
 										Party Code
 									</th>
-{/*
+									{/*
 									<th className='admin-party-ref-manage-data-table-header'>
 										Action
 									</th>
@@ -792,7 +794,8 @@ function UserLoadingManage() {
 										</td>
 										<td className='admin-party-ref-manage-data-table-data'>
 											{party.partyrefno}
-										</td>{/*
+										</td>
+										{/*
 										<td className='admin-party-ref-manage-data-table-data'>
 											<button
 												style={{
@@ -888,7 +891,7 @@ function UserLoadingManage() {
 					</form>
 				</div>
 			</div>
-			<ToastContainer position='top-right' autoClose={3000} />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

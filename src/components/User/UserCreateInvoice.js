@@ -20,6 +20,7 @@ function UserCreateInvoice() {
 	const navigate = useNavigate();
 	const [view, setView] = useState(false);
 	const [url, setUrl] = useState([]);
+	const [pdfUrl, setPdfUrl] = useState([]);
 	const [companies, setCompanies] = useState([]);
 	const [selectedCompany, setSelectedCompany] = useState({});
 
@@ -207,12 +208,13 @@ function UserCreateInvoice() {
 					console.log('Invoice created successfully:', data);
 					toast.success('Invoice created successfully');
 					setUrl(data._id);
+					setPdfUrl(data.pdfUrl);
 
 					// Introduce a delay of 4 seconds before setting setIsModalOpen
 					setTimeout(() => {
 						setView(true);
 						setIsModalOpen(true);
-					}, 4000);
+					}, 3000);
 				} else {
 					toast.error('Invoice creation failed');
 				}
@@ -588,22 +590,26 @@ function UserCreateInvoice() {
 		setIsModalOpen(false);
 	};
 
-	const handleDownload = () => {
-		window.location = `${API}download/${url}`;
-		// console.log(url);
+	const handleView = () => {
+		window.open(pdfUrl);
 	};
 
+	// const handleDownload = () => {
+	// 	window.location = `${API}download/${url}`;
+	// 	// console.log(url);
+	// };
+
 	const handleCopy = () => {
-		const linkToCopy = `${ViewURLOriginal}`; // Replace with the actual link or variable
+		const linkToCopy = `${pdfUrl}`; // Replace with the actual link or variable
 
 		try {
 			copy(linkToCopy);
-			alert('Link copied to clipboard!');
-			// toast.success('Link copied to clipboard!');
+			// alert('Link copied to clipboard!');
+			toast.success('Link copied to clipboard!');
 		} catch (error) {
 			console.error('Unable to copy to clipboard.', error);
-			alert('Error copying to clipboard. Please try again.');
-			// toast.error('Error copying to clipboard. Please try again.');
+			// alert('Error copying to clipboard. Please try again.');
+			toast.error('Error copying to clipboard. Please try again.');
 		}
 	};
 
@@ -622,12 +628,12 @@ function UserCreateInvoice() {
 		const linkToCopy = `${code}`;
 		try {
 			copy(linkToCopy);
-			alert('Code copied to clipboard!');
-			// toast.success('Link copied to clipboard!');
+			// alert('Code copied to clipboard!');
+			toast.success('Code copied to clipboard!');
 		} catch (error) {
 			console.error('Unable to copy to clipboard.', error);
-			alert('Error copying to clipboard. Please try again.');
-			// toast.error('Error copying to clipboard. Please try again.');
+			// alert('Error copying to clipboard. Please try again.');
+			toast.error('Error copying to clipboard. Please try again.');
 		}
 	};
 
@@ -1690,22 +1696,20 @@ function UserCreateInvoice() {
 										>
 											View Invoice
 										</button> */}
-										<button type='button' className='modal-btn'>
-											<Link
-												to={`/pdf/${url}`}
-												target='_blank'
-												style={{ textDecoration: 'none', color: 'white' }}
-											>
-												View Invoice
-											</Link>
-										</button>
 										<button
+											type='button'
+											className='modal-btn'
+											onClick={handleView}
+										>
+											View Invoice
+										</button>
+										{/* <button
 											className='modal-btn'
 											type='button'
 											onClick={handleDownload}
 										>
 											Download
-										</button>
+										</button> */}
 										<button
 											className='modal-btn'
 											type='button'
@@ -1751,7 +1755,7 @@ function UserCreateInvoice() {
 					</div>
 				</div>
 			</form>
-			<ToastContainer position='top-right' autoClose={3000} />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

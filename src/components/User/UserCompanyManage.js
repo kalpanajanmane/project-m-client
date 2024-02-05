@@ -286,8 +286,8 @@ function UserCompanyManage() {
 											</th>
 											<th className='admin-company-manager-data-table-header'>
 												GST No
-											</th>	
-                      <th className='admin-company-manager-data-table-header'>
+											</th>
+											<th className='admin-company-manager-data-table-header'>
 												Office Address
 											</th>
 											{/*
@@ -325,7 +325,7 @@ function UserCompanyManage() {
 												<td className='admin-company-manager-data-table-data'>
 													{company.companyofficeaddress.substring(0, 12)}
 												</td>
-                        {/*
+												{/*
 												<td className='admin-company-manager-data-table-data'>
 													<button
 														style={{
@@ -495,7 +495,7 @@ function UserCompanyManage() {
 					</form>
 				</div>
 			</div>
-			<ToastContainer />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

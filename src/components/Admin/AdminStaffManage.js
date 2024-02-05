@@ -360,7 +360,7 @@ function AdminStaffManage() {
 					</form>
 				</div>
 			</div>
-			<ToastContainer position='top-right' autoClose={3000} />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

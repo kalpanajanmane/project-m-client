@@ -453,7 +453,7 @@ function StaffLoadingManage() {
 													}}
 												/>
 											</button>
-{/*
+											{/*
 											<button
 												style={{
 													background: 'none',
@@ -613,7 +613,7 @@ function StaffLoadingManage() {
 													}}
 												/>
 											</button>
-{/*
+											{/*
 											<button
 												style={{
 													background: 'none',
@@ -709,7 +709,7 @@ function StaffLoadingManage() {
 					<h1 className='admin-party-ref-manage-data-title'>
 						ALL PARTY REFERENCES
 					</h1>
-          {/*
+					{/*
 					<div className='admin-buyer-manage-file-upload'>
 						<input
 							className='admin-buyer-manage-file-upload-input'
@@ -805,7 +805,7 @@ function StaffLoadingManage() {
 													}}
 												/>
 											</button>
-{/*
+											{/*
 											<button
 												style={{
 													background: 'none',
@@ -882,7 +882,7 @@ function StaffLoadingManage() {
 					</form>
 				</div>
 			</div>
-			<ToastContainer position='top-right' autoClose={3000} />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

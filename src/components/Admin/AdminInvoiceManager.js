@@ -58,115 +58,6 @@ function AdminInvoiceManagement() {
 	// const changePage = ({ selected }) => {
 	// 	setPageNumber(selected);
 	// };
-	// const [isModalOpen, setIsModalOpen] = useState(false);
-	// const [isAccordionOpen, setAccordionOpen] = useState(false);
-	// const [selectedOption, setSelectedOption] = useState('Original');
-
-	// const openPdfViewer = () => {
-	// 	setAccordionOpen(!isAccordionOpen);
-	// };
-
-	// const closePdfViewer = () => {
-	// 	setIsModalOpen(false);
-	// };
-
-	// const handleOptionChange = (event) => {
-	// 	setSelectedOption(event.target.value);
-	// };
-
-	// const handleCopy = () => {
-	// 	closePdfViewer();
-	// };
-
-	// const handleCopy = () => {
-	// 	if (selectedOption === 'Original') {
-	// 		handleOriginalCopy();
-	// 	} else {
-	// 		handleDuplicateCopy();
-	// 	}
-	// };
-
-	// const handleOriginalCopy = () => {
-	// 	const expirationTimestamp = Date.now() + 5 * 24 * 60 * 60 * 1000;
-	// 	const id = selectedInvoiceId;
-	// 	console.log(`${API}/download/${id}`);
-	// 	const pdfUrl = `${id}/${expirationTimestamp}`;
-
-	// 	console.log('Handling Original Invoice Copy');
-	// 	const linkToCopy = `${ViewURLOriginal}`;
-	// 	try {
-	// 		copy(linkToCopy);
-	// 		alert('Link copied to clipboard!');
-	// 		// toast.success('Link copied to clipboard!');
-	// 	} catch (error) {
-	// 		console.error('Unable to copy to clipboard.', error);
-	// 		alert('Error copying to clipboard. Please try again.');
-	// 		// toast.error('Error copying to clipboard. Please try again.');
-	// 	}
-	// };
-
-	// const handleDuplicateCopy = () => {
-	// 	const expirationTimestamp = Date.now() + 5 * 24 * 60 * 60 * 1000;
-	// 	const id = selectedInvoiceId;
-	// 	console.log(`${API}/download/${id}`);
-	// 	const pdfUrl = `${id}/${expirationTimestamp}`;
-
-	// 	console.log('Handling Original Invoice Copy');
-	// 	const linkToCopy = `${ViewURLDuplicate}`;
-
-	// 	try {
-	// 		copy(linkToCopy);
-	// 		alert('Link copied to clipboard!');
-	// 		// toast.success('Link copied to clipboard!');
-	// 	} catch (error) {
-	// 		console.error('Unable to copy to clipboard.', error);
-	// 		alert('Error copying to clipboard. Please try again.');
-	// 		// toast.error('Error copying to clipboard. Please try again.');
-	// 	}
-	// };
-
-	// const ViewInvoice = (invoiceid) => {
-	// 	setSelectedInvoiceId(invoiceid);
-	// 	openPdfViewer();
-	// };
-
-	// const handleInvoiceChoice = () => {
-	// 	if (selectedOption === 'Original') {
-	// 		handleOriginalInvoice();
-	// 	} else {
-	// 		handleDuplicateInvoice();
-	// 	}
-	// 	closePdfViewer();
-	// };
-
-	// const handleOriginalInvoice = () => {
-	// 	const expirationTimestamp = Date.now() + 5 * 24 * 60 * 60 * 1000;
-	// 	const id = selectedInvoiceId;
-	// 	console.log(`${API}/download/${id}`);
-	// 	const pdfUrl = `${id}/${expirationTimestamp}`;
-	// 	// Assuming 'navigate' is a function for navigating in your application
-	// 	// You may need to replace it with the appropriate navigation logic
-	// 	navigate(`/pdf/${pdfUrl}`);
-	// 	console.log('Handling Original Invoice');
-	// };
-
-	// const handleDuplicateInvoice = () => {
-	// 	const expirationTimestamp = Date.now() + 5 * 24 * 60 * 60 * 1000;
-	// 	const id = selectedInvoiceId;
-	// 	console.log(`${API}/download2/${id}`);
-	// 	const pdfUrl = `${id}/${expirationTimestamp}`;
-	// 	// Assuming 'navigate' is a function for navigating in your application
-	// 	// You may need to replace it with the appropriate navigation logic
-	// 	navigate(`/pdf2/${pdfUrl}`);
-	// 	console.log('Handling Duplicate Invoice');
-	// };
-
-	// const PrintInvoice = (invoiceid) => {
-	// 	setSelectedInvoiceId(invoiceid);
-	// 	if (selectedInvoiceId) {
-	// 		window.location = ${API}download/${selectedInvoiceId};
-	// 	}
-	// };
 
 	useEffect(() => {
 		axios
@@ -312,56 +203,6 @@ function AdminInvoiceManagement() {
 														.slice(-4)
 												}
 											/>
-											{/* {isAccordionOpen && (
-												<div className='accordion-popover'>
-													<div className='modal-content-invoice'>
-														<div className='modal-btn-div-pdf-invoice'>
-															<div style={{ display: 'flex', gap: '30px' }}>
-																<button
-																	className='modal-btn-invoice'
-																	onClick={handleOriginalInvoice}
-																>
-																	View Original Invoice
-																</button>
-																<button
-																	className='modal-btn-invoice'
-																	onClick={handleOriginalCopy}
-																>
-																	Copy Link
-																</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											)} */}
-											{/* {isModalOpen && (
-												<div className='modal'>
-													<div className='modal-content'>
-														<img
-															src={Close}
-															alt='Close'
-															className='close-modal'
-															onClick={() => closePdfViewer()}
-														/>
-														<div className='modal-btn-div-pdf'>
-															<div style={{ display: 'flex', gap: '30px' }}>
-																<button
-																	className='modal-btn'
-																	onClick={handleOriginalInvoice}
-																>
-																	View Original Invoice
-																</button>
-																<button
-																	className='modal-btn'
-																	onClick={handleOriginalCopy}
-																>
-																	Copy Link
-																</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											)} */}
 										</td>
 									</tr>
 								))}
@@ -385,7 +226,7 @@ function AdminInvoiceManagement() {
 					</div>
 				</div>
 			</div>
-			<ToastContainer position='top-right' autoClose={1000} />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

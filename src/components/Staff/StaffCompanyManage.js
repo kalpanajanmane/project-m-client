@@ -341,7 +341,7 @@ function StaffCompanyManage() {
 															}}
 														/>
 													</button>
-                          {/*
+													{/*
 													<button
 														style={{
 															background: 'none',
@@ -490,7 +490,7 @@ function StaffCompanyManage() {
 					</form>
 				</div>
 			</div>
-			<ToastContainer />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

@@ -452,7 +452,7 @@ function UserBuyerManage() {
 				<div className='admin-buyer-manage-data'>
 					<div className='admin-buyer-manage-data-header'>
 						<h1 className='admin-buyer-manage-data-title'>ALL BUYERS</h1>
-{/*
+						{/*
 						<div className='admin-buyer-manage-file-upload'>
 							<input
 								className='admin-buyer-manage-file-upload-input'
@@ -516,7 +516,7 @@ function UserBuyerManage() {
 									<th className='admin-buyer-manage-data-table-header'>
 										State Code
 									</th>
-{/*
+									{/*
 									<th className='admin-buyer-manage-data-table-header'>
 										Action
 									</th>
@@ -555,7 +555,7 @@ function UserBuyerManage() {
 										<td className='admin-buyer-manage-data-table-data'>
 											{buyer.buyercompanystatecode?.substring(0, 12) ?? 'N/A'}
 										</td>
-                      {/*
+										{/*
 										<td className='admin-buyer-manage-data-table-data'>
 											<button
 												style={{
@@ -732,7 +732,7 @@ function UserBuyerManage() {
 					</form>
 				</div>
 			</div>
-			<ToastContainer position='top-right' autoClose={3000} />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

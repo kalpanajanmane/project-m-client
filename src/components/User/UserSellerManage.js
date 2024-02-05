@@ -468,7 +468,7 @@ function UserSellerManage() {
 				<div className='admin-seller-manage-data'>
 					<div className='admin-seller-manage-data-header'>
 						<h1 className='admin-seller-manage-data-title'>ALL CONSIGNEES</h1>
-          {/*
+						{/*
 						<div className='admin-seller-manage-file-upload'>
 							<input
 								className='admin-seller-manage-file-upload-input'
@@ -538,7 +538,7 @@ function UserSellerManage() {
 									<th className='admin-seller-manage-data-table-header'>
 										State Code
 									</th>
-{/*
+									{/*
 									<th className='admin-seller-manage-data-table-header'>
 										Action
 									</th>
@@ -580,7 +580,8 @@ function UserSellerManage() {
 										</td>
 										<td className='admin-seller-manage-data-table-data'>
 											{seller.sellercompanystatecode?.substring(0, 12) ?? 'N/A'}
-										</td>{/*
+										</td>
+										{/*
 										<td className='admin-seller-manage-data-table-data'>
 											<button
 												style={{
@@ -755,7 +756,7 @@ function UserSellerManage() {
 					</form>
 				</div>
 			</div>
-			<ToastContainer position='top-right' autoClose={3000} />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

@@ -488,7 +488,7 @@ function AdminCompanyManage() {
 					</form>
 				</div>
 			</div>
-			<ToastContainer />
+			<ToastContainer position='top-right' autoClose={1500} />
 		</div>
 	);
 }

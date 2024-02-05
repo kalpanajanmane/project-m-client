@@ -41,7 +41,7 @@ function Staffdashboard() {
 									<img className='admin-logout-icon' src={mu} alt='icon' />
 								</button>
 								<div className='active-user'>
-									ActiveUser: {auth.staff.staffname}
+									ActiveStaff: {auth.staff.staffname}
 								</div>
 							</div>
 						</div>
@@ -63,7 +63,7 @@ function Staffdashboard() {
 								<span>GENERATE REPORTS</span>
 							</div>
 						</button>
-						
+
 						<button
 							className='admin-dashboard-button'
 							onClick={() => navigate('/staffinvdash')}

@@ -40,6 +40,9 @@ function StaffDashboardHO() {
 									LOGOUT
 									<img className='admin-logout-icon' src={mu} alt='icon' />
 								</button>
+								<div className='active-user'>
+									ActiveStaff: {auth.staff.staffname}
+								</div>
 							</div>
 						</div>
 					</div>
@@ -60,7 +63,7 @@ function StaffDashboardHO() {
 								<span>GENERATE REPORTS</span>
 							</div>
 						</button>
-						
+
 						<button
 							className='admin-dashboard-button'
 							onClick={() => navigate('/staffinvdash')}

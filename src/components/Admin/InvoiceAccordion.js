@@ -4,14 +4,17 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import './AdminInvoiceManager.css';
-// import Close from 'path/to/close-icon'; // Update the path to your close icon
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const InvoiceAccordion = ({ invoice, code }) => {
+const InvoiceAccordion = ({ invoice, code, pdfUrl }) => {
 	const [isAccordionOpen, setAccordionOpen] = useState(false);
 	const navigate = useNavigate();
 	const API = process.env.REACT_APP_API;
 	const selectedInvoiceId = invoice;
 	const selectedCode = code;
+	const selectedPdfUrl = pdfUrl;
+	// console.log(selectedPdfUrl);
 
 	const pdfUrlOriginal = `${API}download/${selectedInvoiceId}`;
 	const ViewURLOriginal = `https://docs.google.com/viewer?url=${encodeURIComponent(
@@ -21,7 +24,7 @@ const InvoiceAccordion = ({ invoice, code }) => {
 	const toggleAccordion = () => {
 		setAccordionOpen(!isAccordionOpen);
 	};
-	const pdfUrl = `${selectedInvoiceId}`;
+	// const pdfUrl = `${selectedInvoiceId}`;
 
 	// const handleOriginalInvoice = () => {
 	// 	const expirationTimestamp = Date.now() + 5 * 24 * 60 * 60 * 1000;
@@ -34,20 +37,24 @@ const InvoiceAccordion = ({ invoice, code }) => {
 	// 	console.log('Handling Original Invoice');
 	// };
 
-	const handleInvoiceDownload = () => {
-		window.location = `${API}download/${selectedInvoiceId}`;
+	const handleView = () => {
+		window.open(selectedPdfUrl);
 	};
 
+	// const handleInvoiceDownload = () => {
+	// 	// window.location = `${API}download/${selectedInvoiceId}`;
+	// };
+
 	const handleOriginalCopy = () => {
-		const linkToCopy = `${ViewURLOriginal}`;
+		const linkToCopy = `${selectedPdfUrl}`;
 		try {
 			copy(linkToCopy);
-			alert('Link copied to clipboard!');
-			// toast.success('Link copied to clipboard!');
+			// alert('Link copied to clipboard!');
+			toast.success('Link copied to clipboard!');
 		} catch (error) {
 			console.error('Unable to copy to clipboard.', error);
-			alert('Error copying to clipboard. Please try again.');
-			// toast.error('Error copying to clipboard. Please try again.');
+			// alert('Error copying to clipboard. Please try again.');
+			toast.error('Error copying to clipboard. Please try again.');
 		}
 	};
 
@@ -56,59 +63,47 @@ const InvoiceAccordion = ({ invoice, code }) => {
 		const linkToCopy = `${code}`;
 		try {
 			copy(linkToCopy);
-			alert('Code copied to clipboard!');
-			// toast.success('Link copied to clipboard!');
+			// alert('Code copied to clipboard!');
+			toast.success('Code copied to clipboard!');
 		} catch (error) {
 			console.error('Unable to copy to clipboard.', error);
-			alert('Error copying to clipboard. Please try again.');
-			// toast.error('Error copying to clipboard. Please try again.');
+			// alert('Error copying to clipboard. Please try again.');
+			toast.error('Error copying to clipboard. Please try again.');
 		}
 	};
 
 	return (
 		<div>
-			<button
-				onClick={toggleAccordion}
-				className='invoice-management-data-body-table-data-button'
-			>
-				View
-				{isAccordionOpen && (
-					<div className='accordion-popover'>
-						<div className='modal-btn-div-pdf-inv'>
-							 <button className='modal-btn-inv'>
-								<Link
-									style={{ textDecoration: 'none', color: 'black' }}
-									to={`/pdf/${pdfUrl}`}
-									target='_blank'
+			<div>
+				<button
+					onClick={toggleAccordion}
+					className='invoice-management-data-body-table-data-button'
+				>
+					View
+					{isAccordionOpen && (
+						<div className='accordion-popover'>
+							<div className='modal-btn-div-pdf-inv'>
+								<button
+									type='button'
+									className='modal-btn-inv'
+									onClick={handleView}
 								>
 									View Invoice
-								</Link>
-							</button> 
-							<button className='modal-btn-inv' onClick={handleInvoiceDownload}>
+								</button>
+								{/* <button className='modal-btn-inv' onClick={handleInvoiceDownload}>
 								Download
-							</button>
-							<button className='modal-btn-inv' onClick={handleOriginalCopy}>
-								Copy Link
-							</button>
-							<button className='modal-btn-inv' onClick={handleCodeCopy}>
-								Copy Code
-							</button>
+							</button> */}
+								<button className='modal-btn-inv' onClick={handleOriginalCopy}>
+									Copy Link
+								</button>
+								<button className='modal-btn-inv' onClick={handleCodeCopy}>
+									Copy Code
+								</button>
+							</div>
 						</div>
-					</div>
-				)}
-			</button>
-			{/* {isAccordionOpen && (
-				<div className='accordion-popover'>
-					<div className='modal-btn-div-pdf-inv'>
-						<button className='modal-btn-inv' onClick={handleOriginalInvoice}>
-							View Original Invoice
-						</button>
-						<button className='modal-btn-inv' onClick={handleOriginalCopy}>
-							Copy Link
-						</button>
-					</div>
-				</div>
-			)} */}
+					)}
+				</button>
+			</div>
 		</div>
 	);
 };

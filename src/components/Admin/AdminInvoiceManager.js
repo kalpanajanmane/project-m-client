@@ -10,6 +10,8 @@ import AdminNavbar from './AdminNavbar';
 // import Close from '../images/cross_icon.jpg';
 // import copy from 'clipboard-copy';
 import InvoiceAccordion from './InvoiceAccordion';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AdminInvoiceManagement() {
 	// const navigate = useNavigate();
@@ -295,6 +297,7 @@ function AdminInvoiceManagement() {
 											</button> */}
 											<InvoiceAccordion
 												invoice={invoice._id}
+												pdfUrl={invoice.pdfUrl}
 												code={
 													invoice.vehicledetails.drivernumber +
 													' ' +
@@ -382,6 +385,7 @@ function AdminInvoiceManagement() {
 					</div>
 				</div>
 			</div>
+			<ToastContainer position='top-right' autoClose={1000} />
 		</div>
 	);
 }

@@ -9,8 +9,10 @@ import UserNavbar from './UserNavbar';
 import Close from '../images/cross_icon.jpg';
 import Select from 'react-select';
 import { toast, ToastContainer } from 'react-toastify';
+import { useUserAuth } from './UserAuth';
 
 function UserReports() {
+	const auth = useUserAuth();
 	const [invoice, setInvoice] = useState([]);
 	const [parties, setParties] = useState([]);
 	const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
@@ -41,8 +43,12 @@ function UserReports() {
 		setValue(newValue);
 	};
 
+	const activeUsersInvoice = invoice.filter(
+		(item) => item.invoicedetails.invoicemakername === auth.user.username
+	);
+
 	// const itemsPerPage = 15;
-	const sortedInvoice = [...invoice].reverse();
+	const sortedInvoice = [...activeUsersInvoice].reverse();
 
 	const displayedInvoiceSearch = sortedInvoice.filter((item) => {
 		const invoiceNo =

@@ -41,7 +41,7 @@ function Admindashboard() {
 									<img className='admin-logout-icon' src={mu} alt='icon' />
 								</button>
 								<div className='active-user'>
-									ActiveUser: {auth.admin.adminname}
+									ActiveAdmin: {auth.admin.adminname}
 								</div>
 							</div>
 						</div>

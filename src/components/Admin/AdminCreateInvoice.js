@@ -20,6 +20,8 @@ function AdminCreateInvoice() {
 	const navigate = useNavigate();
 	const [view, setView] = useState(false);
 	const [url, setUrl] = useState([]);
+	const [pdfUrl, setPdfUrl] = useState([]);
+	console.log(pdfUrl);
 	const [companies, setCompanies] = useState([]);
 	const [selectedCompany, setSelectedCompany] = useState({});
 
@@ -205,6 +207,7 @@ function AdminCreateInvoice() {
 					console.log('Invoice created successfully:', data);
 					toast.success('Invoice created successfully');
 					setUrl(data._id);
+					setPdfUrl(data.pdfUrl);
 
 					// Introduce a delay of 4 seconds before setting setIsModalOpen
 					setTimeout(() => {
@@ -576,40 +579,31 @@ function AdminCreateInvoice() {
 		setSelectedParty(selectedParty);
 	};
 
-	// const openPdfViewer = () => {
-	// 	navigate(`/pdf/${url}`);
-	// };
-	// const openPdfViewer = () => {
-	// 	const newWindow = window.open(`/pdf/${url}`, '_blank');
-	// 	if (newWindow) {
-	// 		newWindow.focus();
-	// 	} else {
-	// 		// Handle the case where the popup was blocked
-	// 		console.error('Popup blocked. Please enable popups for this site.');
-	// 	}
-	// };
-
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const closePdfViewer = () => {
 		setIsModalOpen(false);
 	};
 
-	const handleDownload = () => {
-		window.location = `${API}download/${url}`;
-		// console.log(url);
+	const handleView = () => {
+		window.open(pdfUrl);
 	};
 
+	// const handleDownload = () => {
+	// 	// window.location = `${pdfUrl}`;
+	// 	// console.log(url);
+	// };
+
 	const handleCopy = () => {
-		const linkToCopy = `${ViewURLOriginal}`; // Replace with the actual link or variable
+		const linkToCopy = `${pdfUrl}`; // Replace with the actual link or variable
 
 		try {
 			copy(linkToCopy);
-			alert('Link copied to clipboard!');
-			// toast.success('Link copied to clipboard!');
+			// alert('Link copied to clipboard!');
+			toast.success('Link copied to clipboard!');
 		} catch (error) {
 			console.error('Unable to copy to clipboard.', error);
-			alert('Error copying to clipboard. Please try again.');
-			// toast.error('Error copying to clipboard. Please try again.');
+			// alert('Error copying to clipboard. Please try again.');
+			toast.error('Error copying to clipboard. Please try again.');
 		}
 	};
 
@@ -806,22 +800,7 @@ function AdminCreateInvoice() {
 					</div>
 					<div className='admin-create-invoice-data'>
 						<h2 className='admin-create-invoice-subtitle'>BUYER DETAILS</h2>
-						{/* <Select
-							className='admin-create-invoice-select'
-							id='buyerid'
-							name='buyerid'
-							placeholder='Select Buyer'
-							// value={{
-							// 	value: selectedBuyer._id,
-							// 	label: selectedBuyer.buyercompanyname,
-							// }}
-							required
-							onChange={handleSelectChangeBuyer}
-							options={buyers.map((buyer) => ({
-								value: buyer._id,
-								label: buyer.buyercompanyname,
-							}))}
-						/> */}
+
 						<Select
 							className='admin-create-invoice-select'
 							id='buyerid'
@@ -1628,26 +1607,7 @@ function AdminCreateInvoice() {
 								Party Ref.
 							</label>
 							<br />
-							{/* <input
-								className='admin-create-invoice-form-input-v'
-								id='partyref'
-								name='partyref'
-								type='text'
-								required
-								onChange={(e) =>
-									handleChange(
-										{
-											...e,
-											target: {
-												...e.target,
-												value: e.target.value.toUpperCase(),
-											},
-										},
-										'boardingdetails',
-										'partyref'
-									)
-								}
-							/> */}
+
 							<Select
 								className='admin-create-invoice-form-input-v'
 								id='partyid'
@@ -1691,28 +1651,14 @@ function AdminCreateInvoice() {
 										onClick={() => closePdfViewer()}
 									/>
 									<div className='modal-btn-div'>
-										{/* <button
+										<button
+											type='button'
 											className='modal-btn'
-											onClick={() => openPdfViewer()}
+											onClick={handleView}
 										>
 											View Invoice
-										</button> */}
-										<button type='button' className='modal-btn'>
-											<Link
-												to={`/pdf/${url}`}
-												target='_blank'
-												style={{ textDecoration: 'none', color: 'white' }}
-											>
-												View Invoice
-											</Link>
 										</button>
-										<button
-											className='modal-btn'
-											type='button'
-											onClick={handleDownload}
-										>
-											Download
-										</button>
+
 										<button
 											className='modal-btn'
 											type='button'

@@ -40,6 +40,9 @@ function UserDashboardGeneral() {
 									LOGOUT
 									<img className='admin-logout-icon' src={mu} alt='icon' />
 								</button>
+								<div className='active-user'>
+									ActiveUser: {auth.user.username}
+								</div>
 							</div>
 						</div>
 					</div>
@@ -60,7 +63,7 @@ function UserDashboardGeneral() {
 								<span>GENERATE REPORTS</span>
 							</div>
 						</button>
-						
+
 						<button
 							className='admin-dashboard-button'
 							onClick={() => navigate('/userinvdash')}
@@ -83,7 +86,7 @@ function UserDashboardGeneral() {
 								<span>MANAGE OTHERS</span>
 							</div>
 						</button>
-            {/*
+						{/*
 						<button
 							className='admin-dashboard-button'
 							onClick={() => navigate('/staffcomman')}

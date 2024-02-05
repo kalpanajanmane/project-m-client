@@ -9,8 +9,10 @@ import StaffNavbar from './StaffNavbar';
 import Close from '../images/cross_icon.jpg';
 import Select from 'react-select';
 import { toast, ToastContainer } from 'react-toastify';
+import { useStaffAuth } from './StaffAuth';
 
 function StaffReports() {
+	const auth = useStaffAuth();
 	const [invoice, setInvoice] = useState([]);
 	const [parties, setParties] = useState([]);
 	const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
@@ -41,8 +43,12 @@ function StaffReports() {
 		setValue(newValue);
 	};
 
+	const activeStaffsInvoice = invoice.filter(
+		(item) => item.invoicedetails.invoicemakername === auth.staff.staffname
+	);
+
 	// const itemsPerPage = 15;
-	const sortedInvoice = [...invoice].reverse();
+	const sortedInvoice = [...activeStaffsInvoice].reverse();
 
 	const displayedInvoiceSearch = sortedInvoice.filter((item) => {
 		const invoiceNo =

@@ -10,8 +10,10 @@ import UserNavbar from './UserNavbar';
 // import Close from '../images/cross_icon.jpg';
 // import copy from 'clipboard-copy';
 import InvoiceAccordion from '../Admin/InvoiceAccordion';
+import { useUserAuth } from './UserAuth';
 
 function UserInvoiceManagement() {
+	const auth = useUserAuth();
 	// const navigate = useNavigate();
 	const [invoice, setInvoice] = useState([]);
 	// const [pageNumber, setPageNumber] = useState(0);
@@ -29,7 +31,11 @@ function UserInvoiceManagement() {
 	// )}&embedded=true`;
 	// const itemsPerPage = 10;
 
-	const sortedInvoice = [...invoice].reverse();
+	const activeUsersInvoice = invoice.filter(
+		(item) => item.invoicedetails.invoicemakername === auth.user.username
+	);
+
+	const sortedInvoice = [...activeUsersInvoice].reverse();
 	const displayedInvoiceSearch = sortedInvoice.filter((item) => {
 		// const invoiceNo = item.invoicedetails?.invoiceno || '';
 		// const companyName = item.companydetails?.companyname || '';

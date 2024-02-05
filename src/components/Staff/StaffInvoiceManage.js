@@ -9,9 +9,11 @@ import StaffNavbar from './StaffNavbar';
 // import { useNavigate } from 'react-router-dom';
 // import Close from '../images/cross_icon.jpg';
 // import copy from 'clipboard-copy';
+import { useStaffAuth } from './StaffAuth';
 import InvoiceAccordion from '../Admin/InvoiceAccordion';
 
 function StaffInvoiceManagement() {
+	const auth = useStaffAuth();
 	// const navigate = useNavigate();
 	const [invoice, setInvoice] = useState([]);
 	// const [pageNumber, setPageNumber] = useState(0);
@@ -28,8 +30,11 @@ function StaffInvoiceManagement() {
 	// 	pdfUrlDuplicate
 	// )}&embedded=true`;
 	// const itemsPerPage = 10;
+	const activeStaffsInvoice = invoice.filter(
+		(item) => item.invoicedetails.invoicemakername === auth.staff.staffname
+	);
 
-	const sortedInvoice = [...invoice].reverse();
+	const sortedInvoice = [...activeStaffsInvoice].reverse();
 	const displayedInvoiceSearch = sortedInvoice.filter((item) => {
 		// const invoiceNo = item.invoicedetails?.invoiceno || '';
 		// const companyName = item.companydetails?.companyname || '';
@@ -210,6 +215,9 @@ function StaffInvoiceManagement() {
 										Invoice No
 									</th>
 									<th className='invoice-management-data-body-table-header'>
+										Invoice Maker
+									</th>
+									<th className='invoice-management-data-body-table-header'>
 										Company Name
 									</th>
 									<th className='invoice-management-data-body-table-header'>
@@ -241,6 +249,9 @@ function StaffInvoiceManagement() {
 										<td className='invoice-management-data-body-table-data'>
 											{invoice.invoicedetails.invoiceno?.substring(0, 12) ??
 												'N/A'}
+										</td>
+										<td className='invoice-management-data-body-table-data'>
+											{invoice.invoicedetails?.invoicemakername ?? 'N/A'}
 										</td>
 										<td className='invoice-management-data-body-table-data'>
 											{invoice.companydetails?.companyname?.substring(0, 12) ??

@@ -7,6 +7,7 @@
 .invoice-management-data-body {
 	height: 550px;
 	overflow-y: scroll;
+	padding-right: 30px;
 }
 
 /* Add this CSS to your stylesheet or component */
@@ -126,22 +127,26 @@
 }
 
 .invoice-management-data-body-table-data-button {
-	background: #5925dc;
-	color: #fefefe;
-	font-family: 'Urbanist';
-	font-size: 18px;
-	font-style: normal;
-	font-weight: 600;
-	line-height: 28px;
-	letter-spacing: -0.325px;
-	border-radius: 3px;
-	border: 1px solid #5925dc;
-	width: 60px;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	border-radius: 30%;
+	width: 50px;
 	height: 30px;
-	margin-left: 10px;
+	font-size: 20px;
+	line-height: 1;
+	text-align: center;
+	cursor: pointer;
 }
 
 .invoice-management-data-body-table-data-button:hover {
+	background-color: #f1eaff;
+	border: 1px solid #5925dc;
+	border-radius: 30%;
+	width: 55px;
+	height: 30px;
+	font-size: 20px;
+	line-height: 1;
+	text-align: center;
 	cursor: pointer;
 }
 
@@ -192,6 +197,42 @@
 	.invoice-management-data-body {
 		height: 550px;
 		overflow-y: scroll;
+		padding-right: 15px;
+	}
+
+	/* Add this CSS to your stylesheet or component */
+	.accordion-popover {
+		display: flex;
+		justify-content: center;
+
+	}
+
+	.modal-btn-div-pdf-inv {
+		display: flex;
+		flex-direction: column;
+		z-index: 1000;
+	}
+
+	.modal-btn-inv {
+		text-align: center;
+		height: 25px;
+		width: 90px;
+		border-radius: 10px;
+		border: 2px solid #D2D2D2;
+		font-family: "Urbanist";
+		font-size: 12px;
+		background-color: #fff;
+		color: #000;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		transition: background-color 0.3s;
+	}
+
+	.modal-btn-inv:hover {
+		background-color: #f1eaff;
+		color: #333;
+		cursor: pointer;
+		border-color: #7a5af8;
+		z-index: 1;
 	}
 
 	.invoice-management-data-header {
@@ -250,6 +291,42 @@
 	.invoice-management-data-body {
 		height: 550px;
 		overflow-y: scroll;
+		padding-right: 15px;
+	}
+
+	/* Add this CSS to your stylesheet or component */
+	.accordion-popover {
+		display: flex;
+		justify-content: center;
+
+	}
+
+	.modal-btn-div-pdf-inv {
+		display: flex;
+		flex-direction: column;
+		z-index: 1000;
+	}
+
+	.modal-btn-inv {
+		text-align: center;
+		height: 20px;
+		width: 80px;
+		border-radius: 10px;
+		border: 2px solid #D2D2D2;
+		font-family: "Urbanist";
+		font-size: 10px;
+		background-color: #fff;
+		color: #000;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		transition: background-color 0.3s;
+	}
+
+	.modal-btn-inv:hover {
+		background-color: #f1eaff;
+		color: #333;
+		cursor: pointer;
+		border-color: #7a5af8;
+		z-index: 1;
 	}
 
 	.invoice-management-data-header {
@@ -267,7 +344,7 @@
 	.invoice-management-data-body-table-row-head {
 		color: #1a1a1a;
 		font-family: 'Urbanist';
-		font-size: 15px;
+		font-size: 12px;
 		font-style: bold;
 		text-transform: uppercase;
 	}
@@ -275,7 +352,7 @@
 	.invoice-management-data-body-table-row-body {
 		color: #767676;
 		font-family: 'Urbanist';
-		font-size: 15px;
+		font-size: 12px;
 		font-style: bold;
 		font-weight: 400;
 		line-height: 28px;
@@ -290,7 +367,7 @@
 		width: 150px;
 		height: 30px;
 		font-family: 'Urbanist';
-		font-size: 15px;
+		font-size: 12px;
 		font-style: normal;
 		font-weight: 400;
 		line-height: 28px;
@@ -298,19 +375,27 @@
 	}
 
 	.invoice-management-data-body-table-data-button {
-		background: #5925dc;
-		color: #fefefe;
-		font-family: 'Urbanist';
-		font-size: 10px;
-		font-style: normal;
-		font-weight: 600;
-		line-height: 28px;
-		letter-spacing: -0.325px;
-		border-radius: 3px;
-		border: 1px solid #5925dc;
+		background-color: #ffffff;
+		border: 1px solid #cccccc;
+		border-radius: 30%;
 		width: 40px;
 		height: 30px;
-		margin-left: 5px;
+		font-size: 20px;
+		line-height: 1;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.invoice-management-data-body-table-data-button:hover {
+		background-color: #f1eaff;
+		border: 1px solid #5925dc;
+		border-radius: 30%;
+		width: 45px;
+		height: 30px;
+		font-size: 20px;
+		line-height: 1;
+		text-align: center;
+		cursor: pointer;
 	}
 }
 
@@ -336,6 +421,42 @@
 	.invoice-management-data-body {
 		height: 450px;
 		overflow-y: scroll;
+		padding-right: 20px;
+	}
+
+	/* Add this CSS to your stylesheet or component */
+	.accordion-popover {
+		display: flex;
+		justify-content: center;
+
+	}
+
+	.modal-btn-div-pdf-inv {
+		display: flex;
+		flex-direction: column;
+		z-index: 1000;
+	}
+
+	.modal-btn-inv {
+		text-align: center;
+		height: 20px;
+		width: 70px;
+		border-radius: 10px;
+		border: 2px solid #D2D2D2;
+		font-family: "Urbanist";
+		font-size: 8px;
+		background-color: #fff;
+		color: #000;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		transition: background-color 0.3s;
+	}
+
+	.modal-btn-inv:hover {
+		background-color: #f1eaff;
+		color: #333;
+		cursor: pointer;
+		border-color: #7a5af8;
+		z-index: 1;
 	}
 
 	.invoice-management-data-body-table-row-head {
@@ -372,17 +493,26 @@
 	}
 
 	.invoice-management-data-body-table-data-button {
-		background: #5925dc;
-		color: #fefefe;
-		font-family: 'Urbanist';
-		font-size: 8px;
-		font-style: normal;
-		font-weight: 600;
-		line-height: 12px;
-		letter-spacing: -0.325px;
-		border-radius: 3px;
+		background-color: #ffffff;
+		border: 1px solid #cccccc;
+		border-radius: 30%;
+		width: 30px;
+		height: 30px;
+		font-size: 20px;
+		line-height: 1;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.invoice-management-data-body-table-data-button:hover {
+		background-color: #f1eaff;
 		border: 1px solid #5925dc;
-		width: 25px;
-		height: 15px;
+		border-radius: 30%;
+		width: 35px;
+		height: 30px;
+		font-size: 20px;
+		line-height: 1;
+		text-align: center;
+		cursor: pointer;
 	}
 }

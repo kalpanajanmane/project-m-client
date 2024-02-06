@@ -79,7 +79,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl }) => {
 					onClick={toggleAccordion}
 					className='invoice-management-data-body-table-data-button'
 				>
-					View
+					...
 					{isAccordionOpen && (
 						<div className='accordion-popover'>
 							<div className='modal-btn-div-pdf-inv'>

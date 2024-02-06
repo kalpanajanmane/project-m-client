@@ -130,6 +130,7 @@ function AdminCreateInvoice() {
 			dateofloading: getTodayDate(),
 			// watermark: '',
 			partyref: '',
+			partyrate: '',
 		},
 		loadingdetails: {
 			startstate: '',
@@ -178,7 +179,7 @@ function AdminCreateInvoice() {
 		// Inserting a space after the next 2 characters
 		value = value.substring(0, 7) + ' ' + value.substring(7);
 
-		console.log(value);
+		// console.log(value);
 
 		setDataToSend((prevData) => ({
 			...prevData,
@@ -574,6 +575,7 @@ function AdminCreateInvoice() {
 			boardingdetails: {
 				...prevData.boardingdetails,
 				partyref: selectedParty.partyrefno,
+				partyrate: selectedParty.partyrate,
 			},
 		}));
 		setSelectedParty(selectedParty);
@@ -1574,9 +1576,9 @@ function AdminCreateInvoice() {
 								type='text'
 								required
 								disabled
-								value={`${dataToSend.loadingdetails.transportationcost}`}
+								value={`${dataToSend.boardingdetails.partyrate}`}
 								onChange={(e) =>
-									handleChange(e, 'loadingdetails', 'transportationcost')
+									handleChange(e, 'boardingdetails', 'partyrate')
 								}
 								readOnly
 							/>

@@ -159,8 +159,8 @@ function AdminInvoiceManagement() {
 											) ?? 'N/A'}
 										</td>
 										<td className='invoice-management-data-body-table-data'>
-											{invoice.loadingdetails?.transportationcost
-												? invoice.loadingdetails.transportationcost
+											{invoice.boardingdetails?.partyrate
+												? invoice.boardingdetails.partyrate
 												: 'N/A'}
 										</td>
 										<td className='invoice-management-data-body-table-data'>

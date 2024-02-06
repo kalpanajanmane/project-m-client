@@ -614,8 +614,8 @@ function UserReports() {
 			);
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
-					dataItem.loadingdetails && dataItem.loadingdetails.transportationcost
-						? dataItem.loadingdetails.transportationcost
+					dataItem.loadingdetails && dataItem.boardingdetails.partyrate
+						? dataItem.boardingdetails.partyrate
 						: 'N/A'
 				}</td>`
 			);
@@ -819,9 +819,8 @@ function UserReports() {
 				);
 				newWindow.document.write(
 					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.loadingdetails &&
-						dataItem.loadingdetails.transportationcost
-							? dataItem.loadingdetails.transportationcost
+						dataItem.loadingdetails && dataItem.boardingdetails.partyrate
+							? dataItem.boardingdetails.partyrate
 							: 'N/A'
 					}</td>`
 				);
@@ -838,9 +837,9 @@ function UserReports() {
 				newWindow.document.write(
 					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						typeof item.itemquantity === 'number' &&
-						typeof dataItem.loadingdetails.transportationcost === 'number'
+						typeof dataItem.boardingdetails.partyrate === 'number'
 							? (
-									item.itemquantity * dataItem.loadingdetails.transportationcost
+									item.itemquantity * dataItem.boardingdetails.partyrate
 							  ).toFixed(2)
 							: 'N/A'
 					}</td>`
@@ -848,8 +847,8 @@ function UserReports() {
 				// Calculate and update the total amount
 				const itemTotal =
 					typeof item.itemquantity === 'number' &&
-					typeof dataItem.loadingdetails.transportationcost === 'number'
-						? item.itemquantity * dataItem.loadingdetails.transportationcost
+					typeof dataItem.boardingdetails.partyrate === 'number'
+						? item.itemquantity * dataItem.boardingdetails.partyrate
 						: 0;
 
 				totalAmount += itemTotal;
@@ -943,8 +942,8 @@ function UserReports() {
 			);
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
-					dataItem.loadingdetails.transportationcost
-						? dataItem.loadingdetails.transportationcost
+					dataItem.boardingdetails.partyrate
+						? dataItem.boardingdetails.partyrate
 						: 'N/A'
 				}</td>`
 			);
@@ -1127,8 +1126,8 @@ function UserReports() {
 			);
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
-					dataItem.loadingdetails.transportationcost
-						? dataItem.loadingdetails.transportationcost
+					dataItem.boardingdetails.partyrate
+						? dataItem.boardingdetails.partyrate
 						: 'N/A'
 				}</td>`
 			);
@@ -1232,8 +1231,8 @@ function UserReports() {
 			);
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
-					dataItem.loadingdetails.transportationcost
-						? dataItem.loadingdetails.transportationcost
+					dataItem.boardingdetails.partyrate
+						? dataItem.boardingdetails.partyrate
 						: 'N/A'
 				}</td>`
 			);
@@ -1532,8 +1531,8 @@ function UserReports() {
 					  )
 					: 'N/A',
 			'Transportation Cost':
-				invoice.loadingdetails && invoice.loadingdetails.transportationcost
-					? invoice.loadingdetails.transportationcost
+				invoice.loadingdetails && invoice.boardingdetails.partyrate
+					? invoice.boardingdetails.partyrate
 					: 'N/A',
 			'Company Name':
 				invoice.companydetails && invoice.companydetails.companyname
@@ -1576,8 +1575,8 @@ function UserReports() {
 					  )
 					: 'N/A',
 			'Transportation Cost':
-				invoice.loadingdetails && invoice.loadingdetails.transportationcost
-					? invoice.loadingdetails.transportationcost
+				invoice.loadingdetails && invoice.boardingdetails.partyrate
+					? invoice.boardingdetails.partyrate
 					: 'N/A',
 			'Loading Date':
 				invoice.boardingdetails && invoice.boardingdetails.dateofloading
@@ -1643,8 +1642,8 @@ function UserReports() {
 					? invoice.invoicedetails.invoiceno
 					: 'N/A',
 			'Transportation Cost':
-				invoice.loadingdetails && invoice.loadingdetails.transportationcost
-					? invoice.loadingdetails.transportationcost
+				invoice.loadingdetails && invoice.boardingdetails.partyrate
+					? invoice.boardingdetails.partyrate
 					: 'N/A',
 			'Driver Number':
 				invoice.vehicledetails && invoice.vehicledetails.drivernumber
@@ -1684,8 +1683,8 @@ function UserReports() {
 					  )
 					: 'N/A',
 			'Transportation Cost':
-				invoice.loadingdetails && invoice.loadingdetails.transportationcost
-					? invoice.loadingdetails.transportationcost
+				invoice.loadingdetails && invoice.boardingdetails.partyrate
+					? invoice.boardingdetails.partyrate
 					: 'N/A',
 			'Vehicle Model':
 				invoice.vehicledetails && invoice.vehicledetails.vechiclemodel
@@ -2121,8 +2120,8 @@ function UserReports() {
 															</td>
 															<td className='reports-data-body-table-item-body-row-item'>
 																{invoice.loadingdetails &&
-																invoice.loadingdetails.transportationcost
-																	? invoice.loadingdetails.transportationcost
+																invoice.boardingdetails.partyrate
+																	? invoice.boardingdetails.partyrate
 																	: 'N/A'}
 															</td>
 															{/*
@@ -2133,8 +2132,8 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 															</td>
 															 <td className='reports-data-body-table-item-body-row-item'>
 																{invoice.loadingdetails &&
-																invoice.loadingdetails.transportationcost
-																	? invoice.loadingdetails.transportationcost
+																invoice.boardingdetails.partyrate
+																	? invoice.boardingdetails.partyrate
 																	: 'N/A'}
 															</td> */}
 															<td className='reports-data-body-table-item-body-row-item'>
@@ -2143,7 +2142,7 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 																	.transportationcost === 'number'
 																	? (
 																			item.itemquantity *
-																			invoice.loadingdetails.transportationcost
+																			invoice.boardingdetails.partyrate
 																	  ).toFixed(2)
 																	: 'N/A'}
 															</td>
@@ -2351,8 +2350,8 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													</td>
 													<td className='reports-data-body-table-load-body-row-item'>
 														{invoice.loadingdetails &&
-														invoice.loadingdetails.transportationcost
-															? invoice.loadingdetails.transportationcost
+														invoice.boardingdetails.partyrate
+															? invoice.boardingdetails.partyrate
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-load-body-row-item'>
@@ -2475,8 +2474,8 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-day-body-row-item'>
-														{invoice.loadingdetails.transportationcost
-															? invoice.loadingdetails.transportationcost
+														{invoice.boardingdetails.partyrate
+															? invoice.boardingdetails.partyrate
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-day-body-row-item'>
@@ -2723,8 +2722,8 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-day-body-row-item'>
-														{invoice.loadingdetails.transportationcost
-															? invoice.loadingdetails.transportationcost
+														{invoice.boardingdetails.partyrate
+															? invoice.boardingdetails.partyrate
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-load-body-row-item'>
@@ -2860,8 +2859,8 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													</td>
 
 													<td className='reports-data-body-table-day-body-row-item'>
-														{invoice.loadingdetails.transportationcost
-															? invoice.loadingdetails.transportationcost
+														{invoice.boardingdetails.partyrate
+															? invoice.boardingdetails.partyrate
 															: 'N/A'}
 													</td>
 

@@ -129,6 +129,7 @@ function UserCreateInvoice() {
 			dateofloading: getTodayDate(),
 			// watermark: '',
 			partyref: '',
+			partyrate: '',
 		},
 		loadingdetails: {
 			startstate: '',
@@ -177,7 +178,7 @@ function UserCreateInvoice() {
 		// Inserting a space after the next 2 characters
 		value = value.substring(0, 7) + ' ' + value.substring(7);
 
-		console.log(value);
+		// console.log(value);
 
 		setDataToSend((prevData) => ({
 			...prevData,
@@ -576,6 +577,7 @@ function UserCreateInvoice() {
 			boardingdetails: {
 				...prevData.boardingdetails,
 				partyref: selectedParty.partyrefno,
+				partyrate: selectedParty.partyrate,
 			},
 		}));
 		setSelectedParty(selectedParty);
@@ -1553,6 +1555,35 @@ function UserCreateInvoice() {
 							{/* <div style={{ display: 'flex', flexDirection: 'column' }}> */}
 							<label
 								className='admin-create-invoice-form-label'
+								htmlFor='Party Ref.'
+							>
+								Party Ref.
+							</label>
+							<br />
+
+							<Select
+								className='admin-create-invoice-form-input-v'
+								id='partyid'
+								name='partyid'
+								placeholder='Select Party'
+								// value={{
+								// 	value: selectedBuyer._id,
+								// 	label: selectedBuyer.buyercompanyname,
+								// }}
+								required
+								onChange={handleSelectChangeParty}
+								options={parties.map((party) => ({
+									value: party._id,
+									label: party.partyname,
+								}))}
+							/>
+
+							{/* </div> */}
+						</div>
+						<div className='admin-create-invoice-form-div'>
+							{/* <div style={{ display: 'flex', flexDirection: 'column' }}> */}
+							<label
+								className='admin-create-invoice-form-label'
 								htmlFor='transportationcost'
 							>
 								Transportation Cost
@@ -1565,9 +1596,9 @@ function UserCreateInvoice() {
 								type='text'
 								required
 								disabled
-								value={`${dataToSend.loadingdetails.transportationcost}`}
+								value={`${dataToSend.boardingdetails.partyrate}`}
 								onChange={(e) =>
-									handleChange(e, 'loadingdetails', 'transportationcost')
+									handleChange(e, 'boardingdetails', 'partyrate')
 								}
 								readOnly
 							/>
@@ -1616,55 +1647,6 @@ function UserCreateInvoice() {
 								}
 								disabled
 							/>
-						</div>
-
-						<div className='admin-create-invoice-form-div'>
-							{/* <div style={{ display: 'flex', flexDirection: 'column' }}> */}
-							<label
-								className='admin-create-invoice-form-label'
-								htmlFor='Party Ref.'
-							>
-								Party Ref.
-							</label>
-							<br />
-							{/* <input
-								className='admin-create-invoice-form-input-v'
-								id='partyref'
-								name='partyref'
-								type='text'
-								required
-								onChange={(e) =>
-									handleChange(
-										{
-											...e,
-											target: {
-												...e.target,
-												value: e.target.value.toUpperCase(),
-											},
-										},
-										'boardingdetails',
-										'partyref'
-									)
-								}
-							/> */}
-							<Select
-								className='admin-create-invoice-form-input-v'
-								id='partyid'
-								name='partyid'
-								placeholder='Select Party'
-								// value={{
-								// 	value: selectedBuyer._id,
-								// 	label: selectedBuyer.buyercompanyname,
-								// }}
-								required
-								onChange={handleSelectChangeParty}
-								options={parties.map((party) => ({
-									value: party._id,
-									label: party.partyname,
-								}))}
-							/>
-
-							{/* </div> */}
 						</div>
 					</div>
 					<div className='admin-create-invoice-data-submit'>

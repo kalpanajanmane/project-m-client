@@ -42,6 +42,9 @@ function UserLoadingManage() {
 	const partyValidationSchema = Yup.object().shape({
 		partyname: Yup.string().required('Party Name is required'),
 		partyrefno: Yup.string().required('Party Code is required'),
+		partyrate: Yup.number()
+			.required('Rate is required')
+			.positive('Rate must be positive'),
 	});
 
 	const formik = useFormik({
@@ -71,6 +74,7 @@ function UserLoadingManage() {
 		initialValues: {
 			partyname: '',
 			partyrefno: '',
+			partyrate: '',
 		},
 		partyValidationSchema: partyValidationSchema,
 		onSubmit: (values) => {
@@ -175,6 +179,7 @@ function UserLoadingManage() {
 		partyFormik.setValues({
 			partyname: selectedParty.partyname,
 			partyrefno: selectedParty.partyrefno,
+			partyrate: selectedParty.partyrate,
 		});
 	};
 	const handleLoadingDelete = (loadingDeleteId) => {
@@ -773,6 +778,9 @@ function UserLoadingManage() {
 									<th className='admin-party-ref-manage-data-table-header'>
 										Party Code
 									</th>
+									<th className='admin-party-ref-manage-data-table-header'>
+										Party Rate
+									</th>
 									{/*
 									<th className='admin-party-ref-manage-data-table-header'>
 										Action
@@ -794,6 +802,9 @@ function UserLoadingManage() {
 										</td>
 										<td className='admin-party-ref-manage-data-table-data'>
 											{party.partyrefno}
+										</td>
+										<td className='admin-party-ref-manage-data-table-data'>
+											{party.partyrate ? party.partyrate : 'N/A'}
 										</td>
 										{/*
 										<td className='admin-party-ref-manage-data-table-data'>
@@ -880,6 +891,21 @@ function UserLoadingManage() {
 									{partyFormik.errors.partyrefno}
 								</div>
 							)}
+						<input
+							type='number'
+							className='admin-party-ref-manage-form-input-high'
+							placeholder='Party Rate'
+							required
+							name='partyrate'
+							value={partyFormik.values.partyrate}
+							onChange={partyFormik.handleChange}
+							onBlur={partyFormik.handleBlur}
+						/>
+						{partyFormik.touched.partyrate && partyFormik.errors.partyrate && (
+							<div className='error-message'>
+								{partyFormik.errors.partyrate}
+							</div>
+						)}
 						<br />
 						<button
 							type='submit'

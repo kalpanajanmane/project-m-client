@@ -1533,6 +1533,35 @@ function AdminCreateInvoice() {
 							{/* <div style={{ display: 'flex', flexDirection: 'column' }}> */}
 							<label
 								className='admin-create-invoice-form-label'
+								htmlFor='Party Ref.'
+							>
+								Party Ref.
+							</label>
+							<br />
+
+							<Select
+								className='admin-create-invoice-form-input-v'
+								id='partyid'
+								name='partyid'
+								placeholder='Select Party'
+								// value={{
+								// 	value: selectedBuyer._id,
+								// 	label: selectedBuyer.buyercompanyname,
+								// }}
+								required
+								onChange={handleSelectChangeParty}
+								options={parties.map((party) => ({
+									value: party._id,
+									label: party.partyname,
+								}))}
+							/>
+
+							{/* </div> */}
+						</div>
+						<div className='admin-create-invoice-form-div'>
+							{/* <div style={{ display: 'flex', flexDirection: 'column' }}> */}
+							<label
+								className='admin-create-invoice-form-label'
 								htmlFor='transportationcost'
 							>
 								Transportation Cost
@@ -1596,36 +1625,6 @@ function AdminCreateInvoice() {
 								}
 								disabled
 							/>
-						</div>
-
-						<div className='admin-create-invoice-form-div'>
-							{/* <div style={{ display: 'flex', flexDirection: 'column' }}> */}
-							<label
-								className='admin-create-invoice-form-label'
-								htmlFor='Party Ref.'
-							>
-								Party Ref.
-							</label>
-							<br />
-
-							<Select
-								className='admin-create-invoice-form-input-v'
-								id='partyid'
-								name='partyid'
-								placeholder='Select Party'
-								// value={{
-								// 	value: selectedBuyer._id,
-								// 	label: selectedBuyer.buyercompanyname,
-								// }}
-								required
-								onChange={handleSelectChangeParty}
-								options={parties.map((party) => ({
-									value: party._id,
-									label: party.partyname,
-								}))}
-							/>
-
-							{/* </div> */}
 						</div>
 					</div>
 					<div className='admin-create-invoice-data-submit'>

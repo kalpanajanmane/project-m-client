@@ -29,9 +29,9 @@ function UserLoadingManage() {
 	const validationSchema = Yup.object().shape({
 		startstate: Yup.string().required('Start State is required'),
 		endstate: Yup.string().required('End State is required'),
-		rate: Yup.number()
-			.required('Rate is required')
-			.positive('Rate must be positive'),
+		// rate: Yup.number()
+		// 	.required('Rate is required')
+		// 	.positive('Rate must be positive'),
 	});
 
 	const stateValidationSchema = Yup.object().shape({
@@ -51,7 +51,7 @@ function UserLoadingManage() {
 		initialValues: {
 			startstate: '',
 			endstate: '',
-			rate: '',
+			// rate: '',
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
@@ -162,7 +162,7 @@ function UserLoadingManage() {
 		formik.setValues({
 			startstate: selectedLoading.startstate,
 			endstate: selectedLoading.endstate,
-			rate: selectedLoading.rate,
+			// rate: selectedLoading.rate,
 		});
 	};
 	const handleStateUpdate = (stateUpdateId) => {
@@ -414,9 +414,9 @@ function UserLoadingManage() {
 									<th className='admin-loading-manage-data-table-header'>
 										End State
 									</th>
-									<th className='admin-loading-manage-data-table-header'>
+									{/* <th className='admin-loading-manage-data-table-header'>
 										Rate
-									</th>
+									</th> */}
 									{/*
 									<th className='admin-loading-manage-data-table-header'>
 										Action
@@ -439,9 +439,9 @@ function UserLoadingManage() {
 										<td className='admin-loading-manage-data-table-data'>
 											{loading.endstate}
 										</td>
-										<td className='admin-loading-manage-data-table-data'>
+										{/* <td className='admin-loading-manage-data-table-data'>
 											{loading.rate}
-										</td>
+										</td> */}
 										{/*
 										<td className='admin-loading-manage-data-table-data'>
 											<button
@@ -536,7 +536,7 @@ function UserLoadingManage() {
 						{formik.touched.endstate && formik.errors.endstate && (
 							<div className='error-message'>{formik.errors.endstate}</div>
 						)}
-						<input
+						{/* <input
 							type='number'
 							className='admin-loading-manage-form-input-high'
 							placeholder='Rate'
@@ -548,7 +548,7 @@ function UserLoadingManage() {
 						/>
 						{formik.touched.rate && formik.errors.rate && (
 							<div className='error-message'>{formik.errors.rate}</div>
-						)}
+						)} */}
 						<br />
 						<button
 							type='submit'

@@ -21,8 +21,10 @@ function AdminLoadingManage() {
 	const [selectedLoadingId, setSelectedLoadingId] = useState(null);
 	const [states, setStates] = useState([]);
 	const [parties, setParties] = useState([]);
+	const [partiesForDelete, setPartiesForDelete] = useState([]);
 	const [selectedStateId, setSelectedStateId] = useState(null);
 	const [selectedPartyId, setSelectedPartyId] = useState(null);
+	const [selectedParties, setSelectedParties] = useState([]);
 	const [isGroupDeleteClicked, setIsGroupDeleteClicked] = useState(false);
 	const API = process.env.REACT_APP_API;
 
@@ -383,6 +385,69 @@ function AdminLoadingManage() {
 		}
 	};
 
+	const handleBuyerSelection = (partyId) => {
+		// console.log(partyId);
+		const updatedSelectedParties = selectedParties.includes(partyId)
+			? selectedParties.filter((id) => id !== partyId)
+			: [...selectedParties, partyId];
+		setSelectedParties(updatedSelectedParties);
+	};
+
+	const handleSelectAll = () => {
+		if (selectedParties.length === displayedPartiesSearch.length) {
+			setSelectedParties([]);
+		} else {
+			const allPartyIds = displayedPartiesSearch.map((party) => party._id);
+			setSelectedParties(allPartyIds);
+		}
+	};
+
+	const handleGroupDeleteClick = () => {
+		setIsGroupDeleteClicked(true);
+	};
+
+	const handleGroupDelete = () => {
+		const confirmDelete = window.confirm(
+			'Are you sure you want to delete selected parties?'
+		);
+
+		if (confirmDelete) {
+			// console.log('Confirm delete');
+
+			// Create an array of promises for each buyer deletion
+			const deletePromises = selectedParties.map(async (partyId) => {
+				try {
+					await axios.delete(`${API}party/${partyId}`);
+					return partyId;
+				} catch (error) {
+					console.error(`Error deleting party ${partyId}:`, error);
+					return null;
+				}
+			});
+
+			// Wait for all promises to resolve
+			Promise.all(deletePromises)
+				.then((deletedParties) => {
+					// Filter out null values (failed deletions) and update the state
+					const updatedParties = parties.filter(
+						(party) => !deletedParties.includes(party._id)
+					);
+					setPartiesForDelete(updatedParties);
+					toast.success('Selected parties deleted successfully');
+				})
+				.catch((error) => {
+					console.error('Error deleting selected parties:', error);
+					toast.error('Error deleting selected parties. Please try again.');
+				});
+		}
+		setTimeout(() => {
+			// Refresh the page
+			window.location.reload();
+		}, 2000);
+
+		setIsGroupDeleteClicked(false);
+	};
+
 	return (
 		<div
 			style={{
@@ -724,7 +789,7 @@ function AdminLoadingManage() {
 							>
 								Upload File
 							</button>
-							{/* <div className='delete-btn-div'>
+							<div className='delete-btn-div'>
 								<button
 									style={{
 										display: isGroupDeleteClicked ? 'none' : 'inline-block',
@@ -743,7 +808,7 @@ function AdminLoadingManage() {
 										Delete Selected
 									</button>
 								)}
-							</div> */}
+							</div>
 						</div>
 					</div>
 					<input
@@ -772,6 +837,18 @@ function AdminLoadingManage() {
 									<th className='admin-party-ref-manage-data-table-header'>
 										Action
 									</th>
+									{isGroupDeleteClicked && (
+										<th className='admin-buyer-manage-data-table-header'>
+											<input
+												type='checkbox'
+												checked={
+													selectedParties.length ===
+													displayedPartiesSearch.length
+												}
+												onChange={() => handleSelectAll()}
+											/>
+										</th>
+									)}
 								</tr>
 							</thead>
 							<tbody className='admin-party-ref-manage-data-table-body'>
@@ -828,6 +905,15 @@ function AdminLoadingManage() {
 												/>
 											</button>
 										</td>
+										{isGroupDeleteClicked && (
+											<td className='admin-buyer-manage-data-table-data'>
+												<input
+													type='checkbox'
+													checked={selectedParties.includes(party._id)}
+													onChange={() => handleBuyerSelection(party._id)}
+												/>
+											</td>
+										)}
 									</tr>
 								))}
 							</tbody>

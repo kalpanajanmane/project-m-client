@@ -21,6 +21,7 @@ function AdminCreateInvoice() {
 	const [view, setView] = useState(false);
 	const [url, setUrl] = useState([]);
 	const [pdfUrl, setPdfUrl] = useState([]);
+	const [preSignedUrl, setPreSignedUrl] = useState([]);
 
 	const [companies, setCompanies] = useState([]);
 	const [selectedCompany, setSelectedCompany] = useState({});
@@ -209,6 +210,7 @@ function AdminCreateInvoice() {
 					toast.success('Invoice created successfully');
 					setUrl(data._id);
 					setPdfUrl(data.pdfUrl);
+					setPreSignedUrl(data.preSignedUrl);
 
 					// Introduce a delay of 4 seconds before setting setIsModalOpen
 					setTimeout(() => {
@@ -596,7 +598,7 @@ function AdminCreateInvoice() {
 	// };
 
 	const handleCopy = () => {
-		const linkToCopy = `${pdfUrl}`; // Replace with the actual link or variable
+		const linkToCopy = `${preSignedUrl}`; // Replace with the actual link or variable
 
 		try {
 			copy(linkToCopy);

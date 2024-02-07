@@ -7,13 +7,14 @@ import './AdminInvoiceManager.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const InvoiceAccordion = ({ invoice, code, pdfUrl }) => {
+const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 	const [isAccordionOpen, setAccordionOpen] = useState(false);
 	const navigate = useNavigate();
 	const API = process.env.REACT_APP_API;
 	const selectedInvoiceId = invoice;
 	const selectedCode = code;
 	const selectedPdfUrl = pdfUrl;
+	const selectedPreSignedUrll = preSignedUrl;
 	// console.log(selectedPdfUrl);
 
 	const pdfUrlOriginal = `${API}download/${selectedInvoiceId}`;
@@ -46,7 +47,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl }) => {
 	// };
 
 	const handleOriginalCopy = () => {
-		const linkToCopy = `${selectedPdfUrl}`;
+		const linkToCopy = `${selectedPreSignedUrll}`;
 		try {
 			copy(linkToCopy);
 			// alert('Link copied to clipboard!');

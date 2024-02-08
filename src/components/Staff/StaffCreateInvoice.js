@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../Admin/AdminCreateInvoice.css';
+import './StaffCreateInvoice.css';
 import background from '../images/Desktop.png';
 import A from '../images/A.png';
 import D from '../images/D.png';
@@ -7,7 +7,7 @@ import C from '../images/C.png';
 import Close from '../images/cross_icon.jpg';
 import StaffNavbar from './StaffNavbar';
 import Select from 'react-select';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
@@ -16,12 +16,14 @@ import copy from 'clipboard-copy';
 import { useStaffAuth } from './StaffAuth';
 import axios from 'axios';
 
-function StaffCreateInvoice() {
+function AdminCreateInvoice() {
 	const auth = useStaffAuth();
 	const navigate = useNavigate();
 	const [view, setView] = useState(false);
 	const [url, setUrl] = useState([]);
 	const [pdfUrl, setPdfUrl] = useState([]);
+	const [preSignedUrl, setPreSignedUrl] = useState([]);
+
 	const [companies, setCompanies] = useState([]);
 	const [selectedCompany, setSelectedCompany] = useState({});
 
@@ -124,7 +126,7 @@ function StaffCreateInvoice() {
 			invoiceid: '',
 			invoiceno: '',
 			invoicedate: getTodayDate(),
-			invoicemakername: auth.staff.staffname,
+			invoicemakername: auth.admin.adminname,
 		},
 		boardingdetails: {
 			dateofloading: getTodayDate(),
@@ -192,11 +194,9 @@ function StaffCreateInvoice() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// console.log(dataToSend);
 
 		// Check the length of items in dataToSend
 		if (dataToSend && dataToSend.consignmentdetails.itemdetails.length >= 1) {
-			// console.log(dataToSend);
 			try {
 				const response = await fetch(`${API}invoice`, {
 					method: 'POST',
@@ -211,6 +211,7 @@ function StaffCreateInvoice() {
 					toast.success('Invoice created successfully');
 					setUrl(data._id);
 					setPdfUrl(data.pdfUrl);
+					setPreSignedUrl(data.preSignedUrl);
 
 					// Introduce a delay of 4 seconds before setting setIsModalOpen
 					setTimeout(() => {
@@ -225,7 +226,6 @@ function StaffCreateInvoice() {
 			}
 		} else {
 			// Show an alert if the length is not greater than 1
-			// alert('Please add items before creating invoice.');
 			toast.info(
 				'Please add Items in Consignment Details before creating invoice.'
 			);
@@ -584,10 +584,6 @@ function StaffCreateInvoice() {
 		setSelectedParty(selectedParty);
 	};
 
-	// const openPdfViewer = () => {
-	// 	navigate(`/pdf/${url}`);
-	// };
-
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const closePdfViewer = () => {
 		setIsModalOpen(false);
@@ -598,11 +594,11 @@ function StaffCreateInvoice() {
 	};
 
 	// const handleDownload = () => {
-	// 	window.location = `${API}download/${url}`;
+	// 	// window.location = `${pdfUrl}`;
 	// 	// console.log(url);
 	// };
 
-	        const [shortenedUrl, setShortenedUrl] = useState('');
+	const [shortenedUrl, setShortenedUrl] = useState('');
 
   const handleCopy = async () => {
     const requestData = {
@@ -827,22 +823,7 @@ function StaffCreateInvoice() {
 					</div>
 					<div className='admin-create-invoice-data'>
 						<h2 className='admin-create-invoice-subtitle'>BUYER DETAILS</h2>
-						{/* <Select
-							className='admin-create-invoice-select'
-							id='buyerid'
-							name='buyerid'
-							placeholder='Select Buyer'
-							// value={{
-							// 	value: selectedBuyer._id,
-							// 	label: selectedBuyer.buyercompanyname,
-							// }}
-							required
-							onChange={handleSelectChangeBuyer}
-							options={buyers.map((buyer) => ({
-								value: buyer._id,
-								label: buyer.buyercompanyname,
-							}))}
-						/> */}
+
 						<Select
 							className='admin-create-invoice-select'
 							id='buyerid'
@@ -1356,7 +1337,8 @@ function StaffCreateInvoice() {
 									<td className='admin-create-invoice-table-consigment-value'>
 										{item.itemname}
 									</td>
-									<td className='admin-create-invoice-table-consignment-value color'>
+
+									<td className='admin-create-invoice-table-consigment-value color'>
 										{item.itemdesc.substring(0, 10)}
 									</td>
 									<td className='admin-create-invoice-table-consigment-value'>
@@ -1691,12 +1673,6 @@ function StaffCreateInvoice() {
 										onClick={() => closePdfViewer()}
 									/>
 									<div className='modal-btn-div'>
-										{/* <button
-											className='modal-btn'
-											onClick={() => openPdfViewer()}
-										>
-											View Invoice
-										</button> */}
 										<button
 											type='button'
 											className='modal-btn'
@@ -1704,13 +1680,7 @@ function StaffCreateInvoice() {
 										>
 											View Invoice
 										</button>
-										{/* <button
-											className='modal-btn'
-											type='button'
-											onClick={handleDownload}
-										>
-											Download
-										</button> */}
+
 										<button
 											className='modal-btn'
 											type='button'
@@ -1761,4 +1731,4 @@ function StaffCreateInvoice() {
 	);
 }
 
-export default StaffCreateInvoice;
+export default AdminCreateInvoice;

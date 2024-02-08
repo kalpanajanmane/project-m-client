@@ -197,7 +197,7 @@ function StaffInvoiceManagement() {
 											>
 												View
 											</button> */}
-											<InvoiceAccordion
+											<StaffInvoiceAccordion
 												invoice={invoice._id}
 												pdfUrl={invoice.pdfUrl}
 												code={

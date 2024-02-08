@@ -192,7 +192,7 @@ function UserInvoiceManagement() {
 											>
 												View
 											</button> */}
-											<InvoiceAccordion
+											<UserInvoiceAccordion
 												invoice={invoice._id}
 												pdfUrl={invoice.pdfUrl}
 												code={

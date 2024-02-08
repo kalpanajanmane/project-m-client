@@ -200,6 +200,7 @@ function StaffInvoiceManagement() {
 											<StaffInvoiceAccordion
 												invoice={invoice._id}
 												pdfUrl={invoice.pdfUrl}
+												preSignedUrl={invoice.preSignedUrl}
 												code={
 													invoice.vehicledetails.drivernumber +
 													' ' +

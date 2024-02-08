@@ -16,7 +16,7 @@ const StaffInvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 	const selectedPdfUrl = pdfUrl;
 	const selectedPreSignedUrll = preSignedUrl;
 	 const [shortenedUrl, setShortenedUrl] = useState('');
-	// console.log(selectedPdfUrl);
+	//console.log(selectedPdfUrl);
 
 	const pdfUrlOriginal = `${API}download/${selectedInvoiceId}`;
 	const ViewURLOriginal = `https://docs.google.com/viewer?url=${encodeURIComponent(
@@ -50,8 +50,10 @@ const StaffInvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 	const handleOriginalCopy = async () => {
     const requestData = {
       url: selectedPreSignedUrll,
+	   
       workspace_id: 174477
-    };
+    }; console.log(url)
+		
 
     const options = {
       method: 'POST',
@@ -68,6 +70,7 @@ const StaffInvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
       const response = await axios.request(options);
       console.log(response.data);
       const fullUrl = response.data.full_url;
+	    console.log(fullUrl);
       setShortenedUrl(fullUrl);
       copy(fullUrl);
       toast.success('Link shortened and copied to clipboard!');

@@ -48,7 +48,6 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 	// };
 
 	const handleOriginalCopy = async () => {
-		console.log(selectedPreSignedUrll);
     const requestData = {
       url: selectedPreSignedUrll,
       workspace_id: 174477

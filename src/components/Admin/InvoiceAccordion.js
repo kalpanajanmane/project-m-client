@@ -15,6 +15,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 	const selectedCode = code;
 	const selectedPdfUrl = pdfUrl;
 	const selectedPreSignedUrll = preSignedUrl;
+	 const [shortenedUrl, setShortenedUrl] = useState('');
 	// console.log(selectedPdfUrl);
 
 	const pdfUrlOriginal = `${API}download/${selectedInvoiceId}`;

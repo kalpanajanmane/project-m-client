@@ -10,7 +10,7 @@ import StaffNavbar from './StaffNavbar';
 // import Close from '../images/cross_icon.jpg';
 // import copy from 'clipboard-copy';
 import { useStaffAuth } from './StaffAuth';
-import StaffInvoiceAccordion from './StaffInvoiceAccordion';
+import InvoiceAccordion from '../Admin/InvoiceAccordion';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -197,7 +197,7 @@ function StaffInvoiceManagement() {
 											>
 												View
 											</button> */}
-											<StaffInvoiceAccordion
+											<InvoiceAccordion
 												invoice={invoice._id}
 												pdfUrl={invoice.pdfUrl}
 												code={

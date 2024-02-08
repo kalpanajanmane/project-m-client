@@ -9,7 +9,7 @@ import UserNavbar from './UserNavbar';
 // import { useNavigate } from 'react-router-dom';
 // import Close from '../images/cross_icon.jpg';
 // import copy from 'clipboard-copy';
-import InvoiceAccordion from '../Admin/InvoiceAccordion';
+import UserInvoiceAccordion from './UserInvoiceAccordion';
 import { useUserAuth } from './UserAuth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -192,9 +192,10 @@ function UserInvoiceManagement() {
 											>
 												View
 											</button> */}
-											<InvoiceAccordion
+											<UserInvoiceAccordion
 												invoice={invoice._id}
 												pdfUrl={invoice.pdfUrl}
+												preSignedUrl={invoice.preSignedUrl}
 												code={
 													invoice.vehicledetails.drivernumber +
 													' ' +

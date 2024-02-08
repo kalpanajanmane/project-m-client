@@ -52,7 +52,7 @@ const StaffInvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
       url: selectedPreSignedUrll,
 	   
       workspace_id: 174477
-    }; console.log(url)
+    }; 
 		
 
     const options = {

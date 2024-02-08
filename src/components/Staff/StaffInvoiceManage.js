@@ -10,7 +10,7 @@ import StaffNavbar from './StaffNavbar';
 // import Close from '../images/cross_icon.jpg';
 // import copy from 'clipboard-copy';
 import { useStaffAuth } from './StaffAuth';
-import InvoiceAccordion from '../Admin/InvoiceAccordion';
+import StaffInvoiceAccordion from './StaffInvoiceAccordion';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

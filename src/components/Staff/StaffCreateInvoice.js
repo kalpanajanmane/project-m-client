@@ -126,7 +126,7 @@ function AdminCreateInvoice() {
 			invoiceid: '',
 			invoiceno: '',
 			invoicedate: getTodayDate(),
-			invoicemakername: auth.admin.adminname,
+			invoicemakername: auth.staff.staffname,
 		},
 		boardingdetails: {
 			dateofloading: getTodayDate(),

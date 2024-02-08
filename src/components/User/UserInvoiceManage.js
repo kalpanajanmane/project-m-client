@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../Admin/AdminInvoiceManager.css';
+import '../Admin/AdminInvoiceManage.css';
 import background from '../images/Desktop.png';
 // import ReactPaginate from 'react-paginate';
 import UserNavbar from './UserNavbar';

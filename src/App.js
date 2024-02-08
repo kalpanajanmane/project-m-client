@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AdminAuthProvider } from './components/Admin/AdminAuth';
 import ReqAdminAuth from './components/Admin/AdminReqAuth';
 import AdminLogin from './components/Admin/Adminlogin';
+import AdminPasswordChange from './components/Admin/AdminPasswordChange';
 import AdminDashboard from './components/Admin/Admindashboard';
 import { StaffAuthProvider } from './components/Staff/StaffAuth';
 import ReqStaffAuth from './components/Staff/StaffReqAuth';
@@ -59,6 +60,14 @@ function App() {
 				<AdminAuthProvider>
 					<Routes>
 						<Route path='/' element={<AdminLogin />} />
+						<Route
+							path='/adminpasswordchange'
+							element={
+								<ReqAdminAuth>
+									<AdminPasswordChange />
+								</ReqAdminAuth>
+							}
+						/>
 						<Route
 							path='/admindashboard'
 							element={

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Admindashboard.css';
 import background from '../images/Desktop.png';
 import gr from '../images/gr.png';
@@ -10,15 +10,23 @@ import ms from '../images/ms.png';
 import ad from '../images/ad.png';
 import vs from '../images/vs.png';
 import { useAdminAuth } from './AdminAuth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import AdminAccordion from './AdminAccordion';
 
 function Admindashboard() {
 	const auth = useAdminAuth();
 	const navigate = useNavigate();
 
+	const [isClicked, setIsClicked] = useState(false);
+
+	const handleClick = () => {
+		setIsClicked(!isClicked);
+	};
+
 	const handleLogout = () => {
 		auth.adminlogout();
 	};
+
 	return (
 		<div
 			style={{
@@ -33,16 +41,35 @@ function Admindashboard() {
 					<div className='admin-logout-box'>
 						<div className='admin-logout-container'>
 							<div className='admin-logout-button'>
-								<button
+								{/* <button
+									onClick={handleClick}
 									className='admin-logout-button-value'
-									onClick={handleLogout}
 								>
-									LOGOUT
+									{auth.admin.adminname}
 									<img className='admin-logout-icon' src={mu} alt='icon' />
 								</button>
-								<div className='active-user'>
-									ActiveAdmin: {auth.admin.adminname}
-								</div>
+								<div>
+									{isClicked && (
+										<div>
+											<div className='active-user'>
+												<Link
+													style={{ textDecoration: 'none', color: 'black' }}
+													to='/adminpasswordchange'
+												>
+													Change Password
+												</Link>
+											</div>
+											<div
+												type='button'
+												className='active-user'
+												onClick={handleLogout}
+											>
+												LOGOUT
+											</div>
+										</div>
+									)}
+								</div> */}
+								<AdminAccordion />
 							</div>
 						</div>
 					</div>

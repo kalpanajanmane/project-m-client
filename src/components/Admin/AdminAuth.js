@@ -10,7 +10,9 @@ const AdminAuthProvider = (props) => {
 		const storedAdmin = localStorage.getItem('admin');
 		return storedAdmin ? JSON.parse(storedAdmin) : null;
 	});
+
 	const [adminlist, setAdminlist] = useState([]);
+
 	const API = process.env.REACT_APP_API;
 
 	const saveAdminToLocalStorage = (admin) => {
@@ -18,8 +20,8 @@ const AdminAuthProvider = (props) => {
 		// console.log(admin);
 	};
 
-	const adminlogin = (adminname, adminemail, adminpassword) => {
-		const newAdmin = { adminname, adminemail, adminpassword };
+	const adminlogin = (_id, adminname, adminemail, adminpassword) => {
+		const newAdmin = { _id, adminname, adminemail, adminpassword };
 		setAdmin(newAdmin);
 		saveAdminToLocalStorage(newAdmin);
 	};

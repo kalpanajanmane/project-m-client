@@ -14,6 +14,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import copy from 'clipboard-copy';
 import { useUserAuth } from './UserAuth';
+import axios from 'axios';
 
 function UserCreateInvoice() {
 	const auth = useUserAuth();
@@ -601,19 +602,37 @@ function UserCreateInvoice() {
 	// 	// console.log(url);
 	// };
 
-	const handleCopy = () => {
-		const linkToCopy = `${pdfUrl}`; // Replace with the actual link or variable
+	        const [shortenedUrl, setShortenedUrl] = useState('');
 
-		try {
-			copy(linkToCopy);
-			// alert('Link copied to clipboard!');
-			toast.success('Link copied to clipboard!');
-		} catch (error) {
-			console.error('Unable to copy to clipboard.', error);
-			// alert('Error copying to clipboard. Please try again.');
-			toast.error('Error copying to clipboard. Please try again.');
-		}
-	};
+  const handleCopy = async () => {
+    const requestData = {
+      url: preSignedUrl,
+      workspace_id: 174477 // Adjust the workspace_id as needed
+    };
+
+    const options = {
+      method: 'POST',
+      url: 'https://app.linklyhq.com/api/v1/link?api_key=4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-csrf-token': 'HhdcLz0uDScPJw1ZFy4oPH0VMllxNyxozvncbT8BIlj3TMeH2skn9EgE'
+      },
+      data: requestData
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+      const fullUrl = response.data.full_url;
+      setShortenedUrl(fullUrl);
+      copy(fullUrl);
+      toast.success('Link shortened and copied to clipboard!');
+    } catch (error) {
+      console.error('Error shortening link:', error);
+      toast.error('Error shortening link. Please try again.');
+    }
+  };
 
 	const code =
 		dataToSend.vehicledetails.drivernumber +

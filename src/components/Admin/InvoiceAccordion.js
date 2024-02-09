@@ -17,6 +17,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 	const selectedPreSignedUrll = preSignedUrl;
 	 const [shortenedUrl, setShortenedUrl] = useState('');
 	// console.log(selectedPdfUrl);
+	const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 	const pdfUrlOriginal = `${API}download/${selectedInvoiceId}`;
 	const ViewURLOriginal = `https://docs.google.com/viewer?url=${encodeURIComponent(
@@ -40,7 +41,18 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 	// };
 
 	const handleView = () => {
-		window.open(selectedPdfUrl);
+		if (isMobile) {
+	const newWindow = window.open();
+    const newIframe = newWindow.document.createElement('iframe');
+    newIframe.src = `https://docs.google.com/viewer?url=${selectedPdfUrl}&embedded=true&toolbar=0`;
+    newIframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+	newIframe.style.width = '100%';
+	newIframe.style.height = '100%';
+    newWindow.document.body.appendChild(newIframe);
+	};
+	if (!isMobile) {
+		window.open(selectedPdfUrl)
+	}
 	};
 
 	// const handleInvoiceDownload = () => {

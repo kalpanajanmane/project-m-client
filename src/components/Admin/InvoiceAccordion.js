@@ -65,8 +65,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 			const firstResponse = await axios.post('https://app.linklyhq.com/api/v1/link?api_key=4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D', {
 				url: selectedPreSignedUrll,
 				workspace_id: 174477,
-				expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString(),
-				expiry_destination: 'https://raw.githubusercontent.com/AJ-ES/project-m-client/master/src/components/images/link-expiry.png'
+				expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString()
 			});
 			console.log(firstResponse.data);
 			const fullUrl = firstResponse.data.full_url;
@@ -75,8 +74,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 			const secondResponse = await axios.post('https://app.linklyhq.com/api/v1/link?api_key=4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D', {
 				url: `https://docs.google.com/viewer?url=${encodeURIComponent(fullUrl)}&embedded=true`,
 				workspace_id: 174477,
-				expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString(),
-				
+				expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString()
 			});
 			console.log(secondResponse.data);
 			const shortenedUrl = secondResponse.data.full_url;

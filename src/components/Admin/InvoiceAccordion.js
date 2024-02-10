@@ -126,6 +126,10 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 					.delete(`${API}invoice/${selectedInvoiceId}`)
 					.then((response) => {
 						toast.success('Invoice deleted successfully');
+						setTimeout(() => {
+							// Reload the page after successful deletion
+							window.location.reload();
+						}, 2000);
 					})
 					.catch((error) => {
 						console.error('Error deleting invoice:', error);

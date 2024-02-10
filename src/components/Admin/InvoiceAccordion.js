@@ -15,7 +15,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 	const selectedCode = code;
 	const selectedPdfUrl = pdfUrl;
 	const selectedPreSignedUrll = preSignedUrl;
-	 const [shortenedUrl, setShortenedUrl] = useState('');
+	const [shortenedUrl, setShortenedUrl] = useState('');
 	// console.log(selectedPdfUrl);
 	const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -42,17 +42,17 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 
 	const handleView = () => {
 		if (isMobile) {
-	const newWindow = window.open();
-    const newIframe = newWindow.document.createElement('iframe');
-    newIframe.src = `https://docs.google.com/viewer?url=${selectedPdfUrl}&embedded=true&toolbar=0`;
-    newIframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-	newIframe.style.width = '100%';
-	newIframe.style.height = '100%';
-    newWindow.document.body.appendChild(newIframe);
-	};
-	if (!isMobile) {
-		window.open(selectedPdfUrl)
-	}
+			const newWindow = window.open();
+			const newIframe = newWindow.document.createElement('iframe');
+			newIframe.src = `https://docs.google.com/viewer?url=${selectedPdfUrl}&embedded=true&toolbar=0`;
+			newIframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+			newIframe.style.width = '100%';
+			newIframe.style.height = '100%';
+			newWindow.document.body.appendChild(newIframe);
+		}
+		if (!isMobile) {
+			window.open(selectedPdfUrl);
+		}
 	};
 
 	// const handleInvoiceDownload = () => {
@@ -62,23 +62,35 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 	const handleOriginalCopy = async () => {
 		try {
 			// First request to obtain fullUrl
-			const firstResponse = await axios.post('https://app.linklyhq.com/api/v1/link?api_key=4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D', {
-				url: selectedPreSignedUrll,
-				workspace_id: 174477,
-				expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString()
-			});
+			const firstResponse = await axios.post(
+				'https://app.linklyhq.com/api/v1/link?api_key=4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D',
+				{
+					url: selectedPreSignedUrll,
+					workspace_id: 174477,
+					expiry_datetime: new Date(
+						Date.now() + 6 * 60 * 60 * 1000
+					).toISOString(),
+				}
+			);
 			console.log(firstResponse.data);
 			const fullUrl = firstResponse.data.full_url;
-	
+
 			// Second request to shorten the fullUrl
-			const secondResponse = await axios.post('https://app.linklyhq.com/api/v1/link?api_key=4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D', {
-				url: `https://docs.google.com/viewer?url=${encodeURIComponent(fullUrl)}&embedded=true`,
-				workspace_id: 174477,
-				expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString()
-			});
+			const secondResponse = await axios.post(
+				'https://app.linklyhq.com/api/v1/link?api_key=4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D',
+				{
+					url: `https://docs.google.com/viewer?url=${encodeURIComponent(
+						fullUrl
+					)}&embedded=true`,
+					workspace_id: 174477,
+					expiry_datetime: new Date(
+						Date.now() + 6 * 60 * 60 * 1000
+					).toISOString(),
+				}
+			);
 			console.log(secondResponse.data);
 			const shortenedUrl = secondResponse.data.full_url;
-	
+
 			// Copy the shortened URL
 			copy(shortenedUrl);
 			toast.success('Shortened link copied to clipboard!');
@@ -87,7 +99,6 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 			toast.error('Error generating or copying the shortened link.');
 		}
 	};
-	
 
 	const handleCodeCopy = () => {
 		const code = selectedCode;
@@ -100,6 +111,28 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 			console.error('Unable to copy to clipboard.', error);
 			// alert('Error copying to clipboard. Please try again.');
 			toast.error('Error copying to clipboard. Please try again.');
+		}
+	};
+
+	const handleDelete = () => {
+		// console.log('delete');
+		const confirmDelete = window.confirm(
+			"Are you sure, you want to Delete Invoice?\n\nNote: Once deleted can't be recovered..."
+		);
+
+		if (confirmDelete) {
+			if (confirmDelete) {
+				axios
+					.delete(`${API}invoice/${selectedInvoiceId}`)
+					.then((response) => {
+						toast.success('Invoice deleted successfully');
+					})
+					.catch((error) => {
+						console.error('Error deleting invoice:', error);
+						toast.error('Error deleting invoice. Please try again.');
+					});
+				// console.log('deleted');
+			}
 		}
 	};
 
@@ -129,6 +162,9 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 								</button>
 								<button className='modal-btn-inv' onClick={handleCodeCopy}>
 									Copy Code
+								</button>
+								<button className='modal-btn-inv' onClick={handleDelete}>
+									Delete
 								</button>
 							</div>
 						</div>

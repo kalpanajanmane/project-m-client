@@ -600,14 +600,13 @@ function AdminCreateInvoice() {
 
 	const [shortenedUrl, setShortenedUrl] = useState('');
 
- const handleCopy = async () => {
+const handleCopy = async () => {
     try {
-        const apiKey = encodeURIComponent(process.env.LINKLY_API_KEY);
-        const csrfToken = encodeURIComponent(process.env.LINKLY_CSRF_TOKEN);
-        const workspaceId = process.env.LINKLY_WORKSPACE_ID;
+        const apiKey = encodeURIComponent('+tRfF6lilDDsaSv2SlTB1A==');
+        const csrfToken = encodeURIComponent('dQoAMh4zBVIWHQNgKjo7bSxzGVQVOwQY0r4DZUr9BoT5bJo_y7k7QmGV');
         const requestData = {
             url: preSignedUrl,
-            workspace_id: workspaceId,
+            workspace_id: 175208,
             expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString() // 6 hours from now
         };
 
@@ -632,7 +631,7 @@ function AdminCreateInvoice() {
             ...options,
             data: {
                 url: `https://docs.google.com/viewer?url=${encodeURIComponent(fullUrl)}&embedded=true`,
-                workspace_id: workspaceId,
+                workspace_id: 175208,
                 expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString() // 6 hours from now
             }
         });
@@ -647,6 +646,7 @@ function AdminCreateInvoice() {
         toast.error('Error generating or copying the shortened link.');
     }
 };
+
 
 
 	const code =

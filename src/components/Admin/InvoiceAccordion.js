@@ -61,9 +61,9 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 
 	const handleOriginalCopy = async () => {
     try {
-        const apiKey = encodeURIComponent(process.env.LINKLY_API_KEY);
-        const csrfToken = encodeURIComponent(process.env.LINKLY_CSRF_TOKEN);
-        const workspaceId = process.env.LINKLY_WORKSPACE_ID;
+        const apiKey = encodeURIComponent('4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D');
+        const csrfToken = encodeURIComponent('HhdcLz0uDScPJw1ZFy4oPH0VMllxNyxozvncbT8BIlj3TMeH2skn9EgE');
+        const workspaceId = 174477;
         const requestData = {
             url: selectedPreSignedUrll,
             workspace_id: workspaceId,
@@ -106,6 +106,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
         toast.error('Error generating or copying the shortened link.');
     }
 };
+
 
 
 	const handleCodeCopy = () => {

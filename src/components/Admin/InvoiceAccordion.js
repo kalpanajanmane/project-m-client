@@ -60,45 +60,53 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 	// };
 
 	const handleOriginalCopy = async () => {
-		try {
-			// First request to obtain fullUrl
-			const firstResponse = await axios.post(
-				'https://app.linklyhq.com/api/v1/link?api_key=4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D',
-				{
-					url: selectedPreSignedUrll,
-					workspace_id: 174477,
-					expiry_datetime: new Date(
-						Date.now() + 6 * 60 * 60 * 1000
-					).toISOString(),
-				}
-			);
-			console.log(firstResponse.data);
-			const fullUrl = firstResponse.data.full_url;
+    try {
+        const apiKey = encodeURIComponent(process.env.LINKLY_API_KEY);
+        const csrfToken = encodeURIComponent(process.env.LINKLY_CSRF_TOKEN);
+        const workspaceId = process.env.LINKLY_WORKSPACE_ID;
+        const requestData = {
+            url: selectedPreSignedUrll,
+            workspace_id: workspaceId,
+            expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString() // 6 hours from now
+        };
 
-			// Second request to shorten the fullUrl
-			const secondResponse = await axios.post(
-				'https://app.linklyhq.com/api/v1/link?api_key=4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D',
-				{
-					url: `https://docs.google.com/viewer?url=${encodeURIComponent(
-						fullUrl
-					)}&embedded=true`,
-					workspace_id: 174477,
-					expiry_datetime: new Date(
-						Date.now() + 6 * 60 * 60 * 1000
-					).toISOString(),
-				}
-			);
-			console.log(secondResponse.data);
-			const shortenedUrl = secondResponse.data.full_url;
+        const options = {
+            method: 'POST',
+            url: `https://app.linklyhq.com/api/v1/link?api_key=${apiKey}`,
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-csrf-token': csrfToken
+            },
+            data: requestData
+        };
 
-			// Copy the shortened URL
-			copy(shortenedUrl);
-			toast.success('Shortened link copied to clipboard!');
-		} catch (error) {
-			console.error('Error:', error);
-			toast.error('Error generating or copying the shortened link.');
-		}
-	};
+        // First request to obtain fullUrl
+        const firstResponse = await axios.request(options);
+        console.log(firstResponse.data);
+        const fullUrl = firstResponse.data.full_url;
+
+        // Second request to shorten the fullUrl
+        const secondResponse = await axios.request({
+            ...options,
+            data: {
+                url: `https://docs.google.com/viewer?url=${encodeURIComponent(fullUrl)}&embedded=true`,
+                workspace_id: workspaceId,
+                expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString() // 6 hours from now
+            }
+        });
+        console.log(secondResponse.data);
+        const shortenedUrl = secondResponse.data.full_url;
+
+        // Copy the shortened URL
+        copy(shortenedUrl);
+        toast.success('Shortened link copied to clipboard!');
+    } catch (error) {
+        console.error('Error:', error);
+        toast.error('Error generating or copying the shortened link.');
+    }
+};
+
 
 	const handleCodeCopy = () => {
 		const code = selectedCode;

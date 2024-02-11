@@ -61,11 +61,11 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
 
 	const handleOriginalCopy = async () => {
     try {
-        const apiKey = encodeURIComponent('4Btnug%2B%2B3emlEzFhnm7X8A%3D%3D');
-        const csrfToken = encodeURIComponent('HhdcLz0uDScPJw1ZFy4oPH0VMllxNyxozvncbT8BIlj3TMeH2skn9EgE');
-        const workspaceId = 174477;
+        const apiKey = encodeURIComponent('+tRfF6lilDDsaSv2SlTB1A==');
+        const csrfToken = encodeURIComponent('dQoAMh4zBVIWHQNgKjo7bSxzGVQVOwQY0r4DZUr9BoT5bJo_y7k7QmGV');
+        const workspaceId = 175208;
         const requestData = {
-            url: selectedPreSignedUrll,
+            url: preSignedUrl,
             workspace_id: workspaceId,
             expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString() // 6 hours from now
         };

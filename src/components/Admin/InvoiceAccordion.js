@@ -81,23 +81,8 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
             data: requestData
         };
 
-        // First request to obtain fullUrl
-        const firstResponse = await axios.request(options);
-        console.log(firstResponse.data);
-        const fullUrl = firstResponse.data.full_url;
-
-        // Second request to shorten the fullUrl
-        const secondResponse = await axios.request({
-            ...options,
-            data: {
-                url: `https://docs.google.com/viewer?url=${encodeURIComponent(fullUrl)}&embedded=true`,
-                workspace_id: workspaceId,
-                expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString() // 6 hours from now
-            }
-        });
-        console.log(secondResponse.data);
-        const shortenedUrl = secondResponse.data.full_url;
-
+        const Response = await axios.request(options);
+        const shortenedUrl = Response.data.full_url;
         // Copy the shortened URL
         copy(shortenedUrl);
         toast.success('Shortened link copied to clipboard!');
@@ -106,7 +91,6 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
         toast.error('Error generating or copying the shortened link.');
     }
 };
-
 
 
 	const handleCodeCopy = () => {

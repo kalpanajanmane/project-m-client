@@ -207,7 +207,7 @@ function AdminCreateInvoice() {
 				});
 				if (response.ok) {
 					const data = await response.json();
-					console.log('Invoice created successfully:', data);
+					console.log('Invoice created successfully:');
 					toast.success('Invoice created successfully');
 					setUrl(data._id);
 					setPdfUrl(data.pdfUrl);

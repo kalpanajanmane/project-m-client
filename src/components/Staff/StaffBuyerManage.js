@@ -194,7 +194,7 @@ function StaffBuyerManage() {
 				},
 			});
 
-			console.log('File uploaded successfully:', response.data);
+			console.log('File uploaded successfully:');
 			toast.success('File is Uploaded Successfully');
 			window.location.reload();
 		} catch (error) {

@@ -600,53 +600,40 @@ function AdminCreateInvoice() {
 
 	const [shortenedUrl, setShortenedUrl] = useState('');
 
- const handleCopy = async () => {
-    try {
-        const apiKey = encodeURIComponent('+tRfF6lilDDsaSv2SlTB1A==');
-        const csrfToken = encodeURIComponent('dQoAMh4zBVIWHQNgKjo7bSxzGVQVOwQY0r4DZUr9BoT5bJo_y7k7QmGV');
-        const requestData = {
-            url: preSignedUrl,
-            workspace_id: 175208,
-            expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString() // 6 hours from now
-        };
+const handleCopy = async () => {
+		try {
+			const apiKey = encodeURIComponent('+tRfF6lilDDsaSv2SlTB1A==');
+			const csrfToken = encodeURIComponent(
+				'dQoAMh4zBVIWHQNgKjo7bSxzGVQVOwQY0r4DZUr9BoT5bJo_y7k7QmGV'
+			);
+			const requestData = {
+				url: preSignedUrl,
+				workspace_id: 175208,
+				expiry_datetime: new Date(
+					Date.now() + 6 * 60 * 60 * 1000
+				).toISOString(), // 6 hours from now
+			};
 
-        const options = {
-            method: 'POST',
-            url: `https://app.linklyhq.com/api/v1/link?api_key=${apiKey}`,
-            headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-csrf-token': csrfToken
-            },
-            data: requestData
-        };
-
-        // First request to obtain fullUrl
-        const firstResponse = await axios.request(options);
-        console.log(firstResponse.data);
-        const fullUrl = firstResponse.data.full_url;
-
-        // Second request to shorten the fullUrl
-        const secondResponse = await axios.request({
-            ...options,
-            data: {
-                url: `https://docs.google.com/viewer?url=${encodeURIComponent(fullUrl)}&embedded=true`,
-                workspace_id: 175208,
-                expiry_datetime: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString() // 6 hours from now
-            }
-        });
-        console.log(secondResponse.data);
-        const shortenedUrl = secondResponse.data.full_url;
-
-        // Copy the shortened URL
-        copy(shortenedUrl);
-        toast.success('Shortened link copied to clipboard!');
-    } catch (error) {
-        console.error('Error:', error);
-        toast.error('Error generating or copying the shortened link.');
-    }
-};
-
+			const options = {
+				method: 'POST',
+				url: `https://app.linklyhq.com/api/v1/link?api_key=${apiKey}`,
+				headers: {
+					accept: 'application/json',
+					'Content-Type': 'application/json',
+					'x-csrf-token': csrfToken,
+				},
+				data: requestData,
+			};
+			const Response = await axios.request(options);
+			const shortenedUrl = Response.data.full_url;
+			// Copy the shortened URL
+			copy(shortenedUrl);
+			toast.success('Shortened link copied to clipboard!');
+		} catch (error) {
+			console.error('Error:', error);
+			toast.error('Error generating or copying the shortened link.');
+		}
+	};
 
 
 	const code =

@@ -249,7 +249,7 @@ function UserLoadingManage() {
 	};
 
 	const handleFormSubmit = (formData) => {
-		console.log(formData);
+		// console.log(formData);
 		if (selectedLoadingId) {
 			axios
 				.put(`${API}load/${selectedLoadingId}`, formData)

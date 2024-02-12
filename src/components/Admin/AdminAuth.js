@@ -45,7 +45,7 @@ const AdminAuthProvider = (props) => {
 				adminpassword: adminpassword,
 			})
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 			})
 			.catch((err) => {
 				console.log(err);

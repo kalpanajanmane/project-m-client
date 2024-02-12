@@ -1845,7 +1845,7 @@ function StaffReports() {
 				console.error('Error updating invoice:', error);
 				toast.error('Error In Updating the Invoice');
 			});
-		console.log(dataToSend);
+		// console.log(dataToSend);
 		setIsModalVisible(false);
 	};
 

@@ -86,7 +86,7 @@ function AdminStaffManage() {
 				.put(`${API}staff/${selectedStaffId}`, values)
 				.then((response) => {
 					// Handle successful update (if needed)
-					console.log('Staff member updated successfully:', response.data);
+					console.log('Staff member updated successfully:');
 					// Optionally, you can update the local state to reflect the changes
 					setStaffMembers((prevStaffMembers) =>
 						prevStaffMembers.map((staff) =>
@@ -105,7 +105,7 @@ function AdminStaffManage() {
 				.post(`${API}staff`, values)
 				.then((response) => {
 					// Handle successful creation (if needed)
-					console.log('Staff member created successfully:', response.data);
+					console.log('Staff member created successfully:');
 					// Optionally, you can update the local state to include the new staff member
 					setStaffMembers((prevStaffMembers) => [
 						...prevStaffMembers,

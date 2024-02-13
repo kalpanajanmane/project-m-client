@@ -1461,54 +1461,54 @@ function StaffReports() {
 
 	const exportMisReport = () => {
 		const filteredMisDataData = displayedMisInvoiceSearch.map((invoice) => ({
-			// Date:
-			// 	invoice.invoicedetails && invoice.invoicedetails.invoicedate
-			// 		? new Date(invoice.invoicedetails.invoicedate).toLocaleDateString(
-			// 				'en-GB',
-			// 				{
-			// 					day: '2-digit',
-			// 					month: '2-digit',
-			// 					year: 'numeric',
-			// 				}
-			// 		  )
-			// 		: 'N/A',
-			// 'Buyer Name':
-			// 	invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
-			// 		? invoice.buyerdetails.buyercompanyname
-			// 		: 'N/A',
-			// 'Agent Name':
-			// 	invoice.sellerdetails && invoice.sellerdetails.sellercompanyname
-			// 		? invoice.sellerdetails.sellercompanyname
-			// 		: 'N/A',
+			Date:
+				invoice.invoicedetails && invoice.invoicedetails.invoicedate
+					? new Date(invoice.invoicedetails.invoicedate).toLocaleDateString(
+							'en-GB',
+							{
+								day: '2-digit',
+								month: '2-digit',
+								year: 'numeric',
+							}
+					  )
+					: 'N/A',
+			'Buyer Name':
+				invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
+					? invoice.buyerdetails.buyercompanyname
+					: 'N/A',
+			'Agent Name':
+				invoice.sellerdetails && invoice.sellerdetails.sellercompanyname
+					? invoice.sellerdetails.sellercompanyname
+					: 'N/A',
 
-			// 'Load From':
-			// 	invoice.loadingdetails && invoice.loadingdetails.startpoint
-			// 		? invoice.loadingdetails.startpoint
-			// 		: 'N/A',
-			// Destination:
-			// 	invoice.loadingdetails && invoice.loadingdetails.endpoint
-			// 		? invoice.loadingdetails.endpoint
-			// 		: 'N/A',
-			// 'Motor vehicle No':
-			// 	invoice.vehicledetails && invoice.vehicledetails.vechiclenumber
-			// 		? invoice.vehicledetails.vechiclenumber
-			// 		: 'N/A',
-			// 'Total Quantity':
-			// 	invoice.consignmentdetails && invoice.consignmentdetails.itemdetails[0]
-			// 		? invoice.consignmentdetails.itemdetails[0].itemquantity
-			// 		: '0',
+			'Load From':
+				invoice.loadingdetails && invoice.loadingdetails.startpoint
+					? invoice.loadingdetails.startpoint
+					: 'N/A',
+			Destination:
+				invoice.loadingdetails && invoice.loadingdetails.endpoint
+					? invoice.loadingdetails.endpoint
+					: 'N/A',
+			'Motor vehicle No':
+				invoice.vehicledetails && invoice.vehicledetails.vechiclenumber
+					? invoice.vehicledetails.vechiclenumber
+					: 'N/A',
+			'Total Quantity':
+				invoice.consignmentdetails && invoice.consignmentdetails.itemdetails[0]
+					? invoice.consignmentdetails.itemdetails[0].itemquantity
+					: '0',
 			'Ref. Code':
 				invoice.boardingdetails && invoice.boardingdetails.partyref
 					? invoice.boardingdetails.partyref
 					: 'N/A',
-			// 'Bill Maker Name':
-			// 	invoice.invoicedetails && invoice.invoicedetails.invoicemakername
-			// 		? invoice.invoicedetails.invoicemakername
-			// 		: 'N/A',
-			// Rate:
-			// 	invoice.consignmentdetails && invoice.consignmentdetails.itemdetails[0]
-			// 		? invoice.consignmentdetails.itemdetails[0].itemprice
-			// 		: 'N/A',
+			'Bill Maker Name':
+				invoice.invoicedetails && invoice.invoicedetails.invoicemakername
+					? invoice.invoicedetails.invoicemakername
+					: 'N/A',
+			Rate:
+				invoice.consignmentdetails && invoice.consignmentdetails.itemdetails[0]
+					? invoice.consignmentdetails.itemdetails[0].itemprice
+					: 'N/A',
 		}));
 		setExportedData(filteredMisDataData);
 	};

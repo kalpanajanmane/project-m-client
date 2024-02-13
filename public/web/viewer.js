@@ -2139,9 +2139,9 @@
 
           eventBus._on("print", webViewerPrint);
 
-          eventBus._on("download", webViewerDownload);
+          // eventBus._on("download", webViewerDownload);
 
-          eventBus._on("save", webViewerSave);
+          // eventBus._on("save", webViewerSave);
 
           eventBus._on("firstpage", webViewerFirstPage);
 
@@ -2298,9 +2298,9 @@
 
           eventBus._off("print", webViewerPrint);
 
-          eventBus._off("download", webViewerDownload);
+          // eventBus._off("download", webViewerDownload);
 
-          eventBus._off("save", webViewerSave);
+          // eventBus._off("save", webViewerSave);
 
           eventBus._off("firstpage", webViewerFirstPage);
 

@@ -139,7 +139,7 @@ function AdminCreateInvoice() {
 			endstate: '',
 			startpoint: '',
 			endpoint: '',
-			transportationcost: '',
+			// transportationcost: '',
 		},
 	});
 
@@ -600,7 +600,7 @@ function AdminCreateInvoice() {
 
 	const [shortenedUrl, setShortenedUrl] = useState('');
 
-const handleCopy = async () => {
+	const handleCopy = async () => {
 		try {
 			const apiKey = encodeURIComponent('+tRfF6lilDDsaSv2SlTB1A==');
 			const csrfToken = encodeURIComponent(
@@ -634,8 +634,6 @@ const handleCopy = async () => {
 			toast.error('Error generating or copying the shortened link.');
 		}
 	};
-
-
 
 	const code =
 		dataToSend.vehicledetails.drivernumber +

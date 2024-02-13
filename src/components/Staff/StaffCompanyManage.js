@@ -14,12 +14,12 @@ import CompanyImage from '../images/addComapny.png';
 
 const validationSchema = Yup.object().shape({
 	companyname: Yup.string().required('Company Name is required'),
-	companygstno: Yup.string()
-		.required('GST No is required')
-		.matches(
-			/^[A-Z0-9]{15}$/,
-			'GST No must be 15 characters long and contain only uppercase letters and numerics'
-		),
+	// companygstno: Yup.string()
+	// 	.required('GST No is required')
+	// 	.matches(
+	// 		/^[A-Z0-9]{15}$/,
+	// 		'GST No must be 15 characters long and contain only uppercase letters and numerics'
+	// 	),
 	// companycontact: Yup.string().required('Contact is required'),
 	companyofficeaddress: Yup.string().required('Office Address is required'),
 	companystate: Yup.string().required('State is required'),
@@ -411,7 +411,7 @@ function StaffCompanyManage() {
 
 						<input
 							type='text'
-							required
+							// required
 							className='admin-company-manager-form-input-high'
 							placeholder='GST No'
 							{...formik.getFieldProps('companygstno')}

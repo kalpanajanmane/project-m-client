@@ -102,12 +102,12 @@ function UserBuyerManage() {
 		validationSchema: Yup.object({
 			// buyerid: Yup.string().required('Buyer ID is required'),
 			buyercompanyname: Yup.string().required('Company Name is required'),
-			buyercompanygstno: Yup.string()
-				.required('GST No is required')
-				.matches(
-					/^[A-Z0-9]{15}$/,
-					'GST No must be 15 characters long and contain only uppercase letters and numerics'
-				),
+			// buyercompanygstno: Yup.string()
+			// 	.required('GST No is required')
+			// 	.matches(
+			// 		/^[A-Z0-9]{15}$/,
+			// 		'GST No must be 15 characters long and contain only uppercase letters and numerics'
+			// 	),
 			buyercompanyaddress: Yup.string().required('Company Address is required'),
 			buyercompanystatename: Yup.string().required(
 				'Company State Name is required'

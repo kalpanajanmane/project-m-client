@@ -819,7 +819,7 @@ function StaffReports() {
 				);
 				newWindow.document.write(
 					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.loadingdetails && dataItem.boardingdetails.partyrate
+						dataItem.boardingdetails && dataItem.boardingdetails.partyrate
 							? dataItem.boardingdetails.partyrate
 							: 'N/A'
 					}</td>`
@@ -2138,8 +2138,8 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 															</td> */}
 															<td className='reports-data-body-table-item-body-row-item'>
 																{typeof item.itemquantity === 'number' &&
-																typeof invoice.boardingdetails
-																	.partyrate === 'number'
+																typeof invoice.boardingdetails.partyrate ===
+																	'number'
 																	? (
 																			item.itemquantity *
 																			invoice.boardingdetails.partyrate

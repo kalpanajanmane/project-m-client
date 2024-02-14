@@ -24,7 +24,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
     pdfUrlOriginal
   )}&embedded=true`;
 
-  const shareUrl = `${API}web/viewer.html?file=${encodeURIComponent(pdfUrl)}`;
+  // const shareUrl = `${API}web/viewer.html?file=${encodeURIComponent(pdfUrl)}`;
 
   const toggleAccordion = () => {
     setAccordionOpen(!isAccordionOpen);
@@ -69,7 +69,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
       );
       const workspaceId = 175208;
       const requestData = {
-        url: shareUrl,
+        url: preSignedUrl,
         workspace_id: workspaceId,
         expiry_datetime: new Date(
           Date.now() + 6 * 60 * 60 * 1000

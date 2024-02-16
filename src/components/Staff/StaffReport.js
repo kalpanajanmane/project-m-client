@@ -703,7 +703,7 @@ function StaffReports() {
 
 		// sai given code
 		newWindow.document.write(
-			'<button id="exportButton" style="float:right">Export to CSV</button>'
+			'<button id="exportButton" style="position: absolute; top: 50px; right: 16%;">Export to CSV</button>'
 		);
 
 		newWindow.document

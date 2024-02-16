@@ -1303,6 +1303,10 @@ function AdminReports() {
 										year: 'numeric',
 								  })
 								: 'N/A',
+							'Inovice ID':
+								invoice.invoicedetails && invoice.invoicedetails.invoiceid
+									? invoice.invoicedetails.invoiceid
+									: 'N/A',
 							Agent: invoice.sellerdetails?.sellercompanyname ?? 'N/A',
 							Buyer: invoice.buyerdetails?.buyercompanyname ?? 'N/A',
 							'Load From': invoice.loadingdetails?.startpoint ?? 'N/A',
@@ -1470,6 +1474,10 @@ function AdminReports() {
 								year: 'numeric',
 							}
 					  )
+					: 'N/A',
+			'Inovice ID':
+				invoice.invoicedetails && invoice.invoicedetails.invoiceid
+					? invoice.invoicedetails.invoiceid
 					: 'N/A',
 			'Buyer Name':
 				invoice.buyerdetails && invoice.buyerdetails.buyercompanyname

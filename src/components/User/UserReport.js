@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import './UserReport.css';
+import './AdminReport.css';
 import background from '../images/Desktop.png';
 import axios from 'axios';
 import E from '../images/E.png';
 // import ReactPaginate from 'react-paginate';
 import { CSVLink } from 'react-csv';
-import UserNavbar from './UserNavbar';
+import AdminNavbar from './AdminNavbar';
 import Close from '../images/cross_icon.jpg';
 import Select from 'react-select';
 import { toast, ToastContainer } from 'react-toastify';
-import { useUserAuth } from './UserAuth';
 
 function UserReports() {
-	const auth = useUserAuth();
 	const [invoice, setInvoice] = useState([]);
 	const [parties, setParties] = useState([]);
 	const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
@@ -43,12 +41,8 @@ function UserReports() {
 		setValue(newValue);
 	};
 
-	const activeUsersInvoice = invoice.filter(
-		(item) => item.invoicedetails.invoicemakername === auth.user.username
-	);
-
 	// const itemsPerPage = 15;
-	const sortedInvoice = [...activeUsersInvoice].reverse();
+	const sortedInvoice = [...invoice].reverse();
 
 	const displayedInvoiceSearch = sortedInvoice.filter((item) => {
 		const invoiceNo =
@@ -614,7 +608,7 @@ function UserReports() {
 			);
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
-					dataItem.loadingdetails && dataItem.boardingdetails.partyrate
+					dataItem.boardingdetails && dataItem.boardingdetails.partyrate
 						? dataItem.boardingdetails.partyrate
 						: 'N/A'
 				}</td>`
@@ -698,13 +692,115 @@ function UserReports() {
 			'<h2 style="text-align: center; font-size: 40px;">MIS Details</h2>'
 		);
 		newWindow.document.write(
-			'<table style="width: 70%; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd;">'
+			'<table style="width: 100%; max-width: 70%; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd;">'
 		);
+		// sai given code
+		newWindow.document.write(
+			'<button id="exportButton" style="float:right">Export to CSV</button>'
+		);
+
+		newWindow.document
+			.getElementById('exportButton')
+			.addEventListener('click', () => {
+				// Create CSV content with column names
+				const columnNames = [
+					'Date',
+					'Invoice Id',
+					'Agent',
+					'Buyer',
+					'Load From',
+					'Destination',
+					'Motor Vehicle No',
+					'Total Quantity',
+					'Ref. Code',
+					'Bill Maker Name',
+					'transport Cost',
+					'Total',
+				];
+
+				const csvContent =
+					'data:text/csv;charset=utf-8,' +
+					[columnNames.join(',')]
+						.concat(
+							datatoIterate.map((invoice) =>
+								[
+									invoice.invoicedetails && invoice.invoicedetails.invoicedate
+										? new Date(
+												invoice.invoicedetails.invoicedate
+										  ).toLocaleDateString('en-GB', {
+												day: '2-digit',
+												month: '2-digit',
+												year: 'numeric',
+										  })
+										: 'N/A',
+									invoice.invoicedetails && invoice.invoicedetails.invoiceid
+										? invoice.invoicedetails.invoiceid
+										: 'N/A',
+									invoice.sellerdetails &&
+									invoice.sellerdetails.sellercompanyname
+										? invoice.sellerdetails.sellercompanyname
+										: 'N/A',
+									invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
+										? invoice.buyerdetails.buyercompanyname
+										: 'N/A',
+
+									invoice.loadingdetails && invoice.loadingdetails.startpoint
+										? invoice.loadingdetails.startpoint
+										: 'N/A',
+									invoice.loadingdetails && invoice.loadingdetails.endpoint
+										? invoice.loadingdetails.endpoint
+										: 'N/A',
+									invoice.vehicledetails &&
+									invoice.vehicledetails.vechiclenumber
+										? invoice.vehicledetails.vechiclenumber
+										: 'N/A',
+									invoice.consignmentdetails &&
+									invoice.consignmentdetails.itemdetails[0]
+										? invoice.consignmentdetails.itemdetails[0].itemquantity
+										: '0',
+									invoice.boardingdetails && invoice.boardingdetails.partyref
+										? invoice.boardingdetails.partyref
+										: 'N/A',
+									invoice.invoicedetails &&
+									invoice.invoicedetails.invoicemakername
+										? invoice.invoicedetails.invoicemakername
+										: 'N/A',
+									invoice.boardingdetails && invoice.boardingdetails.partyrate
+										? invoice.boardingdetails.partyrate
+										: 'N/A',
+									typeof invoice.consignmentdetails.itemdetails[0]
+										.itemquantity === 'number' &&
+									typeof invoice.boardingdetails.partyrate === 'number'
+										? (
+												invoice.consignmentdetails.itemdetails[0].itemquantity *
+												invoice.boardingdetails.partyrate
+										  ).toFixed(2)
+										: 'N/A',
+								].join(',')
+							)
+						)
+						.join('\n');
+
+				// Encode CSV content
+				const encodedUri = encodeURI(csvContent);
+
+				// Create a link element and trigger download
+				const link = document.createElement('a');
+				link.setAttribute('href', encodedUri);
+				link.setAttribute('download', 'mis_report.csv');
+				newWindow.document.body.appendChild(link); // Append to new window's body
+				link.click();
+			});
+
+		// end of sai given code
 
 		// Table header
 		newWindow.document.write('<tr style="background-color: #fcec03;">');
 		newWindow.document.write(
 			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Date</th>'
+		);
+		newWindow.document.write(
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Invoice ID</th>'
 		);
 		newWindow.document.write(
 			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Agent</th>'
@@ -751,7 +847,7 @@ function UserReports() {
 				newWindow.document.write('<tr>');
 
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.invoicedetails && dataItem.invoicedetails.invoicedate
 							? new Date(
 									dataItem.invoicedetails.invoicedate
@@ -764,78 +860,85 @@ function UserReports() {
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+						dataItem.invoicedetails && dataItem.invoicedetails.invoiceid
+							? dataItem.invoicedetails.invoiceid
+							: 'N/A'
+					}</td>`
+				);
+				newWindow.document.write(
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.sellerdetails && dataItem.sellerdetails.sellercompanyname
 							? dataItem.sellerdetails.sellercompanyname.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.buyerdetails && dataItem.buyerdetails.buyercompanyname
 							? dataItem.buyerdetails.buyercompanyname.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.loadingdetails && dataItem.loadingdetails.startpoint
 							? dataItem.loadingdetails.startpoint.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.loadingdetails && dataItem.loadingdetails.endpoint
 							? dataItem.loadingdetails.endpoint.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.vehicledetails && dataItem.vehicledetails.vechiclenumber
 							? dataItem.vehicledetails.vechiclenumber.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						item.itemquantity ? item.itemquantity : 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.boardingdetails && dataItem.boardingdetails.partyref
 							? dataItem.boardingdetails.partyref.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.invoicedetails && dataItem.invoicedetails.invoicemakername
 							? dataItem.invoicedetails.invoicemakername.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.boardingdetails && dataItem.boardingdetails.partyrate
 							? dataItem.boardingdetails.partyrate
 							: 'N/A'
 					}</td>`
 				);
 				// newWindow.document.write(
-				// 	`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 				// 		item.itemweight ? item.itemweight : 'N/A'
 				// 	}</td>`
 				// );
 				// newWindow.document.write(
-				// 	`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 				// 		item.itemtaxrate ? item.itemtaxrate : 'N/A'
 				// 	}</td>`
 				// );
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						typeof item.itemquantity === 'number' &&
 						typeof dataItem.boardingdetails.partyrate === 'number'
 							? (
@@ -1279,7 +1382,7 @@ function UserReports() {
 								}
 						  )
 						: 'N/A',
-					'Total Cost': invoice.loadingdetails?.transportationcost ?? 'N/A',
+					'Total Cost': invoice.boardingdetails?.partyrate ?? 'N/A',
 					'Company Name': invoice.companydetails?.companyname ?? 'N/A',
 					'No of Items': invoice.consignmentdetails?.itemdetails.length ?? '0',
 				}));
@@ -1299,10 +1402,6 @@ function UserReports() {
 										year: 'numeric',
 								  })
 								: 'N/A',
-							'Inovice ID':
-								invoice.invoicedetails && invoice.invoicedetails.invoiceid
-									? invoice.invoicedetails.invoiceid
-									: 'N/A',
 							Agent: invoice.sellerdetails?.sellercompanyname ?? 'N/A',
 							Buyer: invoice.buyerdetails?.buyercompanyname ?? 'N/A',
 							'Load From': invoice.loadingdetails?.startpoint ?? 'N/A',
@@ -1311,8 +1410,7 @@ function UserReports() {
 								invoice.vehicledetails?.vechiclenumber ?? 'N/A',
 							'Total Qty': item?.itemquantity ?? 'N/A',
 							'Ref. Code': invoice.boardingdetails?.partyref ?? 'N/A',
-							'Bill Maker Name':
-								invoice.invoicedetails?.invoicemakername ?? 'N/A',
+							'Bill Maker Name': invoice.companydetails?.companyname ?? 'N/A',
 							'Transportation Cost':
 								invoice.boardingdetails?.partyrate ?? 'N/A',
 							'Item Quality': item?.itemquantity ?? 'N/A',
@@ -1358,8 +1456,7 @@ function UserReports() {
 								}
 						  )
 						: 'N/A',
-					'Transportation Cost':
-						invoice.loadingdetails?.transportationcost ?? 'N/A',
+					'Transportation Cost': invoice.boardingdetails?.partyrate ?? 'N/A',
 					'Loading Date': invoice.boardingdetails?.dateofloading
 						? new Date(
 								invoice.boardingdetails.dateofloading
@@ -1425,8 +1522,7 @@ function UserReports() {
 						  )
 						: 'N/A',
 					'Invoice No': invoice.invoicedetails?.invoiceno ?? 'N/A',
-					'Transportation Cost':
-						invoice.loadingdetails?.transportationcost ?? 'N/A',
+					'Transportation Cost': invoice.boardingdetails?.partyrate ?? 'N/A',
 					'Driver Number': invoice.vehicledetails?.drivernumber ?? 'N/A',
 					'Vehicle Model': invoice.vehicledetails?.vechiclemodel ?? 'N/A',
 				}));
@@ -1448,8 +1544,7 @@ function UserReports() {
 								}
 						  )
 						: 'N/A',
-					'Transportation Cost':
-						invoice.loadingdetails?.transportationcost ?? 'N/A',
+					'Transportation Cost': invoice.boardingdetails?.partyrate ?? 'N/A',
 					'Vehicle Model': invoice.vehicledetails?.vechiclemodel ?? 'N/A',
 					'No of Items': invoice.consignmentdetails?.itemdetails.length ?? '0',
 				}));
@@ -1473,10 +1568,6 @@ function UserReports() {
 								year: 'numeric',
 							}
 					  )
-					: 'N/A',
-			'Inovice ID':
-				invoice.invoicedetails && invoice.invoicedetails.invoiceid
-					? invoice.invoicedetails.invoiceid
 					: 'N/A',
 			'Buyer Name':
 				invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
@@ -1537,7 +1628,7 @@ function UserReports() {
 					  )
 					: 'N/A',
 			'Transportation Cost':
-				invoice.loadingdetails && invoice.boardingdetails.partyrate
+				invoice.boardingdetails && invoice.boardingdetails.partyrate
 					? invoice.boardingdetails.partyrate
 					: 'N/A',
 			'Company Name':
@@ -1581,7 +1672,7 @@ function UserReports() {
 					  )
 					: 'N/A',
 			'Transportation Cost':
-				invoice.loadingdetails && invoice.boardingdetails.partyrate
+				invoice.boardingdetails && invoice.boardingdetails.partyrate
 					? invoice.boardingdetails.partyrate
 					: 'N/A',
 			'Loading Date':
@@ -1648,7 +1739,7 @@ function UserReports() {
 					? invoice.invoicedetails.invoiceno
 					: 'N/A',
 			'Transportation Cost':
-				invoice.loadingdetails && invoice.boardingdetails.partyrate
+				invoice.boardingdetails && invoice.boardingdetails.partyrate
 					? invoice.boardingdetails.partyrate
 					: 'N/A',
 			'Driver Number':
@@ -1689,7 +1780,7 @@ function UserReports() {
 					  )
 					: 'N/A',
 			'Transportation Cost':
-				invoice.loadingdetails && invoice.boardingdetails.partyrate
+				invoice.boardingdetails && invoice.boardingdetails.partyrate
 					? invoice.boardingdetails.partyrate
 					: 'N/A',
 			'Vehicle Model':
@@ -1757,6 +1848,7 @@ function UserReports() {
 			dateofloading: '',
 			// watermark: '',
 			partyref: '',
+			partyrate: '',
 		},
 		loadingdetails: {
 			startstate: '',
@@ -1851,7 +1943,7 @@ function UserReports() {
 				console.error('Error updating invoice:', error);
 				toast.error('Error In Updating the Invoice');
 			});
-		//console.log(dataToSend);
+		console.log(dataToSend);
 		setIsModalVisible(false);
 	};
 
@@ -1864,7 +1956,7 @@ function UserReports() {
 				minHeight: '100vh',
 			}}
 		>
-			<UserNavbar />
+			<AdminNavbar />
 			<div className='reports'>
 				<div className='reports-data'>
 					<div className='reports-data-header'>
@@ -1954,14 +2046,14 @@ function UserReports() {
 										/>
 									</div>
 
-									<CSVLink
+									{/*	<CSVLink
 										data={exportedData}
 										filename={`exported_data_${new Date().toISOString()}.csv`}
 										className='export-button'
 										target='_blank'
 									>
 										Export
-									</CSVLink>
+						           </CSVLink> */}
 								</div>
 								<div style={{ margin: '10px' }}>
 									<div className='date-div'>
@@ -1994,6 +2086,9 @@ function UserReports() {
 											<tr className='reports-data-body-table-load-head-row'>
 												<th className='reports-data-body-table-load-head-row-item'>
 													Date
+												</th>
+												<th className='reports-data-body-table-load-head-row-item'>
+													Invoice ID
 												</th>
 												<th className='reports-data-body-table-load-head-row-item'>
 													Agent
@@ -2056,6 +2151,12 @@ function UserReports() {
 																			month: '2-digit',
 																			year: 'numeric',
 																	  })
+																	: 'N/A'}
+															</td>
+															<td className='reports-data-body-table-load-body-row-item'>
+																{invoice.invoicedetails &&
+																invoice.invoicedetails.invoiceid
+																	? invoice.invoicedetails.invoiceid
 																	: 'N/A'}
 															</td>
 															<td className='reports-data-body-table-load-body-row-item'>
@@ -2152,6 +2253,7 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 																	  ).toFixed(2)
 																	: 'N/A'}
 															</td>
+
 															<td className='reports-data-body-table-item-body-row-item'>
 																<button
 																	style={{

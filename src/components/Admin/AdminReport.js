@@ -694,6 +694,105 @@ function AdminReports() {
 		newWindow.document.write(
 			'<table style="width: 100%; max-width: 70%; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd;">'
 		);
+		// sai given code
+		newWindow.document.write(
+			'<button id="exportButton" style="float:right">Export to CSV</button>'
+		);
+
+		newWindow.document
+			.getElementById('exportButton')
+			.addEventListener('click', () => {
+				// Create CSV content with column names
+				const columnNames = [
+					'Date',
+					'Invoice Id',
+					'Agent',
+					'Buyer',
+					'Load From',
+					'Destination',
+					'Motor Vehicle No',
+					'Total Quantity',
+					'Ref. Code',
+					'Bill Maker Name',
+					'transport Cost',
+					'Total',
+				];
+
+				const csvContent =
+					'data:text/csv;charset=utf-8,' +
+					[columnNames.join(',')]
+						.concat(
+							datatoIterate.map((invoice) =>
+								[
+									invoice.invoicedetails && invoice.invoicedetails.invoicedate
+										? new Date(
+												invoice.invoicedetails.invoicedate
+										  ).toLocaleDateString('en-GB', {
+												day: '2-digit',
+												month: '2-digit',
+												year: 'numeric',
+										  })
+										: 'N/A',
+									invoice.invoicedetails && invoice.invoicedetails.invoiceid
+										? invoice.invoicedetails.invoiceid
+										: 'N/A',
+									invoice.sellerdetails &&
+									invoice.sellerdetails.sellercompanyname
+										? invoice.sellerdetails.sellercompanyname
+										: 'N/A',
+									invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
+										? invoice.buyerdetails.buyercompanyname
+										: 'N/A',
+
+									invoice.loadingdetails && invoice.loadingdetails.startpoint
+										? invoice.loadingdetails.startpoint
+										: 'N/A',
+									invoice.loadingdetails && invoice.loadingdetails.endpoint
+										? invoice.loadingdetails.endpoint
+										: 'N/A',
+									invoice.vehicledetails &&
+									invoice.vehicledetails.vechiclenumber
+										? invoice.vehicledetails.vechiclenumber
+										: 'N/A',
+									invoice.consignmentdetails &&
+									invoice.consignmentdetails.itemdetails[0]
+										? invoice.consignmentdetails.itemdetails[0].itemquantity
+										: '0',
+									invoice.boardingdetails && invoice.boardingdetails.partyref
+										? invoice.boardingdetails.partyref
+										: 'N/A',
+									invoice.invoicedetails &&
+									invoice.invoicedetails.invoicemakername
+										? invoice.invoicedetails.invoicemakername
+										: 'N/A',
+									invoice.boardingdetails && invoice.boardingdetails.partyrate
+										? invoice.boardingdetails.partyrate
+										: 'N/A',
+									typeof invoice.consignmentdetails.itemdetails[0]
+										.itemquantity === 'number' &&
+									typeof invoice.boardingdetails.partyrate === 'number'
+										? (
+												invoice.consignmentdetails.itemdetails[0].itemquantity *
+												invoice.boardingdetails.partyrate
+										  ).toFixed(2)
+										: 'N/A',
+								].join(',')
+							)
+						)
+						.join('\n');
+
+				// Encode CSV content
+				const encodedUri = encodeURI(csvContent);
+
+				// Create a link element and trigger download
+				const link = document.createElement('a');
+				link.setAttribute('href', encodedUri);
+				link.setAttribute('download', 'mis_report.csv');
+				newWindow.document.body.appendChild(link); // Append to new window's body
+				link.click();
+			});
+
+		// end of sai given code
 
 		// Table header
 		newWindow.document.write('<tr style="background-color: #fcec03;">');
@@ -1303,10 +1402,6 @@ function AdminReports() {
 										year: 'numeric',
 								  })
 								: 'N/A',
-							'Inovice ID':
-								invoice.invoicedetails && invoice.invoicedetails.invoiceid
-									? invoice.invoicedetails.invoiceid
-									: 'N/A',
 							Agent: invoice.sellerdetails?.sellercompanyname ?? 'N/A',
 							Buyer: invoice.buyerdetails?.buyercompanyname ?? 'N/A',
 							'Load From': invoice.loadingdetails?.startpoint ?? 'N/A',
@@ -1315,8 +1410,7 @@ function AdminReports() {
 								invoice.vehicledetails?.vechiclenumber ?? 'N/A',
 							'Total Qty': item?.itemquantity ?? 'N/A',
 							'Ref. Code': invoice.boardingdetails?.partyref ?? 'N/A',
-							'Bill Maker Name':
-								invoice.invoicedetails?.invoicemakername ?? 'N/A',
+							'Bill Maker Name': invoice.companydetails?.companyname ?? 'N/A',
 							'Transportation Cost':
 								invoice.boardingdetails?.partyrate ?? 'N/A',
 							'Item Quality': item?.itemquantity ?? 'N/A',
@@ -1474,10 +1568,6 @@ function AdminReports() {
 								year: 'numeric',
 							}
 					  )
-					: 'N/A',
-			'Inovice ID':
-				invoice.invoicedetails && invoice.invoicedetails.invoiceid
-					? invoice.invoicedetails.invoiceid
 					: 'N/A',
 			'Buyer Name':
 				invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
@@ -1956,14 +2046,14 @@ function AdminReports() {
 										/>
 									</div>
 
-									<CSVLink
+									{/*	<CSVLink
 										data={exportedData}
 										filename={`exported_data_${new Date().toISOString()}.csv`}
 										className='export-button'
 										target='_blank'
 									>
 										Export
-									</CSVLink>
+						           </CSVLink> */}
 								</div>
 								<div style={{ margin: '10px' }}>
 									<div className='date-div'>

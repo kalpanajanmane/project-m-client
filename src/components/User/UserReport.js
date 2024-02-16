@@ -703,7 +703,7 @@ function UserReports() {
 
 		// sai given code
 		newWindow.document.write(
-			'<button id="exportButton" style="position: absolute; top: 50px; right: 16%;">Export to CSV</button>'
+			'<button id="exportButton" style="position: absolute; top: 50px; right: 16%; font-size: 16px">Export to CSV</button>'
 		);
 
 		newWindow.document

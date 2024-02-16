@@ -1299,6 +1299,10 @@ function StaffReports() {
 										year: 'numeric',
 								  })
 								: 'N/A',
+							'Inovice ID':
+								invoice.invoicedetails && invoice.invoicedetails.invoiceid
+									? invoice.invoicedetails.invoiceid
+									: 'N/A',
 							Agent: invoice.sellerdetails?.sellercompanyname ?? 'N/A',
 							Buyer: invoice.buyerdetails?.buyercompanyname ?? 'N/A',
 							'Load From': invoice.loadingdetails?.startpoint ?? 'N/A',
@@ -1307,12 +1311,11 @@ function StaffReports() {
 								invoice.vehicledetails?.vechiclenumber ?? 'N/A',
 							'Total Qty': item?.itemquantity ?? 'N/A',
 							'Ref. Code': invoice.boardingdetails?.partyref ?? 'N/A',
-							'Bill Maker Name': invoice.companydetails?.companyname ?? 'N/A',
+							'Bill Maker Name':
+								invoice.invoicedetails?.invoicemakername ?? 'N/A',
 							'Transportation Cost':
 								invoice.loadingdetails?.transportationcost ?? 'N/A',
 							'Item Quality': item?.itemquantity ?? 'N/A',
-							'Transportation Cost':
-								invoice.loadingdetails?.transportationcost ?? 'N/A',
 							Total:
 								typeof item?.itemquantity === 'number' &&
 								typeof invoice.loadingdetails?.transportationcost === 'number'
@@ -1471,6 +1474,10 @@ function StaffReports() {
 								year: 'numeric',
 							}
 					  )
+					: 'N/A',
+			'Inovice ID':
+				invoice.invoicedetails && invoice.invoicedetails.invoiceid
+					? invoice.invoicedetails.invoiceid
 					: 'N/A',
 			'Buyer Name':
 				invoice.buyerdetails && invoice.buyerdetails.buyercompanyname

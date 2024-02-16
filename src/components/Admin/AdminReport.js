@@ -714,7 +714,7 @@ function AdminReports() {
 					'Total Quantity',
 					'Ref. Code',
 					'Bill Maker Name',
-					'transport Cost',
+					'Transport Cost',
 					'Total',
 				];
 

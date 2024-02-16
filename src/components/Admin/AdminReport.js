@@ -1311,7 +1311,8 @@ function AdminReports() {
 								invoice.vehicledetails?.vechiclenumber ?? 'N/A',
 							'Total Qty': item?.itemquantity ?? 'N/A',
 							'Ref. Code': invoice.boardingdetails?.partyref ?? 'N/A',
-							'Bill Maker Name': invoice.companydetails?.companyname ?? 'N/A',
+							'Bill Maker Name':
+								invoice.invoicedetails?.invoicemakername ?? 'N/A',
 							'Transportation Cost':
 								invoice.boardingdetails?.partyrate ?? 'N/A',
 							'Item Quality': item?.itemquantity ?? 'N/A',

@@ -1314,13 +1314,12 @@ function StaffReports() {
 							'Bill Maker Name':
 								invoice.invoicedetails?.invoicemakername ?? 'N/A',
 							'Transportation Cost':
-								invoice.loadingdetails?.transportationcost ?? 'N/A',
+								invoice.boardingdetails?.partyrate ?? 'N/A',
 							'Item Quality': item?.itemquantity ?? 'N/A',
 							Total:
 								typeof item?.itemquantity === 'number' &&
-								typeof invoice.loadingdetails?.transportationcost === 'number'
-									? item?.itemquantity *
-									  invoice.loadingdetails?.transportationcost
+								typeof invoice.boardingdetails?.partyrate === 'number'
+									? item?.itemquantity * invoice.boardingdetails?.partyrate
 									: 'N/A',
 						})
 					)

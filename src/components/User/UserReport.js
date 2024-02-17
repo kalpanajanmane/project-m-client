@@ -2063,14 +2063,14 @@ function UserReports() {
 										/>
 									</div>
 
-									<CSVLink
+									{/* <CSVLink
 										data={exportedData}
 										filename={`exported_data_${new Date().toISOString()}.csv`}
 										className='export-button'
 										target='_blank'
 									>
 										Export
-									</CSVLink>
+									</CSVLink> */}
 								</div>
 								<div style={{ margin: '10px' }}>
 									<div className='date-div'>

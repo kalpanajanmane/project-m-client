@@ -181,6 +181,8 @@ function AdminCreateInvoice() {
 		// Inserting a space after the next 2 characters
 		value = value.substring(0, 7) + ' ' + value.substring(7);
 
+		value = value.toUpperCase();
+
 		// console.log(value);
 
 		setDataToSend((prevData) => ({

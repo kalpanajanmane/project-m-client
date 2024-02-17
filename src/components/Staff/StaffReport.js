@@ -730,60 +730,69 @@ function StaffReports() {
 					[columnNames.join(',')]
 						.concat(
 							datatoIterate.map((invoice) =>
-								[
-									invoice.invoicedetails && invoice.invoicedetails.invoicedate
-										? new Date(
-												invoice.invoicedetails.invoicedate
-										  ).toLocaleDateString('en-GB', {
-												day: '2-digit',
-												month: '2-digit',
-												year: 'numeric',
-										  })
-										: 'N/A',
-									invoice.invoicedetails && invoice.invoicedetails.invoiceid
-										? invoice.invoicedetails.invoiceid
-										: 'N/A',
-									invoice.sellerdetails &&
-									invoice.sellerdetails.sellercompanyname
-										? invoice.sellerdetails.sellercompanyname
-										: 'N/A',
-									invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
-										? invoice.buyerdetails.buyercompanyname
-										: 'N/A',
-
-									invoice.loadingdetails && invoice.loadingdetails.startpoint
-										? invoice.loadingdetails.startpoint
-										: 'N/A',
-									invoice.loadingdetails && invoice.loadingdetails.endpoint
-										? invoice.loadingdetails.endpoint
-										: 'N/A',
-									invoice.vehicledetails &&
-									invoice.vehicledetails.vechiclenumber
-										? invoice.vehicledetails.vechiclenumber
-										: 'N/A',
-									invoice.consignmentdetails &&
-									invoice.consignmentdetails.itemdetails[0]
-										? invoice.consignmentdetails.itemdetails[0].itemquantity
-										: '0',
-									invoice.boardingdetails && invoice.boardingdetails.partyref
-										? invoice.boardingdetails.partyref
-										: 'N/A',
-									invoice.invoicedetails &&
-									invoice.invoicedetails.invoicemakername
-										? invoice.invoicedetails.invoicemakername
-										: 'N/A',
-									invoice.boardingdetails && invoice.boardingdetails.partyrate
-										? invoice.boardingdetails.partyrate
-										: 'N/A',
-									typeof invoice.consignmentdetails.itemdetails[0]
-										.itemquantity === 'number' &&
-									typeof invoice.boardingdetails.partyrate === 'number'
-										? (
-												invoice.consignmentdetails.itemdetails[0].itemquantity *
-												invoice.boardingdetails.partyrate
-										  ).toFixed(2)
-										: 'N/A',
-								].join(',')
+								invoice.consignmentdetails &&
+								invoice.consignmentdetails.itemdetails
+									? invoice.consignmentdetails.itemdetails
+											.map((item) =>
+												[
+													invoice.invoicedetails &&
+													invoice.invoicedetails.invoicedate
+														? new Date(
+																invoice.invoicedetails.invoicedate
+														  ).toLocaleDateString('en-GB', {
+																day: '2-digit',
+																month: '2-digit',
+																year: 'numeric',
+														  })
+														: 'N/A',
+													invoice.invoicedetails &&
+													invoice.invoicedetails.invoiceid
+														? invoice.invoicedetails.invoiceid
+														: 'N/A',
+													invoice.sellerdetails &&
+													invoice.sellerdetails.sellercompanyname
+														? invoice.sellerdetails.sellercompanyname
+														: 'N/A',
+													invoice.buyerdetails &&
+													invoice.buyerdetails.buyercompanyname
+														? invoice.buyerdetails.buyercompanyname
+														: 'N/A',
+													invoice.loadingdetails &&
+													invoice.loadingdetails.startpoint
+														? invoice.loadingdetails.startpoint
+														: 'N/A',
+													invoice.loadingdetails &&
+													invoice.loadingdetails.endpoint
+														? invoice.loadingdetails.endpoint
+														: 'N/A',
+													invoice.vehicledetails &&
+													invoice.vehicledetails.vechiclenumber
+														? invoice.vehicledetails.vechiclenumber
+														: 'N/A',
+													item.itemquantity ? item.itemquantity : '0',
+													invoice.boardingdetails &&
+													invoice.boardingdetails.partyref
+														? invoice.boardingdetails.partyref
+														: 'N/A',
+													invoice.invoicedetails &&
+													invoice.invoicedetails.invoicemakername
+														? invoice.invoicedetails.invoicemakername
+														: 'N/A',
+													invoice.boardingdetails &&
+													invoice.boardingdetails.partyrate
+														? invoice.boardingdetails.partyrate
+														: 'N/A',
+													typeof item.itemquantity === 'number' &&
+													typeof invoice.boardingdetails.partyrate === 'number'
+														? (
+																item.itemquantity *
+																invoice.boardingdetails.partyrate
+														  ).toFixed(2)
+														: 'N/A',
+												].join(',')
+											)
+											.join('\n')
+									: ''
 							)
 						)
 						.join('\n');

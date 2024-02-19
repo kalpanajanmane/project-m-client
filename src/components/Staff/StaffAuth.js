@@ -1,86 +1,100 @@
 // StaffAuth.js
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
 const StaffAuthContext = React.createContext(null);
 
 const StaffAuthProvider = (props) => {
-  const [staff, setStaff] = useState(() => {
-    const storedStaff = localStorage.getItem("staff");
-    return storedStaff ? JSON.parse(storedStaff) : null;
-  });
+	const [staff, setStaff] = useState(() => {
+		const storedStaff = localStorage.getItem('staff');
+		return storedStaff ? JSON.parse(storedStaff) : null;
+	});
 
-  const [stafflist, setStafflist] = useState([]);
-  const API = process.env.REACT_APP_API;
-  
-  // Initialize access state from localStorage or set to an empty string
-  const [access, setAccess] = useState(localStorage.getItem("access") || '');
+	const [stafflist, setStafflist] = useState([]);
+	const API = process.env.REACT_APP_API;
 
-  const saveStaffToLocalStorage = (staff) => {
-    localStorage.setItem("staff", JSON.stringify(staff));
-  };
+	// Initialize access state from localStorage or set to an empty string
+	const [access, setAccess] = useState(localStorage.getItem('access') || '');
 
-  const saveAccessToLocalStorage = (newAccess) => {
-    localStorage.setItem("access", newAccess);
-  };
+	const saveStaffToLocalStorage = (staff) => {
+		localStorage.setItem('staff', JSON.stringify(staff));
+	};
 
-  const stafflogin = (
-    staffname,
-    staffemail,
-    staffpassword,
-    staffphone,
-    staffaccess,
-    staffidproof,
-    staffofficebranch,
-  ) => {
-    const newStaff = {
-      staffname,
-      staffemail,
-      staffpassword,
-      staffphone,
-      staffaccess,
-      staffidproof,
-      staffofficebranch,
-    };
+	const saveAccessToLocalStorage = (newAccess) => {
+		localStorage.setItem('access', newAccess);
+	};
 
-    setStaff(newStaff);
-    saveStaffToLocalStorage(newStaff);
+	const stafflogin = (
+		id,
+		staffname,
+		staffemail,
+		staffpassword,
+		staffphone,
+		staffaccess,
+		staffidproof,
+		staffofficebranch
+	) => {
+		const newStaff = {
+			id,
+			staffname,
+			staffemail,
+			staffpassword,
+			staffphone,
+			staffaccess,
+			staffidproof,
+			staffofficebranch,
+		};
 
-    setAccess(staffaccess);
-    saveAccessToLocalStorage(staffaccess);
-  };
+		setStaff(newStaff);
+		saveStaffToLocalStorage(newStaff);
 
-  const setStaffAccess = (newAccess) => {
-    setAccess(newAccess);
-    saveAccessToLocalStorage(newAccess);
-  };
+		// console.log(newStaff);
 
-  useEffect(() => {
-    axios.get(`${API}staff`)
-      .then(res => {
-        setStafflist(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [API]);
+		setAccess(staffaccess);
+		saveAccessToLocalStorage(staffaccess);
+	};
 
-  const stafflogout = () => {
-    setStaff(null);
-    setAccess('');
-    localStorage.removeItem("staff");
-    localStorage.removeItem("access");
-  };
+	const setStaffAccess = (newAccess) => {
+		setAccess(newAccess);
+		saveAccessToLocalStorage(newAccess);
+	};
 
-  return (
-    <StaffAuthContext.Provider value={{ staff, stafflogin, stafflogout, stafflist, access, setStaffAccess }}>
-      {props.children}
-    </StaffAuthContext.Provider>
-  );
+	useEffect(() => {
+		axios
+			.get(`${API}staff`)
+			.then((res) => {
+				setStafflist(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [API]);
+
+	const stafflogout = () => {
+		setStaff(null);
+		setAccess('');
+		localStorage.removeItem('staff');
+		localStorage.removeItem('access');
+	};
+
+	return (
+		<StaffAuthContext.Provider
+			value={{
+				staff,
+				stafflogin,
+				stafflogout,
+				stafflist,
+				access,
+				setStaffAccess,
+			}}
+		>
+			{props.children}
+		</StaffAuthContext.Provider>
+	);
 };
 
 const useStaffAuth = () => {
-  return useContext(StaffAuthContext);
+	return useContext(StaffAuthContext);
 };
 
 export { StaffAuthProvider, useStaffAuth };

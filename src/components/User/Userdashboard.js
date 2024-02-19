@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../Admin/Admindashboard.css';
 import background from '../images/Desktop.png';
 import gr from '../images/gr.png';
@@ -11,10 +11,17 @@ import ad from '../images/ad.png';
 import vs from '../images/vs.png';
 import { useUserAuth } from './UserAuth';
 import { useNavigate } from 'react-router-dom';
+import UserAccordion from './UserAccordion';
 
 function Userdashboard() {
 	const auth = useUserAuth();
 	const navigate = useNavigate();
+
+	const [isClicked, setIsClicked] = useState(false);
+
+	const handleClick = () => {
+		setIsClicked(!isClicked);
+	};
 
 	const handleLogout = () => {
 		auth.userlogout();
@@ -33,7 +40,7 @@ function Userdashboard() {
 					<div className='admin-logout-box'>
 						<div className='admin-logout-container'>
 							<div className='admin-logout-button'>
-								<button
+								{/* <button
 									className='admin-logout-button-value'
 									onClick={handleLogout}
 								>
@@ -42,7 +49,8 @@ function Userdashboard() {
 								</button>
 								<div className='active-user'>
 									ActiveUser: {auth.user.username}
-								</div>
+								</div> */}
+								<UserAccordion />
 							</div>
 						</div>
 					</div>
@@ -63,7 +71,7 @@ function Userdashboard() {
 								<span>GENERATE REPORTS</span>
 							</div>
 						</button>
-						
+
 						<button
 							className='admin-dashboard-button'
 							onClick={() => navigate('/userinvdash')}
@@ -86,7 +94,7 @@ function Userdashboard() {
 								<span>MANAGE OTHERS</span>
 							</div>
 						</button>
-            {/*
+						{/*
 						<button
 							className='admin-dashboard-button'
 							onClick={() => navigate('/staffcomman')}

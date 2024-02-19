@@ -51,6 +51,8 @@ import PdfViewer from './components/Admin/PdfViewer';
 import PdfViewer2 from './components/Admin/PdfViewer2';
 import StaffPdfViewer from './components/Staff/StaffInvoiceView';
 import UserPdfViewer from './components/User/UserInvoiceView';
+import StaffPasswordChange from './components/Staff/StaffPasswordChange';
+import UserPasswordChange from './components/User/UserPasswordChange';
 
 function App() {
 	return (
@@ -192,6 +194,14 @@ function App() {
 					<Routes>
 						<Route path='/staff' element={<StaffLogin />} />
 						<Route
+							path='/staffpasswordchange'
+							element={
+								<ReqStaffAuth>
+									<StaffPasswordChange />
+								</ReqStaffAuth>
+							}
+						/>
+						<Route
 							path='/staffinvdash'
 							element={
 								<ReqStaffAuth>
@@ -302,6 +312,14 @@ function App() {
 				<UserAuthProvider>
 					<Routes>
 						<Route path='/user' element={<UserLogin />} />
+						<Route
+							path='/userpasswordchange'
+							element={
+								<ReqUserAuth>
+									<UserPasswordChange />
+								</ReqUserAuth>
+							}
+						/>
 						<Route
 							path='/userinvdash'
 							element={

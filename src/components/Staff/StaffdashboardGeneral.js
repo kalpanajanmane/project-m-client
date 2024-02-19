@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../Admin/Admindashboard.css';
 import background from '../images/Desktop.png';
 import gr from '../images/gr.png';
@@ -11,10 +11,17 @@ import ad from '../images/ad.png';
 import vs from '../images/vs.png';
 import { useStaffAuth } from './StaffAuth';
 import { useNavigate } from 'react-router-dom';
+import StaffAccordion from './StaffAccordion';
 
 function StaffDashboardGeneral() {
 	const auth = useStaffAuth();
 	const navigate = useNavigate();
+
+	const [isClicked, setIsClicked] = useState(false);
+
+	const handleClick = () => {
+		setIsClicked(!isClicked);
+	};
 
 	const handleLogout = () => {
 		auth.stafflogout();
@@ -33,7 +40,7 @@ function StaffDashboardGeneral() {
 					<div className='admin-logout-box'>
 						<div className='admin-logout-container'>
 							<div className='admin-logout-button'>
-								<button
+								{/* <button
 									className='admin-logout-button-value'
 									onClick={handleLogout}
 								>
@@ -42,7 +49,8 @@ function StaffDashboardGeneral() {
 								</button>
 								<div className='active-user'>
 									ActiveStaff: {auth.staff.staffname}
-								</div>
+								</div> */}
+								<StaffAccordion />
 							</div>
 						</div>
 					</div>

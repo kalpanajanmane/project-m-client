@@ -25,22 +25,24 @@ function UserLogin() {
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
 			const { Email, password } = values;
-		
+
 			let matchFound = false;
+			let id = '';
 			let access = '';
-			let username = '';  // Declare username here
-		
+			let username = ''; // Declare username here
+
 			auth.userlist.forEach((item) => {
 				if (item.useremail === Email && item.userpassword === password) {
 					matchFound = true;
+					id = item._id;
 					access = item.useraccess;
-					username = item.username;  // Assign the value here
+					username = item.username; // Assign the value here
 					return;
 				}
 			});
-		
+
 			if (matchFound) {
-				auth.userlogin(username, Email, password, access);
+				auth.userlogin(id, username, Email, password, access);
 				auth.setUserAccess(access);
 				switch (access) {
 					case 'Super-User':
@@ -60,7 +62,6 @@ function UserLogin() {
 				formik.setFieldError('password', 'Invalid username or password');
 			}
 		},
-		
 	});
 
 	return (

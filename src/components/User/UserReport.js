@@ -69,48 +69,97 @@ function UserReports() {
 	// const itemsPerPage = 15;
 	const sortedInvoice = [...activeUsersInvoice].reverse();
 
-	const displayedInvoiceSearch = sortedInvoice.filter((item) => {
-		const invoiceNo =
-			(item.invoicedetails && item.invoicedetails.invoiceno) || '';
-		const companyName =
-			(item.companydetails && item.companydetails.companyname) || '';
-		const invoiceDate =
-			(item.invoicedetails && item.invoicedetails.invoicedate) || '';
-		const vehicleNumber =
-			(item.vehicledetails && item.vehicledetails.vechiclenumber) || '';
-		const driverName =
-			(item.vehicledetails && item.vehicledetails.drivername) || '';
-		const itemName =
-			(item.consignmentdetails.itemdetails[0] &&
-				item.consignmentdetails.itemdetails[0].itemname) ||
-			'';
-		const buyerCompanyName =
-			(item.buyerdetails && item.buyerdetails.buyercompanyname) || '';
-		const buyerCompanyState =
-			(item.buyerdetails && item.buyerdetails.buyercompanystatename) || '';
-		const agentCompanyName =
-			(item.sellerdetails && item.sellerdetails.sellercompanyname) || ''; // **Include Agent Company Name field**
-		const agentCompanyState =
-			(item.sellerdetails && item.sellerdetails.sellercompanystatename) || ''; // **Include Agent Company State Name**
-		const searchLowerCase = searchInput?.toLowerCase();
+	const displayedInvoiceSearch = sortedInvoice
+		.filter((item) => {
+			const invoiceNo =
+				(item.invoicedetails && item.invoicedetails.invoiceno) || '';
+			const companyName =
+				(item.companydetails && item.companydetails.companyname) || '';
+			const invoiceDate =
+				(item.invoicedetails && item.invoicedetails.invoicedate) || '';
+			const vehicleNumber =
+				(item.vehicledetails && item.vehicledetails.vechiclenumber) || '';
+			const driverName =
+				(item.vehicledetails && item.vehicledetails.drivername) || '';
+			const itemName =
+				(item.consignmentdetails.itemdetails[0] &&
+					item.consignmentdetails.itemdetails[0].itemname) ||
+				'';
+			const buyerCompanyName =
+				(item.buyerdetails && item.buyerdetails.buyercompanyname) || '';
+			const buyerCompanyState =
+				(item.buyerdetails && item.buyerdetails.buyercompanystatename) || '';
+			const agentCompanyName =
+				(item.sellerdetails && item.sellerdetails.sellercompanyname) || ''; // **Include Agent Company Name field**
+			const agentCompanyState =
+				(item.sellerdetails && item.sellerdetails.sellercompanystatename) || ''; // **Include Agent Company State Name**
+			const searchLowerCase = searchInput?.toLowerCase();
 
-		if (
-			invoiceNo.toLowerCase().includes(searchInput?.toLowerCase()) ||
-			companyName.toLowerCase().includes(searchInput?.toLowerCase()) ||
-			invoiceDate.toLowerCase().includes(searchInput?.toLowerCase()) ||
-			vehicleNumber.toLowerCase().includes(searchInput?.toLowerCase()) ||
-			driverName.toLowerCase().includes(searchInput?.toLowerCase()) ||
-			itemName.toLowerCase().includes(searchLowerCase) ||
-			buyerCompanyName.toLowerCase().includes(searchLowerCase) ||
-			buyerCompanyState.toLowerCase().includes(searchLowerCase) ||
-			agentCompanyName.toLowerCase().includes(searchLowerCase) || // **Check Agent Company Name**
-			agentCompanyState.toLowerCase().includes(searchLowerCase) // **Check Agent Company State Name**
-		) {
-			return true;
-		}
+			if (
+				invoiceNo.toLowerCase().includes(searchInput?.toLowerCase()) ||
+				companyName.toLowerCase().includes(searchInput?.toLowerCase()) ||
+				invoiceDate.toLowerCase().includes(searchInput?.toLowerCase()) ||
+				vehicleNumber.toLowerCase().includes(searchInput?.toLowerCase()) ||
+				driverName.toLowerCase().includes(searchInput?.toLowerCase()) ||
+				itemName.toLowerCase().includes(searchLowerCase) ||
+				buyerCompanyName.toLowerCase().includes(searchLowerCase) ||
+				buyerCompanyState.toLowerCase().includes(searchLowerCase) ||
+				agentCompanyName.toLowerCase().includes(searchLowerCase) || // **Check Agent Company Name**
+				agentCompanyState.toLowerCase().includes(searchLowerCase) // **Check Agent Company State Name**
+			) {
+				return true;
+			}
 
-		return false;
-	});
+			return false;
+		})
+		.filter((item) => {
+			const refCode =
+				(item.boardingdetails && item.boardingdetails.partyref) || '';
+			const searchLowerCase = searchInput?.toLowerCase();
+
+			if (refCode.toLowerCase().includes(searchLowerCase)) {
+				return true;
+			}
+			return false;
+		})
+		.filter((item) => {
+			const itemDate = new Date(item.invoicedetails.invoicedate);
+			const itemDate_format = formatDate(itemDate);
+
+			// Check if startDate and endDate are valid date strings
+			const isStartDateValid =
+				startDate !== '' && !isNaN(new Date(startDate).getTime());
+			const isEndDateValid =
+				endDate !== '' && !isNaN(new Date(endDate).getTime());
+
+			if (
+				(isStartDateValid &&
+					itemDate_format >= formatDate(new Date(startDate))) ||
+				!isStartDateValid
+			) {
+				if (
+					(isEndDateValid &&
+						itemDate_format <= formatDate(new Date(endDate))) ||
+					!isEndDateValid
+				) {
+					return true;
+				}
+			}
+			return false;
+		})
+		.map((item) => {
+			const toDate = endDate ? new Date(endDate) : null;
+
+			if (toDate) {
+				toDate.setDate(toDate.getDate() + 1);
+			}
+
+			return {
+				...item,
+				fromDate: startDate || null,
+				toDate: toDate || null,
+			};
+		});
 	// 	.slice(pageNumber * itemsPerPage, (pageNumber + 1) * itemsPerPage);
 
 	// const pageCount = Math.ceil(sortedInvoice.length / itemsPerPage);

@@ -43,9 +43,9 @@ function UserReports() {
 	// tomorrow.setDate(new Date().getDate() + 1);  shobha
 
 	const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
-	console.log('tomorrow    ', tomorrowFormatted);
+	// console.log('tomorrow    ', tomorrowFormatted);
 	const [endDate, setEndDate] = useState(tomorrowFormatted);
-	console.log('endDate  ', endDate);
+	// console.log('endDate  ', endDate);
 	const tomorrow1 = new Date();
 	// tomorrow1.setDate(new Date().getDate() + 1);  shobha
 
@@ -426,11 +426,11 @@ function UserReports() {
 		.filter((item) => {
 			// const itemDate = new Date(item.invoicedetails.invoicedate);
 			const itemDate = new Date(item.invoicedetails.invoicedate);
-			console.log('itemDate    ', itemDate);
+			// console.log('itemDate    ', itemDate);
 			const itemDate_format = formatDate(itemDate);
-			console.log('formated Date', itemDate_format);
+			// console.log('formated Date', itemDate_format);
 			const enddate_format = formatDate(new Date(endDate));
-			console.log('enddate formated', enddate_format);
+			// console.log('enddate formated', enddate_format);
 			// Check if startDate and endDate are valid date strings
 			const isStartDateValid =
 				startDate !== '' && !isNaN(new Date(startDate).getTime());
@@ -442,14 +442,14 @@ function UserReports() {
 					itemDate_format >= formatDate(new Date(startDate))) ||
 				!isStartDateValid
 			) {
-				console.log('start date valid');
+				// console.log('start date valid');
 
-				console.log(new Date(endDate));
+				// console.log(new Date(endDate));
 				if (
 					(isEndDateValid && itemDate_format <= enddate_format) ||
 					!isEndDateValid
 				) {
-					console.log('end date is equal');
+					// console.log('end date is equal');
 					return true;
 				}
 			}
@@ -728,28 +728,28 @@ function UserReports() {
 	//for showing data of mis section by date
 	const handleShowMisDataByDate = () => {
 		let datatoIterate;
-		console.log('lllllllllllllll');
+		// console.log('lllllllllllllll');
 
 		if (filteredDataByDate) {
 			datatoIterate = filteredDataByDate;
-			console.log('ihandleShowMisDataByDate n first if');
+			// console.log('ihandleShowMisDataByDate n first if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch) {
 			datatoIterate = displayedMisInvoiceSearch;
-			console.log('handleShowMisDataByDate in second if');
+			// console.log('handleShowMisDataByDate in second if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch && filteredDataByDate) {
 			datatoIterate = displayedMisInvoiceSearch
 				.filter((item) => {
 					const itemDate = new Date(item.invoicedetails.invoicedate);
-					console.log('handleShowMisDataByDate Item date:', itemDate);
+					// console.log('handleShowMisDataByDate Item date:', itemDate);
 					const itemDate_format = formatDate(itemDate);
 
 					const enddate_format = formatDate(new Date(endDate));
 					// Check if startDate and endDate are valid date strings
 					const isStartDateValid =
 						startDate !== '' && !isNaN(new Date(startDate).getTime());
-					console.log('handleShowMisDataByDate startDate:', startDate);
+					// console.log('handleShowMisDataByDate startDate:', startDate);
 					const isEndDateValid =
 						endDate !== '' && !isNaN(new Date(endDate).getTime());
 
@@ -765,7 +765,7 @@ function UserReports() {
 							return true;
 						}
 					}
-					console.log('super!!!!');
+					// console.log('super!!!!');
 					return false;
 				})
 				.map((item) => {
@@ -777,7 +777,7 @@ function UserReports() {
 						// Add one day to the toDate
 						toDate.setDate(toDate.getDate() + 1);
 					}
-					console.log('toDate', toDate);
+					// console.log('toDate', toDate);
 
 					return {
 						...item,

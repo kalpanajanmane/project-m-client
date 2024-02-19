@@ -10,6 +10,15 @@ import Close from '../images/cross_icon.jpg';
 import Select from 'react-select';
 import { toast, ToastContainer } from 'react-toastify';
 
+function formatDate(date) {
+	const day = date.getDate().toString().padStart(2, '0');
+	const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+	const year = date.getFullYear();
+
+	// return `${day}/${month}/${year}`;
+	return `${year}/${month}/${day}`;
+}
+
 function AdminReports() {
 	const [invoice, setInvoice] = useState([]);
 	const [parties, setParties] = useState([]);
@@ -29,9 +38,19 @@ function AdminReports() {
 	const [startDate, setStartDate] = useState(today);
 	// Get tomorrow's date in the format "YYYY-MM-DD"
 	const tomorrow = new Date();
-	tomorrow.setDate(new Date().getDate() + 1);
+	// tomorrow.setDate(new Date().getDate() + 1);  shobha
+
 	const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+	console.log('tomorrow    ', tomorrowFormatted);
 	const [endDate, setEndDate] = useState(tomorrowFormatted);
+	console.log('endDate  ', endDate);
+	const tomorrow1 = new Date();
+	// tomorrow1.setDate(new Date().getDate() + 1);  shobha
+
+	// const tomorrowFormatted1 = tomorrow1.toISOString().split('T')[0];
+	// console.log('tomorrow    ',tomorrowFormatted1);
+	// const [endDate1, setEndDate] = useState(tomorrowFormatted1);
+	// console.log('endDate  ',endDate)
 	// const [selectedDateOption, setSelectedDateOption] = useState('');
 	// const [filteredDateSelectData, setFilteredDateSelectData] = useState([]);
 	// const [dateData, setDateData] = useState([]);
@@ -105,17 +124,66 @@ function AdminReports() {
 		return 0; // names are equal
 	});
 
-	const displayedMisInvoiceSearch = sortedInvoice.filter((item) => {
-		const refCode =
-			(item.boardingdetails && item.boardingdetails.partyref) || '';
-		const searchLowerCase = searchInput?.toLowerCase();
+	const displayedMisInvoiceSearch = sortedInvoice
+		.filter((item) => {
+			const refCode =
+				(item.boardingdetails && item.boardingdetails.partyref) || '';
+			const searchLowerCase = searchInput?.toLowerCase();
 
-		if (refCode.toLowerCase().includes(searchLowerCase)) {
-			return true;
-		}
+			if (refCode.toLowerCase().includes(searchLowerCase)) {
+				return true;
+			}
+			return false;
+		})
+		.filter((item) => {
+			const itemDate = new Date(item.invoicedetails.invoicedate);
+			const itemDate_format = formatDate(itemDate);
 
-		return false;
-	});
+			// Check if startDate and endDate are valid date strings
+			const isStartDateValid =
+				startDate !== '' && !isNaN(new Date(startDate).getTime());
+			const isEndDateValid =
+				endDate !== '' && !isNaN(new Date(endDate).getTime());
+
+			if (
+				(isStartDateValid &&
+					itemDate_format >= formatDate(new Date(startDate))) ||
+				!isStartDateValid
+			) {
+				if (
+					(isEndDateValid &&
+						itemDate_format <= formatDate(new Date(endDate))) ||
+					!isEndDateValid
+				) {
+					return true;
+				}
+			}
+			return false;
+		})
+		.map((item) => {
+			const toDate = endDate ? new Date(endDate) : null;
+
+			if (toDate) {
+				toDate.setDate(toDate.getDate() + 1);
+			}
+
+			return {
+				...item,
+				fromDate: startDate || null,
+				toDate: toDate || null,
+			};
+		});
+
+	// const displayedMisInvoiceSearch = sortedInvoice.filter((item) => {
+	// 	const refCode =
+	// 		(item.boardingdetails && item.boardingdetails.partyref) || '';
+	// 	const searchLowerCase = searchInput?.toLowerCase();
+
+	// 	if (refCode.toLowerCase().includes(searchLowerCase)) {
+	// 		return true;
+	// 	}
+	// 	return false;
+	// });
 
 	useEffect(() => {
 		axios
@@ -304,7 +372,7 @@ function AdminReports() {
 	const handleFromDateSelect = (e) => {
 		const selectedFromDate = e.target.value;
 		setStartDate(selectedFromDate);
-		// console.log(selectedFromDate);
+		console.log(selectedFromDate);
 	};
 
 	// const handleToDateSelect = (e) => {
@@ -324,6 +392,16 @@ function AdminReports() {
 
 	const incrementDate = (dateString) => {
 		const selectedDate = new Date(dateString);
+		// selectedDate.setDate(selectedDate.getDate() + 1);  shobha
+		selectedDate.setDate(selectedDate.getDate());
+
+		// Format the next date to match the 'YYYY-MM-DD' format used by the input type 'date'
+		const formattedNextDate = selectedDate.toISOString().split('T')[0];
+
+		return formattedNextDate;
+	};
+	const incrementDate1 = (dateString) => {
+		const selectedDate = new Date(dateString);
 		selectedDate.setDate(selectedDate.getDate() + 1);
 
 		// Format the next date to match the 'YYYY-MM-DD' format used by the input type 'date'
@@ -339,8 +417,13 @@ function AdminReports() {
 
 	const filteredDataByDate = filteredAgentSelectData
 		.filter((item) => {
+			// const itemDate = new Date(item.invoicedetails.invoicedate);
 			const itemDate = new Date(item.invoicedetails.invoicedate);
-
+			console.log('itemDate    ', itemDate);
+			const itemDate_format = formatDate(itemDate);
+			console.log('formated Date', itemDate_format);
+			const enddate_format = formatDate(new Date(endDate));
+			console.log('enddate formated', enddate_format);
 			// Check if startDate and endDate are valid date strings
 			const isStartDateValid =
 				startDate !== '' && !isNaN(new Date(startDate).getTime());
@@ -348,13 +431,18 @@ function AdminReports() {
 				endDate !== '' && !isNaN(new Date(endDate).getTime());
 
 			if (
-				(isStartDateValid && itemDate >= new Date(startDate)) ||
+				(isStartDateValid &&
+					itemDate_format >= formatDate(new Date(startDate))) ||
 				!isStartDateValid
 			) {
+				console.log('start date valid');
+
+				console.log(new Date(endDate));
 				if (
-					(isEndDateValid && itemDate <= new Date(endDate)) ||
+					(isEndDateValid && itemDate_format <= enddate_format) ||
 					!isEndDateValid
 				) {
+					console.log('end date is equal');
 					return true;
 				}
 			}
@@ -400,7 +488,7 @@ function AdminReports() {
 		});
 
 		setAgentData(agentWiseData);
-		// console.log(agentWiseData);
+		console.log(agentWiseData);
 	}, [selectedAgentOption]);
 
 	// console.log('agentData', agentData);
@@ -546,6 +634,7 @@ function AdminReports() {
 	//for showing data of load section by date
 	const handleShowLoadDataByDate = () => {
 		const newWindow = window.open('', '_blank');
+		console.log('kkkkkkkkkkkkkkkkkkk');
 		newWindow.document.write(
 			'<html><head><title>Load Details</title></head><body>'
 		);
@@ -633,36 +722,44 @@ function AdminReports() {
 	//for showing data of mis section by date
 	const handleShowMisDataByDate = () => {
 		let datatoIterate;
+		console.log('lllllllllllllll');
 
 		if (filteredDataByDate) {
 			datatoIterate = filteredDataByDate;
+			console.log('ihandleShowMisDataByDate n first if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch) {
 			datatoIterate = displayedMisInvoiceSearch;
+			console.log('handleShowMisDataByDate in second if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch && filteredDataByDate) {
 			datatoIterate = displayedMisInvoiceSearch
 				.filter((item) => {
 					const itemDate = new Date(item.invoicedetails.invoicedate);
+					console.log('handleShowMisDataByDate Item date:', itemDate);
+					const itemDate_format = formatDate(itemDate);
 
+					const enddate_format = formatDate(new Date(endDate));
 					// Check if startDate and endDate are valid date strings
 					const isStartDateValid =
 						startDate !== '' && !isNaN(new Date(startDate).getTime());
+					console.log('handleShowMisDataByDate startDate:', startDate);
 					const isEndDateValid =
 						endDate !== '' && !isNaN(new Date(endDate).getTime());
 
 					if (
-						(isStartDateValid && itemDate >= new Date(startDate)) ||
+						(isStartDateValid &&
+							itemDate_format >= formatDate(new Date(startDate))) ||
 						!isStartDateValid
 					) {
 						if (
-							(isEndDateValid && itemDate <= new Date(endDate)) ||
+							(isEndDateValid && itemDate_format <= enddate_format) ||
 							!isEndDateValid
 						) {
 							return true;
 						}
 					}
-
+					console.log('super!!!!');
 					return false;
 				})
 				.map((item) => {
@@ -674,6 +771,7 @@ function AdminReports() {
 						// Add one day to the toDate
 						toDate.setDate(toDate.getDate() + 1);
 					}
+					console.log('toDate', toDate);
 
 					return {
 						...item,
@@ -698,7 +796,6 @@ function AdminReports() {
 		newWindow.document.write(
 			'<button id="exportButton" style="position: absolute; top: 50px; right: 16%; font-size: 16px">Export to CSV</button>'
 		);
-
 		newWindow.document
 			.getElementById('exportButton')
 			.addEventListener('click', () => {
@@ -1375,6 +1472,7 @@ function AdminReports() {
 
 	const handleSearchInputChange = (e) => {
 		const inputValue = e.target.value;
+		console.log('inputValue   ', inputValue);
 		setSearchInput(inputValue);
 
 		switch (value) {
@@ -2055,14 +2153,14 @@ function AdminReports() {
 										/>
 									</div>
 
-									{/*	<CSVLink
+									{/* <CSVLink
 										data={exportedData}
 										filename={`exported_data_${new Date().toISOString()}.csv`}
 										className='export-button'
 										target='_blank'
 									>
 										Export
-						           </CSVLink> */}
+									</CSVLink> */}
 								</div>
 								<div style={{ margin: '10px' }}>
 									<div className='date-div'>

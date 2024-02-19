@@ -11,6 +11,15 @@ import Select from 'react-select';
 import { toast, ToastContainer } from 'react-toastify';
 import { useStaffAuth } from './StaffAuth';
 
+function formatDate(date) {
+	const day = date.getDate().toString().padStart(2, '0');
+	const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+	const year = date.getFullYear();
+
+	// return `${day}/${month}/${year}`;
+	return `${year}/${month}/${day}`;
+}
+
 function StaffReports() {
 	const auth = useStaffAuth();
 	const [invoice, setInvoice] = useState([]);
@@ -31,9 +40,19 @@ function StaffReports() {
 	const [startDate, setStartDate] = useState(today);
 	// Get tomorrow's date in the format "YYYY-MM-DD"
 	const tomorrow = new Date();
-	tomorrow.setDate(new Date().getDate() + 1);
+	// tomorrow.setDate(new Date().getDate() + 1);  shobha
+
 	const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+	console.log('tomorrow    ', tomorrowFormatted);
 	const [endDate, setEndDate] = useState(tomorrowFormatted);
+	console.log('endDate  ', endDate);
+	const tomorrow1 = new Date();
+	// tomorrow1.setDate(new Date().getDate() + 1);  shobha
+
+	// const tomorrowFormatted1 = tomorrow1.toISOString().split('T')[0];
+	// console.log('tomorrow    ',tomorrowFormatted1);
+	// const [endDate1, setEndDate] = useState(tomorrowFormatted1);
+	// console.log('endDate  ',endDate)
 	// const [selectedDateOption, setSelectedDateOption] = useState('');
 	// const [filteredDateSelectData, setFilteredDateSelectData] = useState([]);
 	// const [dateData, setDateData] = useState([]);
@@ -111,17 +130,67 @@ function StaffReports() {
 		return 0; // names are equal
 	});
 
-	const displayedMisInvoiceSearch = sortedInvoice.filter((item) => {
-		const refCode =
-			(item.boardingdetails && item.boardingdetails.partyref) || '';
-		const searchLowerCase = searchInput?.toLowerCase();
+	const displayedMisInvoiceSearch = sortedInvoice
+		.filter((item) => {
+			const refCode =
+				(item.boardingdetails && item.boardingdetails.partyref) || '';
+			const searchLowerCase = searchInput?.toLowerCase();
 
-		if (refCode.toLowerCase().includes(searchLowerCase)) {
-			return true;
-		}
+			if (refCode.toLowerCase().includes(searchLowerCase)) {
+				return true;
+			}
+			return false;
+		})
+		.filter((item) => {
+			const itemDate = new Date(item.invoicedetails.invoicedate);
+			const itemDate_format = formatDate(itemDate);
 
-		return false;
-	});
+			// Check if startDate and endDate are valid date strings
+			const isStartDateValid =
+				startDate !== '' && !isNaN(new Date(startDate).getTime());
+			const isEndDateValid =
+				endDate !== '' && !isNaN(new Date(endDate).getTime());
+
+			if (
+				(isStartDateValid &&
+					itemDate_format >= formatDate(new Date(startDate))) ||
+				!isStartDateValid
+			) {
+				if (
+					(isEndDateValid &&
+						itemDate_format <= formatDate(new Date(endDate))) ||
+					!isEndDateValid
+				) {
+					return true;
+				}
+			}
+			return false;
+		})
+		.map((item) => {
+			const toDate = endDate ? new Date(endDate) : null;
+
+			if (toDate) {
+				toDate.setDate(toDate.getDate() + 1);
+			}
+
+			return {
+				...item,
+				fromDate: startDate || null,
+				toDate: toDate || null,
+			};
+		});
+
+	// const displayedMisInvoiceSearch = sortedInvoice.filter((item) => {
+	// 	const refCode =
+	// 		(item.boardingdetails && item.boardingdetails.partyref) || '';
+	// 	const searchLowerCase = searchInput?.toLowerCase();
+
+	// 	if (refCode.toLowerCase().includes(searchLowerCase)) {
+	// 		return true;
+	// 	}
+
+	// 	return false;
+	// });
 
 	useEffect(() => {
 		axios
@@ -330,6 +399,16 @@ function StaffReports() {
 
 	const incrementDate = (dateString) => {
 		const selectedDate = new Date(dateString);
+		// selectedDate.setDate(selectedDate.getDate() + 1);  shobha
+		selectedDate.setDate(selectedDate.getDate());
+
+		// Format the next date to match the 'YYYY-MM-DD' format used by the input type 'date'
+		const formattedNextDate = selectedDate.toISOString().split('T')[0];
+
+		return formattedNextDate;
+	};
+	const incrementDate1 = (dateString) => {
+		const selectedDate = new Date(dateString);
 		selectedDate.setDate(selectedDate.getDate() + 1);
 
 		// Format the next date to match the 'YYYY-MM-DD' format used by the input type 'date'
@@ -345,8 +424,13 @@ function StaffReports() {
 
 	const filteredDataByDate = filteredAgentSelectData
 		.filter((item) => {
+			// const itemDate = new Date(item.invoicedetails.invoicedate);
 			const itemDate = new Date(item.invoicedetails.invoicedate);
-
+			console.log('itemDate    ', itemDate);
+			const itemDate_format = formatDate(itemDate);
+			console.log('formated Date', itemDate_format);
+			const enddate_format = formatDate(new Date(endDate));
+			console.log('enddate formated', enddate_format);
 			// Check if startDate and endDate are valid date strings
 			const isStartDateValid =
 				startDate !== '' && !isNaN(new Date(startDate).getTime());
@@ -354,13 +438,18 @@ function StaffReports() {
 				endDate !== '' && !isNaN(new Date(endDate).getTime());
 
 			if (
-				(isStartDateValid && itemDate >= new Date(startDate)) ||
+				(isStartDateValid &&
+					itemDate_format >= formatDate(new Date(startDate))) ||
 				!isStartDateValid
 			) {
+				console.log('start date valid');
+
+				console.log(new Date(endDate));
 				if (
-					(isEndDateValid && itemDate <= new Date(endDate)) ||
+					(isEndDateValid && itemDate_format <= enddate_format) ||
 					!isEndDateValid
 				) {
+					console.log('end date is equal');
 					return true;
 				}
 			}
@@ -406,7 +495,7 @@ function StaffReports() {
 		});
 
 		setAgentData(agentWiseData);
-		// console.log(agentWiseData);
+		console.log(agentWiseData);
 	}, [selectedAgentOption]);
 
 	// console.log('agentData', agentData);
@@ -639,36 +728,44 @@ function StaffReports() {
 	//for showing data of mis section by date
 	const handleShowMisDataByDate = () => {
 		let datatoIterate;
+		console.log('lllllllllllllll');
 
 		if (filteredDataByDate) {
 			datatoIterate = filteredDataByDate;
+			console.log('ihandleShowMisDataByDate n first if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch) {
 			datatoIterate = displayedMisInvoiceSearch;
+			console.log('handleShowMisDataByDate in second if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch && filteredDataByDate) {
 			datatoIterate = displayedMisInvoiceSearch
 				.filter((item) => {
 					const itemDate = new Date(item.invoicedetails.invoicedate);
+					console.log('handleShowMisDataByDate Item date:', itemDate);
+					const itemDate_format = formatDate(itemDate);
 
+					const enddate_format = formatDate(new Date(endDate));
 					// Check if startDate and endDate are valid date strings
 					const isStartDateValid =
 						startDate !== '' && !isNaN(new Date(startDate).getTime());
+					console.log('handleShowMisDataByDate startDate:', startDate);
 					const isEndDateValid =
 						endDate !== '' && !isNaN(new Date(endDate).getTime());
 
 					if (
-						(isStartDateValid && itemDate >= new Date(startDate)) ||
+						(isStartDateValid &&
+							itemDate_format >= formatDate(new Date(startDate))) ||
 						!isStartDateValid
 					) {
 						if (
-							(isEndDateValid && itemDate <= new Date(endDate)) ||
+							(isEndDateValid && itemDate_format <= enddate_format) ||
 							!isEndDateValid
 						) {
 							return true;
 						}
 					}
-
+					console.log('super!!!!');
 					return false;
 				})
 				.map((item) => {
@@ -680,6 +777,7 @@ function StaffReports() {
 						// Add one day to the toDate
 						toDate.setDate(toDate.getDate() + 1);
 					}
+					console.log('toDate', toDate);
 
 					return {
 						...item,
@@ -816,6 +914,9 @@ function StaffReports() {
 			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Date</th>'
 		);
 		newWindow.document.write(
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Invoice ID</th>'
+		);
+		newWindow.document.write(
 			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Agent</th>'
 		);
 		newWindow.document.write(
@@ -860,7 +961,7 @@ function StaffReports() {
 				newWindow.document.write('<tr>');
 
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.invoicedetails && dataItem.invoicedetails.invoicedate
 							? new Date(
 									dataItem.invoicedetails.invoicedate
@@ -873,78 +974,85 @@ function StaffReports() {
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+						dataItem.invoicedetails && dataItem.invoicedetails.invoiceid
+							? dataItem.invoicedetails.invoiceid
+							: 'N/A'
+					}</td>`
+				);
+				newWindow.document.write(
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.sellerdetails && dataItem.sellerdetails.sellercompanyname
 							? dataItem.sellerdetails.sellercompanyname.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.buyerdetails && dataItem.buyerdetails.buyercompanyname
 							? dataItem.buyerdetails.buyercompanyname.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.loadingdetails && dataItem.loadingdetails.startpoint
 							? dataItem.loadingdetails.startpoint.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.loadingdetails && dataItem.loadingdetails.endpoint
 							? dataItem.loadingdetails.endpoint.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.vehicledetails && dataItem.vehicledetails.vechiclenumber
 							? dataItem.vehicledetails.vechiclenumber.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						item.itemquantity ? item.itemquantity : 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.boardingdetails && dataItem.boardingdetails.partyref
 							? dataItem.boardingdetails.partyref.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.invoicedetails && dataItem.invoicedetails.invoicemakername
 							? dataItem.invoicedetails.invoicemakername.substring(0, 12)
 							: 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.boardingdetails && dataItem.boardingdetails.partyrate
 							? dataItem.boardingdetails.partyrate
 							: 'N/A'
 					}</td>`
 				);
 				// newWindow.document.write(
-				// 	`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 				// 		item.itemweight ? item.itemweight : 'N/A'
 				// 	}</td>`
 				// );
 				// newWindow.document.write(
-				// 	`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 				// 		item.itemtaxrate ? item.itemtaxrate : 'N/A'
 				// 	}</td>`
 				// );
 				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						typeof item.itemquantity === 'number' &&
 						typeof dataItem.boardingdetails.partyrate === 'number'
 							? (

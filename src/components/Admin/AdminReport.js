@@ -696,6 +696,73 @@ function AdminReports() {
 			'<table style="width: 70%; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd;">'
 		);
 
+		// sai given code
+		newWindow.document.write(
+			'<button id="exportButton" style="position: absolute; top: 50px; right: 16%; font-size: 16px">Export to CSV</button>'
+		);
+		newWindow.document
+			.getElementById('exportButton')
+			.addEventListener('click', () => {
+				// Create CSV content with column names
+				const columnNames = [
+					'Invoice No',
+					'Date',
+					'Company Name',
+					'Transportation Cost',
+					'No of Items',
+				];
+
+				const csvContent =
+					'data:text/csv;charset=utf-8,' +
+					[columnNames.join(',')]
+						.concat(
+							filteredDataByDate.map((invoice) => {
+								if (
+									invoice.consignmentdetails &&
+									invoice.consignmentdetails.itemdetails
+								) {
+									const itemDetails = invoice.consignmentdetails.itemdetails;
+									return [
+										invoice.invoicedetails && invoice.invoicedetails.invoiceno
+											? invoice.invoicedetails.invoiceno
+											: 'N/A',
+										invoice.invoicedetails && invoice.invoicedetails.invoicedate
+											? new Date(
+													invoice.invoicedetails.invoicedate
+											  ).toLocaleDateString('en-GB', {
+													day: '2-digit',
+													month: '2-digit',
+													year: 'numeric',
+											  })
+											: 'N/A',
+										invoice.companydetails && invoice.companydetails.companyname
+											? invoice.companydetails.companyname
+											: 'N/A',
+										invoice.boardingdetails && invoice.boardingdetails.partyrate
+											? invoice.boardingdetails.partyrate
+											: 'N/A',
+										itemDetails.length ? itemDetails.length : 'N/A',
+									].join(',');
+								} else {
+									return '';
+								}
+							})
+						)
+						.join('\n');
+
+				// Encode CSV content
+				const encodedUri = encodeURI(csvContent);
+
+				// Create a link element and trigger download
+				const link = document.createElement('a');
+				link.setAttribute('href', encodedUri);
+				link.setAttribute('download', 'load_report.csv');
+				newWindow.document.body.appendChild(link); // Append to new window's body
+				link.click();
+			});
+
+		// end of sai given code
+
 		// Table header
 		newWindow.document.write('<tr style="background-color: #fcec03;">');
 		newWindow.document.write(
@@ -1143,6 +1210,87 @@ function AdminReports() {
 			'<table style="width: 70%; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd;">'
 		);
 
+		// sai given code
+		newWindow.document.write(
+			'<button id="exportButton" style="position: absolute; top: 50px; right: 16%; font-size: 16px">Export to CSV</button>'
+		);
+		newWindow.document
+			.getElementById('exportButton')
+			.addEventListener('click', () => {
+				// Create CSV content with column names
+				const columnNames = [
+					'Created Date',
+					'Invoice No',
+					'Invoice Date',
+					'Transportation Cost',
+					'Loading Date',
+				];
+
+				const csvContent =
+					'data:text/csv;charset=utf-8,' +
+					[columnNames.join(',')]
+						.concat(
+							filteredDataByDate.map((invoice) => {
+								if (
+									invoice.consignmentdetails &&
+									invoice.consignmentdetails.itemdetails
+								) {
+									return [
+										invoice.invoicedetails && invoice.invoicedetails.invoicedate
+											? new Date(
+													invoice.invoicedetails.invoicedate
+											  ).toLocaleDateString('en-GB', {
+													day: '2-digit',
+													month: '2-digit',
+													year: 'numeric',
+											  })
+											: 'N/A',
+										invoice.invoicedetails && invoice.invoicedetails.invoiceno
+											? invoice.invoicedetails.invoiceno
+											: 'N/A',
+										invoice.invoicedetails && invoice.invoicedetails.invoicedate
+											? new Date(
+													invoice.invoicedetails.invoicedate
+											  ).toLocaleDateString('en-GB', {
+													day: '2-digit',
+													month: '2-digit',
+													year: 'numeric',
+											  })
+											: 'N/A',
+										invoice.boardingdetails && invoice.boardingdetails.partyrate
+											? invoice.boardingdetails.partyrate
+											: 'N/A',
+										invoice.boardingdetails &&
+										invoice.boardingdetails.dateofloading
+											? new Date(
+													invoice.boardingdetails.dateofloading
+											  ).toLocaleDateString('en-GB', {
+													day: '2-digit',
+													month: '2-digit',
+													year: 'numeric',
+											  })
+											: 'N/A',
+									].join(',');
+								} else {
+									return '';
+								}
+							})
+						)
+						.join('\n');
+
+				// Encode CSV content
+				const encodedUri = encodeURI(csvContent);
+
+				// Create a link element and trigger download
+				const link = document.createElement('a');
+				link.setAttribute('href', encodedUri);
+				link.setAttribute('download', 'day_report.csv');
+				newWindow.document.body.appendChild(link); // Append to new window's body
+				link.click();
+			});
+
+		// end of sai given code
+
 		// Table header
 		newWindow.document.write('<tr style="background-color: #fcec03;">');
 		newWindow.document.write(
@@ -1241,6 +1389,72 @@ function AdminReports() {
 			'<table style="width: 70%; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd;">'
 		);
 
+		// sai given code
+		newWindow.document.write(
+			'<button id="exportButton" style="position: absolute; top: 50px; right: 16%; font-size: 16px">Export to CSV</button>'
+		);
+		newWindow.document
+			.getElementById('exportButton')
+			.addEventListener('click', () => {
+				// Create CSV content with column names
+				const columnNames = [
+					'Date',
+					'Invoice No',
+					'Item Name',
+					'Item Amount',
+					'Item Tax',
+					'Item Quantity',
+				];
+
+				const csvContent =
+					'data:text/csv;charset=utf-8,' +
+					[columnNames.join(',')]
+						.concat(
+							filteredDataByDate.map((invoice) =>
+								invoice.consignmentdetails &&
+								invoice.consignmentdetails.itemdetails
+									? invoice.consignmentdetails.itemdetails
+											.map((item) =>
+												[
+													invoice.invoicedetails &&
+													invoice.invoicedetails.invoicedate
+														? new Date(
+																invoice.invoicedetails.invoicedate
+														  ).toLocaleDateString('en-GB', {
+																day: '2-digit',
+																month: '2-digit',
+																year: 'numeric',
+														  })
+														: 'N/A',
+													invoice.invoicedetails &&
+													invoice.invoicedetails.invoiceno
+														? invoice.invoicedetails.invoiceno
+														: 'N/A',
+													item.itemname ? item.itemname : 'N/A',
+													item.itemprice ? item.itemprice : 'N/A',
+													item.itemtaxrate ? item.itemtaxrate : 'N/A',
+													item.itemquantity ? item.itemquantity : 'N/A',
+												].join(',')
+											)
+											.join('\n')
+									: ''
+							)
+						)
+						.join('\n');
+
+				// Encode CSV content
+				const encodedUri = encodeURI(csvContent);
+
+				// Create a link element and trigger download
+				const link = document.createElement('a');
+				link.setAttribute('href', encodedUri);
+				link.setAttribute('download', 'item_report.csv');
+				newWindow.document.body.appendChild(link); // Append to new window's body
+				link.click();
+			});
+
+		// end of sai given code
+
 		// Table header
 		newWindow.document.write('<tr style="background-color: #fcec03;">');
 		newWindow.document.write(
@@ -1330,6 +1544,80 @@ function AdminReports() {
 		newWindow.document.write(
 			'<table style="width: 70%; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd;">'
 		);
+
+		// sai given code
+		newWindow.document.write(
+			'<button id="exportButton" style="position: absolute; top: 50px; right: 16%; font-size: 16px">Export to CSV</button>'
+		);
+		newWindow.document
+			.getElementById('exportButton')
+			.addEventListener('click', () => {
+				// Create CSV content with column names
+				const columnNames = [
+					'Vehicle No',
+					'Invoice Date',
+					'Invoice No',
+					'Transportation Cost',
+					'Driver Number',
+					'Vehicle Model',
+				];
+
+				const csvContent =
+					'data:text/csv;charset=utf-8,' +
+					[columnNames.join(',')]
+						.concat(
+							filteredDataByDate.map((invoice) => {
+								if (
+									invoice.consignmentdetails &&
+									invoice.consignmentdetails.itemdetails
+								) {
+									return [
+										invoice.vehicledetails &&
+										invoice.vehicledetails.vechiclenumber
+											? invoice.vehicledetails.vechiclenumber
+											: 'N/A',
+										invoice.invoicedetails && invoice.invoicedetails.invoicedate
+											? new Date(
+													invoice.invoicedetails.invoicedate
+											  ).toLocaleDateString('en-GB', {
+													day: '2-digit',
+													month: '2-digit',
+													year: 'numeric',
+											  })
+											: 'N/A',
+										invoice.invoicedetails && invoice.invoicedetails.invoiceno
+											? invoice.invoicedetails.invoiceno
+											: 'N/A',
+										invoice.boardingdetails && invoice.boardingdetails.partyrate
+											? invoice.boardingdetails.partyrate
+											: 'N/A',
+										invoice.vehicledetails &&
+										invoice.vehicledetails.drivernumber
+											? invoice.vehicledetails.drivernumber
+											: 'N/A',
+										invoice.vehicledetails.vechiclemodel
+											? invoice.vehicledetails.vechiclemodel
+											: 'N/A',
+									].join(',');
+								} else {
+									return '';
+								}
+							})
+						)
+						.join('\n');
+
+				// Encode CSV content
+				const encodedUri = encodeURI(csvContent);
+
+				// Create a link element and trigger download
+				const link = document.createElement('a');
+				link.setAttribute('href', encodedUri);
+				link.setAttribute('download', 'vehicle_report.csv');
+				newWindow.document.body.appendChild(link); // Append to new window's body
+				link.click();
+			});
+
+		// end of sai given code
 
 		// Table header
 		newWindow.document.write('<tr style="background-color: #fcec03;">');
@@ -1425,6 +1713,83 @@ function AdminReports() {
 		newWindow.document.write(
 			'<table style="width: 70%; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd;">'
 		);
+
+		// sai given code
+		newWindow.document.write(
+			'<button id="exportButton" style="position: absolute; top: 50px; right: 16%; font-size: 16px">Export to CSV</button>'
+		);
+		newWindow.document
+			.getElementById('exportButton')
+			.addEventListener('click', () => {
+				// Create CSV content with column names
+				const columnNames = [
+					'Driver Number',
+					'Vehicle No',
+					'Invoice No',
+					'Date',
+					'Vehicle Model',
+					'No of Items',
+				];
+
+				const csvContent =
+					'data:text/csv;charset=utf-8,' +
+					[columnNames.join(',')]
+						.concat(
+							filteredDataByDate.map((invoice) => {
+								if (
+									invoice.consignmentdetails &&
+									invoice.consignmentdetails.itemdetails
+								) {
+									const itemDetails = invoice.consignmentdetails.itemdetails;
+									return [
+										invoice.vehicledetails &&
+										invoice.vehicledetails.drivernumber
+											? invoice.vehicledetails.drivernumber
+											: 'N/A',
+										invoice.vehicledetails &&
+										invoice.vehicledetails.vechiclenumber
+											? invoice.vehicledetails.vechiclenumber
+											: 'N/A',
+										invoice.invoicedetails && invoice.invoicedetails.invoiceno
+											? invoice.invoicedetails.invoiceno
+											: 'N/A',
+										invoice.invoicedetails && invoice.invoicedetails.invoicedate
+											? new Date(
+													invoice.invoicedetails.invoicedate
+											  ).toLocaleDateString('en-GB', {
+													day: '2-digit',
+													month: '2-digit',
+													year: 'numeric',
+											  })
+											: 'N/A',
+										invoice.vehicledetails.vechiclemodel
+											? invoice.vehicledetails.vechiclemodel
+											: 'N/A',
+
+										invoice.boardingdetails && invoice.boardingdetails.partyrate
+											? invoice.boardingdetails.partyrate
+											: 'N/A',
+										itemDetails.length ? itemDetails.length : 'N/A',
+									].join(',');
+								} else {
+									return '';
+								}
+							})
+						)
+						.join('\n');
+
+				// Encode CSV content
+				const encodedUri = encodeURI(csvContent);
+
+				// Create a link element and trigger download
+				const link = document.createElement('a');
+				link.setAttribute('href', encodedUri);
+				link.setAttribute('download', 'driver_report.csv');
+				newWindow.document.body.appendChild(link); // Append to new window's body
+				link.click();
+			});
+
+		// end of sai given code
 
 		// Table header
 		newWindow.document.write('<tr style="background-color: #fcec03;">');
@@ -2522,14 +2887,14 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 										/>
 									</div>
 
-									<CSVLink
+									{/* <CSVLink
 										data={exportedData}
 										filename={`exported_data_${new Date().toISOString()}.csv`}
 										className='export-button'
 										target='_blank'
 									>
 										Export
-									</CSVLink>
+									</CSVLink> */}
 								</div>
 								<div style={{ margin: '10px' }}>
 									<div className='date-div'>
@@ -2614,7 +2979,7 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-load-body-row-item'>
-														{invoice.loadingdetails &&
+														{invoice.boardingdetails &&
 														invoice.boardingdetails.partyrate
 															? invoice.boardingdetails.partyrate
 															: 'N/A'}
@@ -2646,14 +3011,14 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 										/>
 									</div>
 
-									<CSVLink
+									{/* <CSVLink
 										data={exportedData}
 										filename={`exported_data_${new Date().toISOString()}.csv`}
 										className='export-button'
 										target='_blank'
 									>
 										Export
-									</CSVLink>
+									</CSVLink> */}
 								</div>
 								<div style={{ margin: '10px' }}>
 									<div className='date-div'>
@@ -2774,14 +3139,14 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 										/>
 									</div>
 
-									<CSVLink
+									{/* <CSVLink
 										data={exportedData}
 										filename={`exported_data_${new Date().toISOString()}.csv`}
 										className='export-button'
 										target='_blank'
 									>
 										Export
-									</CSVLink>
+									</CSVLink> */}
 								</div>
 								<div style={{ margin: '10px' }}>
 									<div className='date-div'>
@@ -2894,14 +3259,14 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 										/>
 									</div>
 
-									<CSVLink
+									{/* <CSVLink
 										data={exportedData}
 										filename={`exported_data_${new Date().toISOString()}.csv`}
 										className='export-button'
 										target='_blank'
 									>
 										Export
-									</CSVLink>
+									</CSVLink> */}
 								</div>
 								<div style={{ margin: '10px' }}>
 									<div className='date-div'>
@@ -3023,14 +3388,14 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 										/>
 									</div>
 
-									<CSVLink
+									{/* <CSVLink
 										data={exportedData}
 										filename={`exported_data_${new Date().toISOString()}.csv`}
 										className='export-button'
 										target='_blank'
 									>
 										Export
-									</CSVLink>
+									</CSVLink> */}
 								</div>
 								<div style={{ margin: '10px' }}>
 									<div className='date-div'>
@@ -3162,14 +3527,14 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 										/>
 									</div>
 
-									<CSVLink
+									{/* <CSVLink
 										data={exportedData}
 										filename={`exported_data_${new Date().toISOString()}.csv`}
 										className='export-button'
 										target='_blank'
 									>
 										Export
-									</CSVLink>
+									</CSVLink> */}
 								</div>
 								<div style={{ margin: '10px' }} className='agent-div'>
 									{/* Select Input */}

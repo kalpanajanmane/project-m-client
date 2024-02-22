@@ -197,43 +197,43 @@ function AdminCreateInvoice() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(dataToSend);
+		// console.log(dataToSend);
 
-		// // Check the length of items in dataToSend
-		// if (dataToSend && dataToSend.consignmentdetails.itemdetails.length >= 1) {
-		// 	try {
-		// 		const response = await fetch(`${API}invoice`, {
-		// 			method: 'POST',
-		// 			headers: {
-		// 				'Content-Type': 'application/json',
-		// 			},
-		// 			body: JSON.stringify(dataToSend),
-		// 		});
-		// 		if (response.ok) {
-		// 			const data = await response.json();
-		// 			console.log('Invoice created successfully:');
-		// 			toast.success('Invoice created successfully');
-		// 			setUrl(data._id);
-		// 			setPdfUrl(data.pdfUrl);
-		// 			setPreSignedUrl(data.preSignedUrl);
+		// Check the length of items in dataToSend
+		if (dataToSend && dataToSend.consignmentdetails.itemdetails.length >= 1) {
+			try {
+				const response = await fetch(`${API}invoice`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(dataToSend),
+				});
+				if (response.ok) {
+					const data = await response.json();
+					console.log('Invoice created successfully:');
+					toast.success('Invoice created successfully');
+					setUrl(data._id);
+					setPdfUrl(data.pdfUrl);
+					setPreSignedUrl(data.preSignedUrl);
 
-		// 			// Introduce a delay of 4 seconds before setting setIsModalOpen
-		// 			setTimeout(() => {
-		// 				setView(true);
-		// 				setIsModalOpen(true);
-		// 			}, 3000);
-		// 		} else {
-		// 			toast.error('Invoice creation failed');
-		// 		}
-		// 	} catch (error) {
-		// 		toast.error('Error creating invoice:', error);
-		// 	}
-		// } else {
-		// 	// Show an alert if the length is not greater than 1
-		// 	toast.info(
-		// 		'Please add Items in Consignment Details before creating invoice.'
-		// 	);
-		// }
+					// Introduce a delay of 4 seconds before setting setIsModalOpen
+					setTimeout(() => {
+						setView(true);
+						setIsModalOpen(true);
+					}, 3000);
+				} else {
+					toast.error('Invoice creation failed');
+				}
+			} catch (error) {
+				toast.error('Error creating invoice:', error);
+			}
+		} else {
+			// Show an alert if the length is not greater than 1
+			toast.info(
+				'Please add Items in Consignment Details before creating invoice.'
+			);
+		}
 	};
 
 	const validationSchema = Yup.object().shape({

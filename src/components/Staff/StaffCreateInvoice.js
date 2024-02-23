@@ -576,10 +576,14 @@ function AdminCreateInvoice() {
 			(party) => party._id === selectedPartyId
 		);
 
+		// Extracting the first word from partyname
+		const firstWordPartyName = selectedParty.partyname.split('-')[0].trim();
+
 		setDataToSend((prevData) => ({
 			...prevData,
 			boardingdetails: {
 				...prevData.boardingdetails,
+				partyname: firstWordPartyName, // Assigning the first word of partyname
 				partyref: selectedParty.partyrefno,
 				partyrate: selectedParty.partyrate,
 			},

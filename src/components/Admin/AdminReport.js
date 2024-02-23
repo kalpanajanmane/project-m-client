@@ -2631,6 +2631,9 @@ function AdminReports() {
 													Total Qty
 												</th>
 												<th className='reports-data-body-table-load-head-row-item'>
+													Party Name
+												</th>
+												<th className='reports-data-body-table-load-head-row-item'>
 													Ref. Code
 												</th>
 												<th className='reports-data-body-table-load-head-row-item'>
@@ -2728,6 +2731,12 @@ function AdminReports() {
 															</td>
 															<td className='reports-data-body-table-item-body-row-item'>
 																{item.itemquantity ? item.itemquantity : 'N/A'}
+															</td>
+															<td className='reports-data-body-table-load-body-row-item'>
+																{invoice.boardingdetails &&
+																invoice.boardingdetails.partyname
+																	? invoice.boardingdetails.partyname
+																	: 'N/A'}
 															</td>
 															<td className='reports-data-body-table-load-body-row-item'>
 																{invoice.boardingdetails &&

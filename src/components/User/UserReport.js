@@ -2278,6 +2278,9 @@ function UserReports() {
 													Total Qty
 												</th>
 												<th className='reports-data-body-table-load-head-row-item'>
+													Party Name
+												</th>
+												<th className='reports-data-body-table-load-head-row-item'>
 													Ref. Code
 												</th>
 												<th className='reports-data-body-table-load-head-row-item'>
@@ -2369,6 +2372,15 @@ function UserReports() {
 															</td>
 															<td className='reports-data-body-table-item-body-row-item'>
 																{item.itemquantity ? item.itemquantity : 'N/A'}
+															</td>
+															<td className='reports-data-body-table-load-body-row-item'>
+																{invoice.boardingdetails &&
+																invoice.boardingdetails.partyref
+																	? invoice.boardingdetails.partyref.substring(
+																			0,
+																			12
+																	  )
+																	: 'N/A'}
 															</td>
 															<td className='reports-data-body-table-load-body-row-item'>
 																{invoice.boardingdetails &&

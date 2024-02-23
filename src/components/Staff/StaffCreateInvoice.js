@@ -173,15 +173,16 @@ function AdminCreateInvoice() {
 		let value = e.target.value;
 
 		// Remove existing spaces
-		value = value.replace(/\s/g, '');
+		// value = value.replace(/\s/g, '');
 
-		// Inserting a space after the first 4 characters
-		value = value.substring(0, 4) + ' ' + value.substring(4);
+		// // Inserting a space after the first 4 characters
+		// value = value.substring(0, 4) + ' ' + value.substring(4);
 
-		// Inserting a space after the next 2 characters
-		value = value.substring(0, 7) + ' ' + value.substring(7);
+		// // Inserting a space after the next 2 characters
+		// value = value.substring(0, 7) + ' ' + value.substring(7);
 
-		value = value.toUpperCase();
+		// value = value.toUpperCase();
+		if (value.length > 4) value = value.slice(0, -4) + ' ' + value.slice(-4);
 
 		// console.log(value);
 

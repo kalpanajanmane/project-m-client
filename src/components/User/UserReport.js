@@ -2390,20 +2390,14 @@ function UserReports() {
 															</td>
 															<td className='reports-data-body-table-load-body-row-item'>
 																{invoice.boardingdetails &&
-																invoice.boardingdetails.partyref
-																	? invoice.boardingdetails.partyref.substring(
-																			0,
-																			12
-																	  )
+																invoice.boardingdetails.partyname
+																	? invoice.boardingdetails.partyname
 																	: 'N/A'}
 															</td>
 															<td className='reports-data-body-table-load-body-row-item'>
 																{invoice.boardingdetails &&
 																invoice.boardingdetails.partyref
-																	? invoice.boardingdetails.partyref.substring(
-																			0,
-																			12
-																	  )
+																	? invoice.boardingdetails.partyref
 																	: 'N/A'}
 															</td>
 															<td className='reports-data-body-table-load-body-row-item'>

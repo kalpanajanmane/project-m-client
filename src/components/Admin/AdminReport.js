@@ -926,6 +926,7 @@ function AdminReports() {
 					'Destination',
 					'Motor Vehicle No',
 					'Total Quantity',
+					'Party Name',
 					'Ref. Code',
 					'Bill Maker Name',
 					'Transport Cost',
@@ -977,6 +978,10 @@ function AdminReports() {
 														? invoice.vehicledetails.vechiclenumber
 														: 'N/A',
 													item.itemquantity ? item.itemquantity : '0',
+													invoice.boardingdetails &&
+													invoice.boardingdetails.partyname
+														? invoice.boardingdetails.partyname
+														: 'N/A',
 													invoice.boardingdetails &&
 													invoice.boardingdetails.partyref
 														? invoice.boardingdetails.partyref
@@ -1042,6 +1047,9 @@ function AdminReports() {
 		);
 		newWindow.document.write(
 			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Total Qty</th>'
+		);
+		newWindow.document.write(
+			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Party Name</th>'
 		);
 		newWindow.document.write(
 			'<th style="padding: 4px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Ref. Code</th>'
@@ -1131,8 +1139,15 @@ function AdminReports() {
 				);
 				newWindow.document.write(
 					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+						dataItem.boardingdetails && dataItem.boardingdetails.partyname
+							? dataItem.boardingdetails.partyname
+							: 'N/A'
+					}</td>`
+				);
+				newWindow.document.write(
+					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.boardingdetails && dataItem.boardingdetails.partyref
-							? dataItem.boardingdetails.partyref.substring(0, 12)
+							? dataItem.boardingdetails.partyref
 							: 'N/A'
 					}</td>`
 				);

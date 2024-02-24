@@ -167,6 +167,8 @@ function AdminInvoiceManagement() {
 											{invoice
 												? invoice.vehicledetails.drivernumber +
 												  ' ' +
+												invoice.buyerdetails.buyercompanyname +
+												  ' ' +
 												  invoice.loadingdetails.endpoint.toUpperCase() +
 												  ' ' +
 												  invoice.boardingdetails.partyref.toUpperCase() +

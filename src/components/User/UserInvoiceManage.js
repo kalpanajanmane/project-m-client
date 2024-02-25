@@ -14,6 +14,15 @@ import { useUserAuth } from './UserAuth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+function formatDate(date) {
+	const day = date.getDate().toString().padStart(2, '0');
+	const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+	const year = date.getFullYear();
+
+	// return `${day}/${month}/${year}`;
+	return `${year}/${month}/${day}`;
+}
+
 function UserInvoiceManagement() {
 	const auth = useUserAuth();
 	// const navigate = useNavigate();
@@ -21,6 +30,10 @@ function UserInvoiceManagement() {
 	// const [pageNumber, setPageNumber] = useState(0);
 	// const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
 	const [searchInput, setSearchInput] = useState('');
+
+	// Get today's date in the format "YYYY-MM-DD"
+	const today = new Date().toISOString().split('T')[0];
+	const [startDate, setStartDate] = useState(today);
 
 	const API = process.env.REACT_APP_API;
 	// const pdfUrlOriginal = `${API}download/${selectedInvoiceId}`;
@@ -38,25 +51,56 @@ function UserInvoiceManagement() {
 	);
 
 	const sortedInvoice = [...activeUsersInvoice].reverse();
-	const displayedInvoiceSearch = sortedInvoice.filter((item) => {
-		// const invoiceNo = item.invoicedetails?.invoiceno || '';
-		// const companyName = item.companydetails?.companyname || '';
-		const vehicleNumber = item.vehicledetails?.vechiclenumber || '';
+	const displayedInvoiceSearch = sortedInvoice
+		.filter((item) => {
+			// const invoiceNo = item.invoicedetails?.invoiceno || '';
+			// const companyName = item.companydetails?.companyname || '';
+			const vehicleNumber = item.vehicledetails?.vechiclenumber || '';
 
-		// Check if the search criteria is null or cannot be converted to lowercase
-		if (
-			// (invoiceNo &&
-			// 	invoiceNo.toLowerCase().includes(searchInput?.toLowerCase() ?? '')) ||
-			// (companyName &&
-			// 	companyName.toLowerCase().includes(searchInput?.toLowerCase() ?? '')) ||
-			vehicleNumber &&
-			vehicleNumber.toLowerCase().includes(searchInput?.toLowerCase() ?? '')
-		) {
-			return true;
-		}
+			// Check if the search criteria is null or cannot be converted to lowercase
+			if (
+				// (invoiceNo &&
+				// 	invoiceNo.toLowerCase().includes(searchInput?.toLowerCase() ?? '')) ||
+				// (companyName &&
+				// 	companyName.toLowerCase().includes(searchInput?.toLowerCase() ?? '')) ||
+				vehicleNumber &&
+				vehicleNumber.toLowerCase().includes(searchInput?.toLowerCase() ?? '')
+			) {
+				return true;
+			}
 
-		return false;
-	});
+			return false;
+		})
+		.filter((item) => {
+			const itemDate = new Date(item.invoicedetails.invoicedate);
+			const itemDate_format = formatDate(itemDate);
+
+			// Check if startDate and endDate are valid date strings
+			const isStartDateValid =
+				startDate !== '' && !isNaN(new Date(startDate).getTime());
+
+			if (
+				(isStartDateValid &&
+					itemDate_format === formatDate(new Date(startDate))) ||
+				!isStartDateValid
+			) {
+				return true;
+			}
+			return false;
+		})
+		.map((item) => {
+			// const toDate = endDate ? new Date(endDate) : null;
+
+			// if (toDate) {
+			// 	toDate.setDate(toDate.getDate() + 1);
+			// }
+
+			return {
+				...item,
+				fromDate: startDate || null,
+				// toDate: toDate || null,
+			};
+		});
 	// 	.slice(pageNumber * itemsPerPage, (pageNumber + 1) * itemsPerPage);
 
 	// const pageCount = Math.ceil(sortedInvoice.length / itemsPerPage);
@@ -64,6 +108,12 @@ function UserInvoiceManagement() {
 	// const changePage = ({ selected }) => {
 	// 	setPageNumber(selected);
 	// };
+
+	const handleFromDateSelect = (e) => {
+		const selectedFromDate = e.target.value;
+		setStartDate(selectedFromDate);
+		// console.log(selectedFromDate);
+	};
 
 	useEffect(() => {
 		axios
@@ -96,6 +146,13 @@ function UserInvoiceManagement() {
 							className='invoice-manage-search-input'
 							value={searchInput}
 							onChange={(e) => setSearchInput(e.target.value)}
+						/>
+						<label className='date-label'>Date : </label>
+						<input
+							className='date-select'
+							type='date'
+							value={startDate}
+							onChange={handleFromDateSelect}
 						/>
 					</div>
 					<div className='invoice-management-data-body'>
@@ -138,8 +195,9 @@ function UserInvoiceManagement() {
 											{idx + 1}
 										</td>
 										<td className='invoice-management-data-body-table-data'>
-											{invoice.invoicedetails.invoiceno?.substring(0, 12) ??
-												'N/A'}
+											{invoice.invoicedetails.invoiceno.slice(0, 6) +
+												' ' +
+												invoice.invoicedetails.invoiceno.slice(-4) ?? 'N/A'}
 										</td>
 										<td className='invoice-management-data-body-table-data'>
 											{invoice.companydetails?.companyname?.substring(0, 12) ??

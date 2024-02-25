@@ -725,7 +725,9 @@ function UserReports() {
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 					dataItem.invoicedetails && dataItem.invoicedetails.invoiceno
-						? dataItem.invoicedetails.invoiceno.substring(0, 12)
+						? dataItem.invoicedetails.invoiceno.slice(0, 6) +
+						  ' ' +
+						  dataItem.invoicedetails.invoiceno.slice(-4)
 						: 'N/A'
 				}</td>`
 			);
@@ -1169,7 +1171,7 @@ function UserReports() {
 			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Created Date</th>'
 		);
 		newWindow.document.write(
-			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Invoice NO</th>'
+			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Invoice No</th>'
 		);
 		newWindow.document.write(
 			'<th style="padding: 8px; font-size: 20px; text-align: center; border: 1px solid #ddd;">Invoice Date</th>'
@@ -1200,7 +1202,9 @@ function UserReports() {
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 					dataItem.invoicedetails && dataItem.invoicedetails.invoiceno
-						? dataItem.invoicedetails.invoiceno.substring(0, 12)
+						? dataItem.invoicedetails.invoiceno.slice(0, 6) +
+						  ' ' +
+						  dataItem.invoicedetails.invoiceno.slice(-4)
 						: 'N/A'
 				}</td>`
 			);
@@ -1303,11 +1307,12 @@ function UserReports() {
 				newWindow.document.write(
 					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.invoicedetails && dataItem.invoicedetails.invoiceno
-							? dataItem.invoicedetails.invoiceno.substring(0, 12)
+							? invoice.invoicedetails.invoiceno.slice(0, 6) +
+							  ' ' +
+							  invoice.invoicedetails.invoiceno.slice(-4)
 							: 'N/A'
 					}</td>`
 				);
-
 				newWindow.document.write(
 					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						item.itemname ? item.itemname : 'N/A'
@@ -1399,7 +1404,9 @@ function UserReports() {
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 					dataItem.invoicedetails && dataItem.invoicedetails.invoiceno
-						? dataItem.invoicedetails.invoiceno.substring(0, 12)
+						? invoice.invoicedetails.invoiceno.slice(0, 6) +
+						  ' ' +
+						  invoice.invoicedetails.invoiceno.slice(-4)
 						: 'N/A'
 				}</td>`
 			);
@@ -1490,7 +1497,9 @@ function UserReports() {
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 					dataItem.invoicedetails && dataItem.invoicedetails.invoiceno
-						? dataItem.invoicedetails.invoiceno.substring(0, 12)
+						? invoice.invoicedetails.invoiceno.slice(0, 6) +
+						  ' ' +
+						  invoice.invoicedetails.invoiceno.slice(-4)
 						: 'N/A'
 				}</td>`
 			);
@@ -2612,10 +2621,9 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													<td className='reports-data-body-table-load-body-row-item'>
 														{invoice.invoicedetails &&
 														invoice.invoicedetails.invoiceno
-															? invoice.invoicedetails.invoiceno.substring(
-																	0,
-																	12
-															  )
+															? invoice.invoicedetails.invoiceno.slice(0, 6) +
+															  ' ' +
+															  invoice.invoicedetails.invoiceno.slice(-4)
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-load-body-row-item'>
@@ -2747,10 +2755,9 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													<td className='reports-data-body-table-day-body-row-item'>
 														{invoice.invoicedetails &&
 														invoice.invoicedetails.invoiceno
-															? invoice.invoicedetails.invoiceno.substring(
-																	0,
-																	12
-															  )
+															? invoice.invoicedetails.invoiceno.slice(0, 6) +
+															  ' ' +
+															  invoice.invoicedetails.invoiceno.slice(-4)
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-day-body-row-item'>
@@ -2880,10 +2887,12 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 															<td className='reports-data-body-table-load-body-row-item'>
 																{invoice.invoicedetails &&
 																invoice.invoicedetails.invoiceno
-																	? invoice.invoicedetails.invoiceno.substring(
+																	? invoice.invoicedetails.invoiceno.slice(
 																			0,
-																			12
-																	  )
+																			6
+																	  ) +
+																	  ' ' +
+																	  invoice.invoicedetails.invoiceno.slice(-4)
 																	: 'N/A'}
 															</td>
 															<td className='reports-data-body-table-item-body-row-item'>
@@ -3006,10 +3015,9 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													<td className='reports-data-body-table-load-body-row-item'>
 														{invoice.invoicedetails &&
 														invoice.invoicedetails.invoiceno
-															? invoice.invoicedetails.invoiceno.substring(
-																	0,
-																	12
-															  )
+															? invoice.invoicedetails.invoiceno.slice(0, 6) +
+															  ' ' +
+															  invoice.invoicedetails.invoiceno.slice(-4)
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-day-body-row-item'>
@@ -3131,10 +3139,9 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													<td className='reports-data-body-table-load-body-row-item'>
 														{invoice.invoicedetails &&
 														invoice.invoicedetails.invoiceno
-															? invoice.invoicedetails.invoiceno.substring(
-																	0,
-																	12
-															  )
+															? invoice.invoicedetails.invoiceno.slice(0, 6) +
+															  ' ' +
+															  invoice.invoicedetails.invoiceno.slice(-4)
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-day-body-row-item'>
@@ -3283,10 +3290,9 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													<td className='reports-data-body-table-load-body-row-item'>
 														{invoice.invoicedetails &&
 														invoice.invoicedetails.invoiceno
-															? invoice.invoicedetails.invoiceno.substring(
-																	0,
-																	12
-															  )
+															? invoice.invoicedetails.invoiceno.slice(0, 6) +
+															  ' ' +
+															  invoice.invoicedetails.invoiceno.slice(-4)
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-driver-body-row-item'>

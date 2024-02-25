@@ -1706,6 +1706,9 @@ function AdminCreateInvoice() {
 										style={{ display: 'flex', justifyContent: 'space-between' }}
 									>
 										<p>{dataToSend.vehicledetails?.drivernumber}</p>
+										<p>
+											{dataToSend.buyerdetails?.buyercompanyname.slice(0, 8)}
+										</p>
 										<p>{dataToSend.loadingdetails?.endpoint.toUpperCase()}</p>
 										<p>{dataToSend.boardingdetails?.partyref}</p>
 										<p>{dataToSend.loadingdetails?.startpoint.toUpperCase()}</p>

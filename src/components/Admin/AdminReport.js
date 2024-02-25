@@ -1335,14 +1335,15 @@ function AdminReports() {
 			newWindow.document.write('<tr>');
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
-					dataItem.invoicedetails.invoicecreatedate
-						? new Date(
-								dataItem.invoicedetails.invoicecreatedate
-						  ).toLocaleDateString('en-GB', {
-								day: '2-digit',
-								month: '2-digit',
-								year: 'numeric',
-						  })
+					dataItem.invoicedetails.invoicedate
+						? new Date(dataItem.invoicedetails.invoicedate).toLocaleDateString(
+								'en-GB',
+								{
+									day: '2-digit',
+									month: '2-digit',
+									year: 'numeric',
+								}
+						  )
 						: 'N/A'
 				}</td>`
 			);
@@ -3116,9 +3117,9 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													className='reports-data-body-table-day-body-row'
 												>
 													<td className='reports-data-body-table-day-body-row-item'>
-														{invoice.invoicedetails.invoicecreatedate
+														{invoice.invoicedetails.invoicedate
 															? new Date(
-																	invoice.invoicedetails.invoicecreatedate
+																	invoice.invoicedetails.invoicedate
 															  ).toLocaleDateString('en-GB', {
 																	day: '2-digit',
 																	month: '2-digit',

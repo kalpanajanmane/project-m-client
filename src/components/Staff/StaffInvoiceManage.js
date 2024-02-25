@@ -236,6 +236,8 @@ function StaffInvoiceManagement() {
 											{invoice
 												? invoice.vehicledetails.drivernumber +
 												  ' ' +
+												  invoice.buyerdetails.buyercompanyname.slice(0, 8) +
+												  ' ' +
 												  invoice.loadingdetails.endpoint.toUpperCase() +
 												  ' ' +
 												  invoice.boardingdetails.partyref.toUpperCase() +

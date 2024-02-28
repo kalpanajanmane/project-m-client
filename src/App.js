@@ -53,6 +53,7 @@ import StaffPdfViewer from './components/Staff/StaffInvoiceView';
 import UserPdfViewer from './components/User/UserInvoiceView';
 import StaffPasswordChange from './components/Staff/StaffPasswordChange';
 import UserPasswordChange from './components/User/UserPasswordChange';
+import UserEditInvoice from './components/User/UserEditInvoice';
 
 function App() {
 	return (
@@ -320,6 +321,11 @@ function App() {
 								</ReqUserAuth>
 							}
 						/>
+						<Route path='/usereditinv/:id' element={
+					<ReqUserAuth>
+					<UserEditInvoice />	
+					</ReqUserAuth>
+							} />
 						<Route
 							path='/userinvdash'
 							element={

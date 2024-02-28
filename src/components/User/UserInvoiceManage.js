@@ -4,6 +4,7 @@ import '../Admin/AdminInvoiceManage.css';
 import background from '../images/Desktop.png';
 // import ReactPaginate from 'react-paginate';
 import UserNavbar from './UserNavbar';
+import copy from "clipboard-copy";
 // import PdfViewer from './AdminInvoiceView';
 // import Modal from 'react-modal';
 // import { useNavigate } from 'react-router-dom';
@@ -11,9 +12,12 @@ import UserNavbar from './UserNavbar';
 // import copy from 'clipboard-copy';
 import InvoiceAccordion from '../Admin/InvoiceAccordion';
 import { useUserAuth } from './UserAuth';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
+
+import { ObjectId } from 'bson-objectid';
 function formatDate(date) {
 	const day = date.getDate().toString().padStart(2, '0');
 	const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
@@ -25,6 +29,7 @@ function formatDate(date) {
 
 function UserInvoiceManagement() {
 	const auth = useUserAuth();
+	const navigate = useNavigate();
 	// const navigate = useNavigate();
 	const [invoice, setInvoice] = useState([]);
 	// const [pageNumber, setPageNumber] = useState(0);
@@ -36,6 +41,9 @@ function UserInvoiceManagement() {
 	const [startDate, setStartDate] = useState(today);
 
 	const API = process.env.REACT_APP_API;
+	const API2 = process.env.REACT_APP_URL;
+
+	
 	// const pdfUrlOriginal = `${API}download/${selectedInvoiceId}`;
 	// const pdfUrlDuplicate = `${API}download2/${selectedInvoiceId}`;
 	// const ViewURLOriginal = `https://docs.google.com/viewer?url=${encodeURIComponent(
@@ -126,6 +134,32 @@ function UserInvoiceManagement() {
 			});
 	}, [API]);
 
+
+	const handleCopyLink = async (urlinvoiceno) => {
+		try {
+			// Encode the urlinvoiceno to base64
+			const encodedUrl = btoa(urlinvoiceno);
+			
+			// Construct the original URL with the encoded urlinvoiceno
+			const originalUrl = `${API2}${encodedUrl}`;
+			
+			// Copy the original URL
+			copy(originalUrl);
+			
+			// Show success message
+			toast.success("Original link copied to clipboard!");
+		} catch (error) {
+			console.error("Error:", error);
+			toast.error("Error copying the original link.");
+		}
+	};
+
+	const handleEdit = (id) => {
+		navigate(`/usereditinv/${id}`);
+	  }
+	
+	  
+	
 	return (
 		<div
 			style={{
@@ -182,6 +216,12 @@ function UserInvoiceManagement() {
 									</th>
 									<th className='invoice-management-data-body-table-header'>
 										Action
+									</th>
+									<th className='invoice-management-data-body-table-header'>
+										Edit
+									</th>
+									<th className='invoice-management-data-body-table-header'>
+										Copy Link 2
 									</th>
 								</tr>
 							</thead>
@@ -270,6 +310,26 @@ function UserInvoiceManagement() {
 														.slice(-4)
 												}
 											/>
+										</td>
+										<td className='invoice-management-data-body-table-data'>
+											<button
+												onClick={() => {
+													handleEdit(invoice._id);
+												}}
+												className='invoice-management-data-body-table-data-button'
+											>
+												Edit
+											</button>
+										</td>
+										<td className='invoice-management-data-body-table-data'>
+											 <button
+												onClick={() => {
+													handleCopyLink(invoice._id);
+												}}
+												className='invoice-management-data-body-table-data-button'
+											>
+												Copy
+											</button>
 										</td>
 									</tr>
 								))}

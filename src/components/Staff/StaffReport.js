@@ -780,17 +780,57 @@ function StaffReports() {
 	const handleShowMisDataByDate = () => {
 		let datatoIterate;
 		// console.log('lllllllllllllll');
-
+		// console.log('handleShowMisDataByDate',groupedData);
 		if (filteredDataByDate) {
-			datatoIterate = filteredDataByDate;
+			//console.log('inside first loop')
+			datatoIterate = filteredDataByDate
+			.map((item) => {
+				
+				// Calculate total quantity for each item
+				let totalQuantity = 0;
+				if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
+				item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+					totalQuantity += itemDetail.itemquantity;
+				});
+				}
+				// Assign totalQuantity to the item
+				item.totalQuantity = totalQuantity;
+				return {
+					...item,
+					totalQuantity: totalQuantity,
+					
+				};
+			});
 			// console.log('ihandleShowMisDataByDate n first if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch) {
-			datatoIterate = displayedMisInvoiceSearch;
+			//console.log('inside this loop')
+			datatoIterate = displayedMisInvoiceSearch
+			.map((item) => {
+				
+				// Calculate total quantity for each item
+				let totalQuantity = 0;
+				if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
+				item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+					totalQuantity += itemDetail.itemquantity;
+				});
+				}
+				// Assign totalQuantity to the item
+				item.totalQuantity = totalQuantity;
+				return {
+					...item,
+					totalQuantity: totalQuantity,
+					
+				};
+			});
 			// console.log('handleShowMisDataByDate in second if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch && filteredDataByDate) {
+			let grouptoIterate;
+			grouptoIterate = displayedMisInvoiceSearch
+
 			datatoIterate = displayedMisInvoiceSearch
+			// datatoIterate = groupedData[displayedMisInvoiceSearch[0].vehicledetails.vechiclenumber].items[0]
 				.filter((item) => {
 					const itemDate = new Date(item.invoicedetails.invoicedate);
 					// console.log('handleShowMisDataByDate Item date:', itemDate);
@@ -828,14 +868,24 @@ function StaffReports() {
 						// Add one day to the toDate
 						toDate.setDate(toDate.getDate() + 1);
 					}
-					// console.log('toDate', toDate);
+					// Calculate total quantity for each item
+					let totalQuantity = 0;
+					if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
+					item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+						totalQuantity += itemDetail.itemquantity;
+					});
+					}
 
+					// Assign totalQuantity to the item
+					item.totalQuantity = totalQuantity;
 					return {
 						...item,
+						totalQuantity: totalQuantity,
 						fromDate: startDate || null,
 						toDate: toDate || null,
 					};
 				});
+				//console.log('Final Data:', datatoIterate);
 		}
 
 		const newWindow = window.open('', '_blank');
@@ -1016,7 +1066,8 @@ function StaffReports() {
 		let totalAmount = 0;
 
 		datatoIterate.forEach((dataItem, index) => {
-			dataItem.consignmentdetails.itemdetails.forEach((item, index) => {
+			// dataItem.consignmentdetails.itemdetails.forEach((item, index) => {
+			// dataItem.vehicledetails.vechiclenumber.forEach((item, index) => {
 				newWindow.document.write('<tr>');
 
 				newWindow.document.write(
@@ -1076,7 +1127,8 @@ function StaffReports() {
 				);
 				newWindow.document.write(
 					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						item.itemquantity ? item.itemquantity : 'N/A'
+						// item.itemquantity ? item.itemquantity : 'N/A'
+						dataItem.totalQuantity ? dataItem.totalQuantity : 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
@@ -1109,35 +1161,47 @@ function StaffReports() {
 				);
 				// newWindow.document.write(
 				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-				// 		item.itemweight ? item.itemweight : 'N/A'
+				// 		// item.itemweight ? item.itemweight : 'N/A'
+				// 		dataItem.itemweight ? dataItem.itemweight : 'N/A'
 				// 	}</td>`
 				// );
 				// newWindow.document.write(
 				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-				// 		item.itemtaxrate ? item.itemtaxrate : 'N/A'
+				// 		// item.itemtaxrate ? item.itemtaxrate : 'N/A'
+				// 		dataItem.itemweight ? dataItem.itemweight : 'N/A'
 				// 	}</td>`
 				// );
 				newWindow.document.write(
 					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						typeof item.itemquantity === 'number' &&
+						// typeof item.itemquantity === 'number' &&
+						// typeof dataItem.boardingdetails.partyrate === 'number'
+						// 	? (
+						// 			item.itemquantity * dataItem.boardingdetails.partyrate
+						// 	  ).toFixed(2)
+						// 	: 'N/A'
+						typeof dataItem.totalQuantity === 'number' &&
 						typeof dataItem.boardingdetails.partyrate === 'number'
 							? (
-									item.itemquantity * dataItem.boardingdetails.partyrate
+									dataItem.totalQuantity * dataItem.boardingdetails.partyrate
 							  ).toFixed(2)
 							: 'N/A'
 					}</td>`
 				);
 				// Calculate and update the total amount
 				const itemTotal =
-					typeof item.itemquantity === 'number' &&
+					// typeof item.itemquantity === 'number' &&
+					// typeof dataItem.boardingdetails.partyrate === 'number'
+					// 	? item.itemquantity * dataItem.boardingdetails.partyrate
+					// 	: 0;
+					typeof dataItem.totalQuantity === 'number' &&
 					typeof dataItem.boardingdetails.partyrate === 'number'
-						? item.itemquantity * dataItem.boardingdetails.partyrate
+						? dataItem.totalQuantity * dataItem.boardingdetails.partyrate
 						: 0;
 
 				totalAmount += itemTotal;
 
 				newWindow.document.write('</tr>');
-			});
+			// });
 		});
 
 		newWindow.document.write('</table>');
@@ -2252,6 +2316,7 @@ function StaffReports() {
 										className='export-button'
 										target='_blank'
 									>
+									
 										Export
 									</CSVLink> */}
 								</div>

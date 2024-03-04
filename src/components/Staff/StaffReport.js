@@ -1068,7 +1068,12 @@ function StaffReports() {
 		  // Create a link element and trigger download
 		  const link = document.createElement('a');
 		  link.setAttribute('href', encodedUri);
-		  link.setAttribute('download', 'mis_report.csv');
+		  // Generate datetime string
+		  const currentDatetime = new Date().toISOString().replace(/:/g, '-'); // Example: 2022-03-01T14-35-45.123Z
+
+		  // Create filename with datetime
+		  link.setAttribute('download', `mis_report_${currentDatetime}.csv`);
+		//   link.setAttribute('download', 'mis_report.csv');
 		  newWindow.document.body.appendChild(link); // Append to new window's body
 		  link.click();
 		});

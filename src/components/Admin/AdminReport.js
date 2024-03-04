@@ -986,95 +986,176 @@ function AdminReports() {
 					'Transport Cost',
 					'Total',
 				];
+				console.log('datatoIterate',datatoIterate)
+			// 	const csvContent =
+			// 		'data:text/csv;charset=utf-8,' +
+			// 		[columnNames.join(',')]
+			// 			.concat(
+			// 				// datatoIterate.map((invoice) =>
+			// 				datatoIterate
+			// 				.map((item) => {
+				
+			// 					// Calculate total quantity for each item
+			// 					let totalQuantity = 0;
+			// 					if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
+			// 					item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+			// 						totalQuantity += itemDetail.itemquantity;
+			// 					});
+			// 					}
+			// 					// Assign totalQuantity to the item
+			// 					item.totalQuantity = totalQuantity;
+			// 					return {
+			// 						...item,
+			// 						totalQuantity: totalQuantity,
+									
+			// 					};
+			// 				}),
+			// 				// datatoIterate.map((invoice) =>
+			// 				// 	invoice.consignmentdetails &&
+			// 				// 	invoice.consignmentdetails.itemdetails
+			// 				// 		? invoice.consignmentdetails.itemdetails
+								
+			// 				// 				.map((item) =>
+			// 				// 					[
+			// 										invoice.invoicedetails &&
+			// 										invoice.invoicedetails.invoicedate
+			// 											? new Date(
+			// 													invoice.invoicedetails.invoicedate
+			// 											  ).toLocaleDateString('en-GB', {
+			// 													day: '2-digit',
+			// 													month: '2-digit',
+			// 													year: 'numeric',
+			// 											  })
+			// 											: 'N/A',
+			// 										invoice.invoicedetails &&
+			// 										invoice.invoicedetails.invoiceid
+			// 											? invoice.invoicedetails.invoiceid
+			// 											: 'N/A',
+			// 										invoice.sellerdetails &&
+			// 										invoice.sellerdetails.sellercompanyname
+			// 											? invoice.sellerdetails.sellercompanyname
+			// 											: 'N/A',
+			// 										invoice.buyerdetails &&
+			// 										invoice.buyerdetails.buyercompanyname
+			// 											? invoice.buyerdetails.buyercompanyname
+			// 											: 'N/A',
+			// 										invoice.loadingdetails &&
+			// 										invoice.loadingdetails.startpoint
+			// 											? invoice.loadingdetails.startpoint
+			// 											: 'N/A',
+			// 										invoice.loadingdetails &&
+			// 										invoice.loadingdetails.endpoint
+			// 											? invoice.loadingdetails.endpoint
+			// 											: 'N/A',
+			// 										invoice.vehicledetails &&
+			// 										invoice.vehicledetails.vechiclenumber
+			// 											? invoice.vehicledetails.vechiclenumber
+			// 											: 'N/A',
+			// 										item.itemquantity ? item.itemquantity : '0',
+			// 										invoice.boardingdetails &&
+			// 										invoice.boardingdetails.partyname
+			// 											? invoice.boardingdetails.partyname
+			// 											: 'N/A',
+			// 										invoice.boardingdetails &&
+			// 										invoice.boardingdetails.partyref
+			// 											? invoice.boardingdetails.partyref
+			// 											: 'N/A',
+			// 										invoice.invoicedetails &&
+			// 										invoice.invoicedetails.invoicemakername
+			// 											? invoice.invoicedetails.invoicemakername
+			// 											: 'N/A',
+			// 										invoice.boardingdetails &&
+			// 										invoice.boardingdetails.partyrate
+			// 											? invoice.boardingdetails.partyrate
+			// 											: 'N/A',
+			// 										typeof item.itemquantity === 'number' &&
+			// 										typeof invoice.boardingdetails.partyrate === 'number'
+			// 											? (
+			// 													item.itemquantity *
+			// 													invoice.boardingdetails.partyrate
+			// 											  ).toFixed(2)
+			// 											: 'N/A',
+			// 			// 						].join(',')
+			// 			// 					)
+			// 			// 					.join('\n')
+			// 			// 			: ''
+			// 				)
+			// 			// )
+			// 			.join('\n');
 
-				const csvContent =
-					'data:text/csv;charset=utf-8,' +
-					[columnNames.join(',')]
-						.concat(
-							datatoIterate.map((invoice) =>
-								invoice.consignmentdetails &&
-								invoice.consignmentdetails.itemdetails
-									? invoice.consignmentdetails.itemdetails
-											.map((item) =>
-												[
-													invoice.invoicedetails &&
-													invoice.invoicedetails.invoicedate
-														? new Date(
-																invoice.invoicedetails.invoicedate
-														  ).toLocaleDateString('en-GB', {
-																day: '2-digit',
-																month: '2-digit',
-																year: 'numeric',
-														  })
-														: 'N/A',
-													invoice.invoicedetails &&
-													invoice.invoicedetails.invoiceid
-														? invoice.invoicedetails.invoiceid
-														: 'N/A',
-													invoice.sellerdetails &&
-													invoice.sellerdetails.sellercompanyname
-														? invoice.sellerdetails.sellercompanyname
-														: 'N/A',
-													invoice.buyerdetails &&
-													invoice.buyerdetails.buyercompanyname
-														? invoice.buyerdetails.buyercompanyname
-														: 'N/A',
-													invoice.loadingdetails &&
-													invoice.loadingdetails.startpoint
-														? invoice.loadingdetails.startpoint
-														: 'N/A',
-													invoice.loadingdetails &&
-													invoice.loadingdetails.endpoint
-														? invoice.loadingdetails.endpoint
-														: 'N/A',
-													invoice.vehicledetails &&
-													invoice.vehicledetails.vechiclenumber
-														? invoice.vehicledetails.vechiclenumber
-														: 'N/A',
-													item.itemquantity ? item.itemquantity : '0',
-													invoice.boardingdetails &&
-													invoice.boardingdetails.partyname
-														? invoice.boardingdetails.partyname
-														: 'N/A',
-													invoice.boardingdetails &&
-													invoice.boardingdetails.partyref
-														? invoice.boardingdetails.partyref
-														: 'N/A',
-													invoice.invoicedetails &&
-													invoice.invoicedetails.invoicemakername
-														? invoice.invoicedetails.invoicemakername
-														: 'N/A',
-													invoice.boardingdetails &&
-													invoice.boardingdetails.partyrate
-														? invoice.boardingdetails.partyrate
-														: 'N/A',
-													typeof item.itemquantity === 'number' &&
-													typeof invoice.boardingdetails.partyrate === 'number'
-														? (
-																item.itemquantity *
-																invoice.boardingdetails.partyrate
-														  ).toFixed(2)
-														: 'N/A',
-												].join(',')
-											)
-											.join('\n')
-									: ''
-							)
-						)
-						.join('\n');
+			// 	// Encode CSV content
+			// 	const encodedUri = encodeURI(csvContent);
 
-				// Encode CSV content
-				const encodedUri = encodeURI(csvContent);
+			// 	// Create a link element and trigger download
+			// 	const link = document.createElement('a');
+			// 	link.setAttribute('href', encodedUri);
+			// 	link.setAttribute('download', 'mis_report.csv');
+			// 	newWindow.document.body.appendChild(link); // Append to new window's body
+			// 	link.click();
+			// });
+			// end of sai given code
+			// start of shobha code 3/4/2024
+			const csvContent =
+			'data:text/csv;charset=utf-8,' +
+			[columnNames.join(',')].concat(
+			  datatoIterate.map((invoice) => [
+				invoice.invoicedetails && invoice.invoicedetails.invoicedate
+				  ? new Date(invoice.invoicedetails.invoicedate).toLocaleDateString('en-GB', {
+					  day: '2-digit',
+					  month: '2-digit',
+					  year: 'numeric',
+					})
+				  : 'N/A',
+				invoice.invoicedetails && invoice.invoicedetails.invoiceid
+				  ? invoice.invoicedetails.invoiceid
+				  : 'N/A',
+				invoice.sellerdetails && invoice.sellerdetails.sellercompanyname
+				  ? invoice.sellerdetails.sellercompanyname
+				  : 'N/A',
+				invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
+				  ? invoice.buyerdetails.buyercompanyname
+				  : 'N/A',
+				invoice.loadingdetails && invoice.loadingdetails.startpoint
+				  ? invoice.loadingdetails.startpoint
+				  : 'N/A',
+				invoice.loadingdetails && invoice.loadingdetails.endpoint
+				  ? invoice.loadingdetails.endpoint
+				  : 'N/A',
+				invoice.vehicledetails && invoice.vehicledetails.vechiclenumber
+				  ? invoice.vehicledetails.vechiclenumber
+				  : 'N/A',
+				invoice.totalQuantity !== undefined ? invoice.totalQuantity : 'N/A', // Using the updated totalQuantity from the previous code
+				invoice.boardingdetails && invoice.boardingdetails.partyname
+				  ? invoice.boardingdetails.partyname
+				  : 'N/A',
+				invoice.boardingdetails && invoice.boardingdetails.partyref
+				  ? invoice.boardingdetails.partyref
+				  : 'N/A',
+				invoice.invoicedetails && invoice.invoicedetails.invoicemakername
+				  ? invoice.invoicedetails.invoicemakername
+				  : 'N/A',
+				invoice.boardingdetails && invoice.boardingdetails.partyrate
+				  ? invoice.boardingdetails.partyrate
+				  : 'N/A',
+				typeof invoice.totalQuantity === 'number' &&
+				typeof invoice.boardingdetails.partyrate === 'number'
+				  ? (invoice.totalQuantity * invoice.boardingdetails.partyrate).toFixed(2)
+				  : 'N/A',
+			  ].join(','))
+			).join('\n');
+		
+		  // Encode CSV content
+		  const encodedUri = encodeURI(csvContent);
+		
+		  // Create a link element and trigger download
+		  const link = document.createElement('a');
+		  link.setAttribute('href', encodedUri);
+		  link.setAttribute('download', 'mis_report.csv');
+		  newWindow.document.body.appendChild(link); // Append to new window's body
+		  link.click();
+		});
 
-				// Create a link element and trigger download
-				const link = document.createElement('a');
-				link.setAttribute('href', encodedUri);
-				link.setAttribute('download', 'mis_report.csv');
-				newWindow.document.body.appendChild(link); // Append to new window's body
-				link.click();
-			});
-
-		// end of sai given code
+		// end of shobha given code  4/3/2024
 
 		// Table header
 		newWindow.document.write('<tr style="background-color: #fcec03;">');

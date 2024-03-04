@@ -25,10 +25,9 @@ const UserEditInvoice = () => {
   useEffect(() => {
     const fetchInvoiceData = async () => {
       try {
-        const response = await fetch(${API}invoice/${id});
+        const response = await fetch(`${API}invoice/${id}`);
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
           setFormData(data);
           setLoading(false);
         } else {
@@ -43,7 +42,7 @@ const UserEditInvoice = () => {
     const fetchSelectBoxData = async () => {
       try {
         // Fetch companies data
-        const companiesResponse = await fetch(${API}company);
+        const companiesResponse = await fetch(`${API}company`);
         if (companiesResponse.ok) {
           const companiesData = await companiesResponse.json();
           setCompanies(companiesData);
@@ -53,7 +52,7 @@ const UserEditInvoice = () => {
         }
     
         // Fetch sellers data
-        const sellersResponse = await fetch(${API}seller);
+        const sellersResponse = await fetch(`${API}seller`);
         if (sellersResponse.ok) {
           const sellersData = await sellersResponse.json();
           setSellers(sellersData);
@@ -63,7 +62,7 @@ const UserEditInvoice = () => {
         }
     
         // Fetch buyers data
-        const buyersResponse = await fetch(${API}buyer);
+        const buyersResponse = await fetch(`${API}buyer`);
         if (buyersResponse.ok) {
           const buyersData = await buyersResponse.json();
           setBuyers(buyersData);
@@ -73,7 +72,7 @@ const UserEditInvoice = () => {
         }
     
         // Fetch consignments data
-        const consignmentsResponse = await fetch(${API}consignment);
+        const consignmentsResponse = await fetch(`${API}consignment`);
         if (consignmentsResponse.ok) {
           const consignmentsData = await consignmentsResponse.json();
           setConsignments(consignmentsData);
@@ -83,7 +82,7 @@ const UserEditInvoice = () => {
         }
     
         // Fetch loads data
-        const loadsResponse = await fetch(${API}load);
+        const loadsResponse = await fetch(`${API}load`);
         if (loadsResponse.ok) {
           const loadsData = await loadsResponse.json();
           setLoads(loadsData);
@@ -93,7 +92,7 @@ const UserEditInvoice = () => {
         }
     
         // Fetch parties data
-        const partiesResponse = await fetch(${API}party);
+        const partiesResponse = await fetch(`${API}party`);
         if (partiesResponse.ok) {
           const partiesData = await partiesResponse.json();
           setParties(partiesData);

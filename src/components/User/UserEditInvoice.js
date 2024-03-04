@@ -308,7 +308,7 @@ const UserEditInvoice = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(${API}invoice/${id}, formData);
+      await axios.put(`${API}invoice/${id}`, formData);
       alert('Update invoice successful');
       navigate('/userinman');
     } catch (error) {

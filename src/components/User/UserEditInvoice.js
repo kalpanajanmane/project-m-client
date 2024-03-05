@@ -10,6 +10,8 @@ import E from '../images/E.png';
 import C from '../images/x.png'
 import Select from 'react-select';
 import background from '../images/Desktop.png';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserEditInvoice = () => {
   const { id } = useParams();
@@ -333,7 +335,7 @@ const UserEditInvoice = () => {
     e.preventDefault();
     try {
       await axios.put(`${API}invoice/${id}`, formData);
-      alert("Update invoice successful");
+      toast.success('Invoice Updated successfully');
       navigate("/userinman");
     } catch (error) {
       console.error("Error updating invoice:", error);

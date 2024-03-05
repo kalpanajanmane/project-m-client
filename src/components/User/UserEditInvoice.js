@@ -8,6 +8,7 @@ import D from '../images/D.png';
 import E from '../images/E.png';
 import C from '../images/x.png'
 import Select from 'react-select';
+import background from '../images/Desktop.png';
 
 const UserEditInvoice = () => {
   const { id } = useParams();
@@ -342,8 +343,14 @@ const UserEditInvoice = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <h1 className="admin-create-invoice-title">Edit INVOICE</h1>
+    <div
+    style={{
+      backgroundImage: `url(${background})`,
+      minHeight: '100vh',
+    }}
+    >
+      <UserNavbar />
+      <h1 className="admin-create-invoice-title">EDIT INVOICE</h1>
       <form className="admin-create-invoice-form-all" onSubmit={handleSubmit}>
         <div className="admin-create-invoice-container">
           <div className="admin-create-invoice-data">

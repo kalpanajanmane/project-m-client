@@ -16,7 +16,7 @@ import copy from 'clipboard-copy';
 import { useUserAuth } from './UserAuth';
 import axios from 'axios';
 
-function AdminCreateInvoice() {
+function UserCreateInvoice() {
 	const auth = useUserAuth();
 	const navigate = useNavigate();
 	const [view, setView] = useState(false);
@@ -139,7 +139,7 @@ function AdminCreateInvoice() {
 			endstate: '',
 			startpoint: '',
 			endpoint: '',
-			// transportationcost: '',
+			transportationcost: '',
 		},
 	});
 
@@ -197,6 +197,7 @@ function AdminCreateInvoice() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		// console.log(dataToSend);
 
 		// Check the length of items in dataToSend
 		if (dataToSend && dataToSend.consignmentdetails.itemdetails.length >= 1) {
@@ -552,7 +553,7 @@ function AdminCreateInvoice() {
 	};
 
 	const handleSelectChangeLoading = (selectedOption, field) => {
-		const [startstate, endstate, rate] = selectedOption.value.split('-');
+		const [startstate, endstate] = selectedOption.value.split('-');
 
 		setDataToSend((prevData) => ({
 			...prevData,
@@ -560,7 +561,7 @@ function AdminCreateInvoice() {
 				...prevData.loadingdetails,
 				startstate,
 				endstate,
-				transportationcost: rate, // Set rate to transportationcost
+				// transportationcost: rate, // Set rate to transportationcost
 			},
 		}));
 
@@ -1746,4 +1747,4 @@ function AdminCreateInvoice() {
 	);
 }
 
-export default AdminCreateInvoice;
+export default UserCreateInvoice;

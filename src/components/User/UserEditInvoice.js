@@ -858,7 +858,7 @@ const UserEditInvoice = () => {
                             type="button"
                             className="admin-create-invoice-table-consigment-button"
                             onClick={() => handleCancelConsignment(index)}
-                            disabled={!isFormValid}
+                            
                           >
                             Cancel
                           </button>

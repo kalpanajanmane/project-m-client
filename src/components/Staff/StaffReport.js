@@ -780,17 +780,57 @@ function StaffReports() {
 	const handleShowMisDataByDate = () => {
 		let datatoIterate;
 		// console.log('lllllllllllllll');
-
+		// console.log('handleShowMisDataByDate',groupedData);
 		if (filteredDataByDate) {
-			datatoIterate = filteredDataByDate;
+			//console.log('inside first loop')
+			datatoIterate = filteredDataByDate
+			.map((item) => {
+				
+				// Calculate total quantity for each item
+				let totalQuantity = 0;
+				if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
+				item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+					totalQuantity += itemDetail.itemquantity;
+				});
+				}
+				// Assign totalQuantity to the item
+				item.totalQuantity = totalQuantity;
+				return {
+					...item,
+					totalQuantity: totalQuantity,
+					
+				};
+			});
 			// console.log('ihandleShowMisDataByDate n first if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch) {
-			datatoIterate = displayedMisInvoiceSearch;
+			//console.log('inside this loop')
+			datatoIterate = displayedMisInvoiceSearch
+			.map((item) => {
+				
+				// Calculate total quantity for each item
+				let totalQuantity = 0;
+				if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
+				item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+					totalQuantity += itemDetail.itemquantity;
+				});
+				}
+				// Assign totalQuantity to the item
+				item.totalQuantity = totalQuantity;
+				return {
+					...item,
+					totalQuantity: totalQuantity,
+					
+				};
+			});
 			// console.log('handleShowMisDataByDate in second if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch && filteredDataByDate) {
+			let grouptoIterate;
+			grouptoIterate = displayedMisInvoiceSearch
+
 			datatoIterate = displayedMisInvoiceSearch
+			// datatoIterate = groupedData[displayedMisInvoiceSearch[0].vehicledetails.vechiclenumber].items[0]
 				.filter((item) => {
 					const itemDate = new Date(item.invoicedetails.invoicedate);
 					// console.log('handleShowMisDataByDate Item date:', itemDate);
@@ -828,14 +868,24 @@ function StaffReports() {
 						// Add one day to the toDate
 						toDate.setDate(toDate.getDate() + 1);
 					}
-					// console.log('toDate', toDate);
+					// Calculate total quantity for each item
+					let totalQuantity = 0;
+					if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
+					item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+						totalQuantity += itemDetail.itemquantity;
+					});
+					}
 
+					// Assign totalQuantity to the item
+					item.totalQuantity = totalQuantity;
 					return {
 						...item,
+						totalQuantity: totalQuantity,
 						fromDate: startDate || null,
 						toDate: toDate || null,
 					};
 				});
+				//console.log('Final Data:', datatoIterate);
 		}
 
 		const newWindow = window.open('', '_blank');
@@ -875,94 +925,161 @@ function StaffReports() {
 					'Total',
 				];
 
-				const csvContent =
-					'data:text/csv;charset=utf-8,' +
-					[columnNames.join(',')]
-						.concat(
-							datatoIterate.map((invoice) =>
-								invoice.consignmentdetails &&
-								invoice.consignmentdetails.itemdetails
-									? invoice.consignmentdetails.itemdetails
-											.map((item) =>
-												[
-													invoice.invoicedetails &&
-													invoice.invoicedetails.invoicedate
-														? new Date(
-																invoice.invoicedetails.invoicedate
-														  ).toLocaleDateString('en-GB', {
-																day: '2-digit',
-																month: '2-digit',
-																year: 'numeric',
-														  })
-														: 'N/A',
-													invoice.invoicedetails &&
-													invoice.invoicedetails.invoiceid
-														? invoice.invoicedetails.invoiceid
-														: 'N/A',
-													invoice.sellerdetails &&
-													invoice.sellerdetails.sellercompanyname
-														? invoice.sellerdetails.sellercompanyname
-														: 'N/A',
-													invoice.buyerdetails &&
-													invoice.buyerdetails.buyercompanyname
-														? invoice.buyerdetails.buyercompanyname
-														: 'N/A',
-													invoice.loadingdetails &&
-													invoice.loadingdetails.startpoint
-														? invoice.loadingdetails.startpoint
-														: 'N/A',
-													invoice.loadingdetails &&
-													invoice.loadingdetails.endpoint
-														? invoice.loadingdetails.endpoint
-														: 'N/A',
-													invoice.vehicledetails &&
-													invoice.vehicledetails.vechiclenumber
-														? invoice.vehicledetails.vechiclenumber
-														: 'N/A',
-													item.itemquantity ? item.itemquantity : '0',
-													invoice.boardingdetails &&
-													invoice.boardingdetails.partyname
-														? invoice.boardingdetails.partyname
-														: 'N/A',
-													invoice.boardingdetails &&
-													invoice.boardingdetails.partyref
-														? invoice.boardingdetails.partyref
-														: 'N/A',
-													invoice.invoicedetails &&
-													invoice.invoicedetails.invoicemakername
-														? invoice.invoicedetails.invoicemakername
-														: 'N/A',
-													invoice.boardingdetails &&
-													invoice.boardingdetails.partyrate
-														? invoice.boardingdetails.partyrate
-														: 'N/A',
-													typeof item.itemquantity === 'number' &&
-													typeof invoice.boardingdetails.partyrate === 'number'
-														? (
-																item.itemquantity *
-																invoice.boardingdetails.partyrate
-														  ).toFixed(2)
-														: 'N/A',
-												].join(',')
-											)
-											.join('\n')
-									: ''
-							)
-						)
-						.join('\n');
+			// 	const csvContent =
+			// 		'data:text/csv;charset=utf-8,' +
+			// 		[columnNames.join(',')]
+			// 			.concat(
+			// 				datatoIterate.map((invoice) =>
+			// 					invoice.consignmentdetails &&
+			// 					invoice.consignmentdetails.itemdetails
+			// 						? invoice.consignmentdetails.itemdetails
+			// 								.map((item) =>
+			// 									[
+			// 										invoice.invoicedetails &&
+			// 										invoice.invoicedetails.invoicedate
+			// 											? new Date(
+			// 													invoice.invoicedetails.invoicedate
+			// 											  ).toLocaleDateString('en-GB', {
+			// 													day: '2-digit',
+			// 													month: '2-digit',
+			// 													year: 'numeric',
+			// 											  })
+			// 											: 'N/A',
+			// 										invoice.invoicedetails &&
+			// 										invoice.invoicedetails.invoiceid
+			// 											? invoice.invoicedetails.invoiceid
+			// 											: 'N/A',
+			// 										invoice.sellerdetails &&
+			// 										invoice.sellerdetails.sellercompanyname
+			// 											? invoice.sellerdetails.sellercompanyname
+			// 											: 'N/A',
+			// 										invoice.buyerdetails &&
+			// 										invoice.buyerdetails.buyercompanyname
+			// 											? invoice.buyerdetails.buyercompanyname
+			// 											: 'N/A',
+			// 										invoice.loadingdetails &&
+			// 										invoice.loadingdetails.startpoint
+			// 											? invoice.loadingdetails.startpoint
+			// 											: 'N/A',
+			// 										invoice.loadingdetails &&
+			// 										invoice.loadingdetails.endpoint
+			// 											? invoice.loadingdetails.endpoint
+			// 											: 'N/A',
+			// 										invoice.vehicledetails &&
+			// 										invoice.vehicledetails.vechiclenumber
+			// 											? invoice.vehicledetails.vechiclenumber
+			// 											: 'N/A',
+			// 										item.itemquantity ? item.itemquantity : '0',
+			// 										invoice.boardingdetails &&
+			// 										invoice.boardingdetails.partyname
+			// 											? invoice.boardingdetails.partyname
+			// 											: 'N/A',
+			// 										invoice.boardingdetails &&
+			// 										invoice.boardingdetails.partyref
+			// 											? invoice.boardingdetails.partyref
+			// 											: 'N/A',
+			// 										invoice.invoicedetails &&
+			// 										invoice.invoicedetails.invoicemakername
+			// 											? invoice.invoicedetails.invoicemakername
+			// 											: 'N/A',
+			// 										invoice.boardingdetails &&
+			// 										invoice.boardingdetails.partyrate
+			// 											? invoice.boardingdetails.partyrate
+			// 											: 'N/A',
+			// 										typeof item.itemquantity === 'number' &&
+			// 										typeof invoice.boardingdetails.partyrate === 'number'
+			// 											? (
+			// 													item.itemquantity *
+			// 													invoice.boardingdetails.partyrate
+			// 											  ).toFixed(2)
+			// 											: 'N/A',
+			// 									].join(',')
+			// 								)
+			// 								.join('\n')
+			// 						: ''
+			// 				)
+			// 			)
+			// 			.join('\n');
 
-				// Encode CSV content
-				const encodedUri = encodeURI(csvContent);
+			// 	// Encode CSV content
+			// 	const encodedUri = encodeURI(csvContent);
 
-				// Create a link element and trigger download
-				const link = document.createElement('a');
-				link.setAttribute('href', encodedUri);
-				link.setAttribute('download', 'mis_report.csv');
-				newWindow.document.body.appendChild(link); // Append to new window's body
-				link.click();
-			});
+			// 	// Create a link element and trigger download
+			// 	const link = document.createElement('a');
+			// 	link.setAttribute('href', encodedUri);
+			// 	link.setAttribute('download', 'mis_report.csv');
+			// 	newWindow.document.body.appendChild(link); // Append to new window's body
+			// 	link.click();
+			// });
+			// end of sai given code
+			// added by shobha 4/3/2024
+			const csvContent =
+			'data:text/csv;charset=utf-8,' +
+			[columnNames.join(',')].concat(
+			  datatoIterate.map((invoice) => [
+				invoice.invoicedetails && invoice.invoicedetails.invoicedate
+				  ? new Date(invoice.invoicedetails.invoicedate).toLocaleDateString('en-GB', {
+					  day: '2-digit',
+					  month: '2-digit',
+					  year: 'numeric',
+					})
+				  : 'N/A',
+				invoice.invoicedetails && invoice.invoicedetails.invoiceid
+				  ? invoice.invoicedetails.invoiceid
+				  : 'N/A',
+				invoice.sellerdetails && invoice.sellerdetails.sellercompanyname
+				  ? invoice.sellerdetails.sellercompanyname
+				  : 'N/A',
+				invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
+				  ? invoice.buyerdetails.buyercompanyname
+				  : 'N/A',
+				invoice.loadingdetails && invoice.loadingdetails.startpoint
+				  ? invoice.loadingdetails.startpoint
+				  : 'N/A',
+				invoice.loadingdetails && invoice.loadingdetails.endpoint
+				  ? invoice.loadingdetails.endpoint
+				  : 'N/A',
+				invoice.vehicledetails && invoice.vehicledetails.vechiclenumber
+				  ? invoice.vehicledetails.vechiclenumber
+				  : 'N/A',
+				invoice.totalQuantity !== undefined ? invoice.totalQuantity : 'N/A', // Using the updated totalQuantity from the previous code
+				invoice.boardingdetails && invoice.boardingdetails.partyname
+				  ? invoice.boardingdetails.partyname
+				  : 'N/A',
+				invoice.boardingdetails && invoice.boardingdetails.partyref
+				  ? invoice.boardingdetails.partyref
+				  : 'N/A',
+				invoice.invoicedetails && invoice.invoicedetails.invoicemakername
+				  ? invoice.invoicedetails.invoicemakername
+				  : 'N/A',
+				invoice.boardingdetails && invoice.boardingdetails.partyrate
+				  ? invoice.boardingdetails.partyrate
+				  : 'N/A',
+				typeof invoice.totalQuantity === 'number' &&
+				typeof invoice.boardingdetails.partyrate === 'number'
+				  ? (invoice.totalQuantity * invoice.boardingdetails.partyrate).toFixed(2)
+				  : 'N/A',
+			  ].join(','))
+			).join('\n');
+		
+		  // Encode CSV content
+		  const encodedUri = encodeURI(csvContent);
+		
+		  // Create a link element and trigger download
+		  const link = document.createElement('a');
+		  link.setAttribute('href', encodedUri);
+		  // Generate datetime string
+		  const currentDatetime = new Date().toISOString().replace(/:/g, '-'); // Example: 2022-03-01T14-35-45.123Z
 
-		// end of sai given code
+		  // Create filename with datetime
+		  link.setAttribute('download', `mis_report_${currentDatetime}.csv`);
+		//   link.setAttribute('download', 'mis_report.csv');
+		  newWindow.document.body.appendChild(link); // Append to new window's body
+		  link.click();
+		});
+
+
+		// end of shobha given code  4/3/2024
 
 		// Table header
 		newWindow.document.write('<tr style="background-color: #fcec03;">');
@@ -1016,7 +1133,8 @@ function StaffReports() {
 		let totalAmount = 0;
 
 		datatoIterate.forEach((dataItem, index) => {
-			dataItem.consignmentdetails.itemdetails.forEach((item, index) => {
+			// dataItem.consignmentdetails.itemdetails.forEach((item, index) => {
+			// dataItem.vehicledetails.vechiclenumber.forEach((item, index) => {
 				newWindow.document.write('<tr>');
 
 				newWindow.document.write(
@@ -1076,7 +1194,8 @@ function StaffReports() {
 				);
 				newWindow.document.write(
 					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						item.itemquantity ? item.itemquantity : 'N/A'
+						// item.itemquantity ? item.itemquantity : 'N/A'
+						dataItem.totalQuantity ? dataItem.totalQuantity : 'N/A'
 					}</td>`
 				);
 				newWindow.document.write(
@@ -1109,35 +1228,47 @@ function StaffReports() {
 				);
 				// newWindow.document.write(
 				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-				// 		item.itemweight ? item.itemweight : 'N/A'
+				// 		// item.itemweight ? item.itemweight : 'N/A'
+				// 		dataItem.itemweight ? dataItem.itemweight : 'N/A'
 				// 	}</td>`
 				// );
 				// newWindow.document.write(
 				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-				// 		item.itemtaxrate ? item.itemtaxrate : 'N/A'
+				// 		// item.itemtaxrate ? item.itemtaxrate : 'N/A'
+				// 		dataItem.itemweight ? dataItem.itemweight : 'N/A'
 				// 	}</td>`
 				// );
 				newWindow.document.write(
 					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						typeof item.itemquantity === 'number' &&
+						// typeof item.itemquantity === 'number' &&
+						// typeof dataItem.boardingdetails.partyrate === 'number'
+						// 	? (
+						// 			item.itemquantity * dataItem.boardingdetails.partyrate
+						// 	  ).toFixed(2)
+						// 	: 'N/A'
+						typeof dataItem.totalQuantity === 'number' &&
 						typeof dataItem.boardingdetails.partyrate === 'number'
 							? (
-									item.itemquantity * dataItem.boardingdetails.partyrate
+									dataItem.totalQuantity * dataItem.boardingdetails.partyrate
 							  ).toFixed(2)
 							: 'N/A'
 					}</td>`
 				);
 				// Calculate and update the total amount
 				const itemTotal =
-					typeof item.itemquantity === 'number' &&
+					// typeof item.itemquantity === 'number' &&
+					// typeof dataItem.boardingdetails.partyrate === 'number'
+					// 	? item.itemquantity * dataItem.boardingdetails.partyrate
+					// 	: 0;
+					typeof dataItem.totalQuantity === 'number' &&
 					typeof dataItem.boardingdetails.partyrate === 'number'
-						? item.itemquantity * dataItem.boardingdetails.partyrate
+						? dataItem.totalQuantity * dataItem.boardingdetails.partyrate
 						: 0;
 
 				totalAmount += itemTotal;
 
 				newWindow.document.write('</tr>');
-			});
+			// });
 		});
 
 		newWindow.document.write('</table>');
@@ -2252,6 +2383,7 @@ function StaffReports() {
 										className='export-button'
 										target='_blank'
 									>
+									
 										Export
 									</CSVLink> */}
 								</div>

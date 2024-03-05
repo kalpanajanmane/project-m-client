@@ -302,7 +302,6 @@ const UserEditInvoice = () => {
 
   const handleCancelConsignment = () => {
     setEditingIndex(null);
-    setEditedValues({});
   };
 
   const handleAddConsignment = () => {

@@ -300,8 +300,9 @@ const UserEditInvoice = () => {
     setEditedValues({});
   };
 
-  const handleCancelConsignment = () => {
+ const handleCancelConsignment = (index) => {
     setEditingIndex(null);
+    handleDeleteConsignment(index)
   };
 
   const handleAddConsignment = () => {
@@ -856,7 +857,7 @@ const UserEditInvoice = () => {
                           <button
                             type="button"
                             className="admin-create-invoice-table-consigment-button"
-                            onClick={handleCancelConsignment}
+                            onClick={() => handleCancelConsignment(index)}
                             disabled={!isFormValid}
                           >
                             Cancel

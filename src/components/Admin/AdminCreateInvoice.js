@@ -171,7 +171,7 @@ function AdminCreateInvoice() {
 
 	const handleVehicleNumChange = (e, section, field) => {
 		let value = e.target.value;
-		console.log('vehicle number ',value.length)
+		//console.log('vehicle number ',value.length)
 		// Remove existing spaces
 		value = value.replace(/\s/g, '');
 
@@ -186,7 +186,7 @@ function AdminCreateInvoice() {
 		// if (value.length > 4) value = value.slice(0, -4) + ' ' + value.slice(-4);
 
 		// console.log(value);
-		console.log('vehicle number after modification',value)
+		//console.log('vehicle number after modification',value)
 		setDataToSend((prevData) => ({
 			...prevData,
 			[section]: {

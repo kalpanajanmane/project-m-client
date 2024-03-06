@@ -171,21 +171,22 @@ function AdminCreateInvoice() {
 
 	const handleVehicleNumChange = (e, section, field) => {
 		let value = e.target.value;
-
+		console.log('vehicle number ',value.length)
 		// Remove existing spaces
 		value = value.replace(/\s/g, '');
 
 		// Inserting a space after the first 4 characters
-		value = value.substring(0, 4) + ' ' + value.substring(4);
+		// value = value.substring(0, 4) + ' ' + value.substring(4);
 
 		// Inserting a space after the next 2 characters
-		value = value.substring(0, 7) + ' ' + value.substring(7);
+		// value = value.substring(0, 6) + ' ' + value.substring(6);
+		value = value.substring(0,value.length - 4) + ' ' + value.substring(value.length - 4);
 
 		value = value.toUpperCase();
 		// if (value.length > 4) value = value.slice(0, -4) + ' ' + value.slice(-4);
 
 		// console.log(value);
-
+		console.log('vehicle number after modification',value)
 		setDataToSend((prevData) => ({
 			...prevData,
 			[section]: {

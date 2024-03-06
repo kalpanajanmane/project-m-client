@@ -139,20 +139,58 @@ function UserInvoiceManagement() {
 		try {
 			// Encode the urlinvoiceno to base64
 			const encodedUrl = btoa(urlinvoiceno);
-			
+	
 			// Construct the original URL with the encoded urlinvoiceno
 			const originalUrl = `${API2}${encodedUrl}`;
-			
-			// Copy the original URL
-			copy(originalUrl);
-			
+	
+			// Generate the short URL
+			const shortUrl = await generateShortUrl(originalUrl);
+	
+			// Copy the short URL
+			copy(shortUrl);
+	
 			// Show success message
-			toast.success("Original link copied to clipboard!");
+			toast.success("Shortened link copied to clipboard!");
 		} catch (error) {
 			console.error("Error:", error);
-			toast.error("Error copying the original link.");
+			toast.error("Error copying the shortened link.");
 		}
 	};
+	
+	const generateShortUrl = async (originalUrl) => {
+		try {
+			const apiKey = encodeURIComponent("+tRfF6lilDDsaSv2SlTB1A==");
+			const csrfToken = encodeURIComponent(
+				"dQoAMh4zBVIWHQNgKjo7bSxzGVQVOwQY0r4DZUr9BoT5bJo_y7k7QmGV"
+			);
+			const workspaceId = 175208;
+			const requestData = {
+				url: originalUrl,
+				workspace_id: workspaceId,
+				expiry_datetime: new Date(
+					Date.now() + 30 * 60 * 1000 // 30 minutes from now
+				).toISOString(),
+			};
+	
+			const options = {
+				method: "POST",
+				url: `https://app.linklyhq.com/api/v1/link?api_key=${apiKey}`,
+				headers: {
+					accept: "application/json",
+					"Content-Type": "application/json",
+					"x-csrf-token": csrfToken,
+				},
+				data: requestData,
+			};
+	
+			const response = await axios.request(options);
+			return response.data.full_url;
+		} catch (error) {
+			console.error("Error generating short URL:", error);
+			throw error;
+		}
+	};
+	
 
 	const handleEdit = (id) => {
 		navigate(`/usereditinv/${id}`);

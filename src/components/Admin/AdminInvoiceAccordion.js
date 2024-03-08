@@ -7,10 +7,14 @@ import "./AdminInvoiceManager.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
+const AdminInvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl}) => {
   const [isAccordionOpen, setAccordionOpen] = useState(false);
   const navigate = useNavigate();
   const API = process.env.REACT_APP_API;
+  const API2 = process.env.REACT_APP_URL;
+	const hours = process.env.REACT_APP_TIME;
+
+
   const selectedInvoiceId = invoice;
   const selectedCode = code;
   const selectedPdfUrl = pdfUrl;
@@ -72,7 +76,7 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
         url: preSignedUrl,
         workspace_id: workspaceId,
         expiry_datetime: new Date(
-          Date.now() + 6 * 60 * 60 * 1000
+          Date.now() + hours * 60 * 60 * 1000
         ).toISOString(), // 6 hours from now
       };
 
@@ -137,7 +141,66 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
       }
     }
   };
+  const handleEdit = () => {
+    navigate(`/admineditinv/${selectedInvoiceId}`);
+  }
+  const handleCopy2 = async () => {
+    try {
+      // Encode the selectedInvoiceId to base64
+      const encodedUrl = btoa(selectedInvoiceId);
+    
+      // Construct the original URL with the encoded selectedInvoiceId
+      const originalUrl = `${API2}${encodedUrl}`;
+    
+      // Generate the short URL
+      const shortUrl = await generateShortUrl(originalUrl);
+    
+      // Copy the short URL
+      copy(shortUrl);
+    
+      // Show success message
+      toast.success("Shortened link copied to clipboard!");
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Error copying the shortened link.");
+    }
+  };
+  
 
+  const generateShortUrl = async (originalUrl) => {
+    try {
+      const apiKey = encodeURIComponent("+tRfF6lilDDsaSv2SlTB1A==");
+      const csrfToken = encodeURIComponent(
+        "dQoAMh4zBVIWHQNgKjo7bSxzGVQVOwQY0r4DZUr9BoT5bJo_y7k7QmGV"
+      );
+      const workspaceId = 175208;
+      const requestData = {
+        url: originalUrl,
+        workspace_id: workspaceId,
+        expiry_datetime: new Date(
+          Date.now() + hours * 60 * 60 * 1000 // 30 minutes from now
+        ).toISOString(),
+      };
+  
+      const options = {
+        method: "POST",
+        url: `https://app.linklyhq.com/api/v1/link?api_key=${apiKey}`,
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+          "x-csrf-token": csrfToken,
+        },
+        data: requestData,
+      };
+  
+      const response = await axios.request(options);
+      return response.data.full_url;
+    } catch (error) {
+      console.error("Error generating short URL:", error);
+      throw error;
+    }
+  };
+  
   return (
     <div>
       <div>
@@ -168,6 +231,12 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
                 <button className="modal-btn-inv" onClick={handleDelete}>
                   Delete
                 </button>
+                <button className="modal-btn-inv" onClick={handleEdit}>
+                  Edit
+                </button>
+                <button className="modal-btn-inv" onClick={handleCopy2}>
+                  Copy Link 2
+                </button>
               </div>
             </div>
           )}
@@ -177,4 +246,4 @@ const InvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl }) => {
   );
 };
 
-export default InvoiceAccordion;
+export default AdminInvoiceAccordion;

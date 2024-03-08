@@ -9,7 +9,7 @@ import AdminNavbar from './AdminNavbar';
 // import { useNavigate } from 'react-router-dom';
 // import Close from '../images/cross_icon.jpg';
 // import copy from 'clipboard-copy';
-import InvoiceAccordion from './InvoiceAccordion';
+import AdminInvoiceAccordion from './AdminInvoiceAccordion';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -253,7 +253,7 @@ function AdminInvoiceManagement() {
 											>
 												View
 											</button> */}
-											<InvoiceAccordion
+											<AdminInvoiceAccordion
 												invoice={invoice._id}
 												pdfUrl={invoice.pdfUrl}
 												preSignedUrl={invoice.preSignedUrl}

@@ -42,6 +42,10 @@ function AdminCreateInvoice() {
 	const [parties, setParties] = useState([]);
 	const [selectedParty, setSelectedParty] = useState({});
 
+
+
+	const hours = process.env.REACT_APP_TIME;
+
 	// //Default Date value
 	// const [invoicedate, setInvoicedate] = useState(getTodayDate());
 	// const [dateofloading, setDateofloading] = useState(getTodayDate());
@@ -618,7 +622,7 @@ function AdminCreateInvoice() {
 				url: preSignedUrl,
 				workspace_id: 175208,
 				expiry_datetime: new Date(
-					Date.now() + 6 * 60 * 60 * 1000
+					Date.now() + hours * 60 * 60 * 1000
 				).toISOString(), // 6 hours from now
 			};
 

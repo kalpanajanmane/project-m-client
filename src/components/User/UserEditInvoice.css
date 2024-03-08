@@ -221,15 +221,14 @@ color: #767676;
 }
 
 .admin-create-invoice-table-consigment-icon {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
 }
 
 .admin-create-invoice-table-row-head {
     font-family: "Urbanist";
-    font-size: 13px;
-    
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
 }
@@ -237,7 +236,7 @@ color: #767676;
 .admin-create-invoice-table-row-body {
     font-family: "Urbanist";
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
     text-align: center;
 }
 
@@ -255,8 +254,8 @@ color: #767676;
 }
 
 .admin-create-invoice-table-consigment-icon-low {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
 }
 
@@ -447,7 +446,7 @@ color: #767676;
 
     .admin-create-invoice-table-row-head {
         font-family: "Urbanist";
-        font-size: 10px;
+        font-size: 20px;
         font-weight: bold;
         text-align: center;
     }
@@ -648,7 +647,7 @@ color: #767676;
 
     .admin-create-invoice-table-row-head {
         font-family: "Urbanist";
-        font-size: 10px;
+        font-size: 15px;
         font-weight: bold;
         text-align: center;
     }

@@ -42,6 +42,10 @@ function UserCreateInvoice() {
 	const [parties, setParties] = useState([]);
 	const [selectedParty, setSelectedParty] = useState({});
 
+
+
+	const hours = process.env.REACT_APP_TIME;
+
 	// //Default Date value
 	// const [invoicedate, setInvoicedate] = useState(getTodayDate());
 	// const [dateofloading, setDateofloading] = useState(getTodayDate());
@@ -139,7 +143,7 @@ function UserCreateInvoice() {
 			endstate: '',
 			startpoint: '',
 			endpoint: '',
-			transportationcost: '',
+			// transportationcost: '',
 		},
 	});
 
@@ -171,21 +175,22 @@ function UserCreateInvoice() {
 
 	const handleVehicleNumChange = (e, section, field) => {
 		let value = e.target.value;
-
+		//console.log('vehicle number ',value.length)
 		// Remove existing spaces
 		value = value.replace(/\s/g, '');
 
 		// Inserting a space after the first 4 characters
-		value = value.substring(0, 4) + ' ' + value.substring(4);
+		// value = value.substring(0, 4) + ' ' + value.substring(4);
 
 		// Inserting a space after the next 2 characters
-		value = value.substring(0, 7) + ' ' + value.substring(7);
+		// value = value.substring(0, 6) + ' ' + value.substring(6);
+		value = value.substring(0,value.length - 4) + ' ' + value.substring(value.length - 4);
 
 		value = value.toUpperCase();
 		// if (value.length > 4) value = value.slice(0, -4) + ' ' + value.slice(-4);
 
 		// console.log(value);
-
+		//console.log('vehicle number after modification',value)
 		setDataToSend((prevData) => ({
 			...prevData,
 			[section]: {
@@ -618,7 +623,7 @@ function UserCreateInvoice() {
 				url: preSignedUrl,
 				workspace_id: 175208,
 				expiry_datetime: new Date(
-					Date.now() + 6 * 60 * 60 * 1000
+					Date.now() + hours * 60 * 60 * 1000
 				).toISOString(), // 6 hours from now
 			};
 

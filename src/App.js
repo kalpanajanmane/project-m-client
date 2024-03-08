@@ -54,6 +54,8 @@ import UserPdfViewer from './components/User/UserInvoiceView';
 import StaffPasswordChange from './components/Staff/StaffPasswordChange';
 import UserPasswordChange from './components/User/UserPasswordChange';
 import UserEditInvoice from './components/User/UserEditInvoice';
+import AdminEditInvoice from './components/Admin/AdminEditInvoice';
+import StaffEditInvoice from './components/Staff/StaffEditInvoice';
 
 function App() {
 	return (
@@ -68,6 +70,14 @@ function App() {
 							element={
 								<ReqAdminAuth>
 									<AdminPasswordChange />
+								</ReqAdminAuth>
+							}
+						/>
+						<Route
+							path='/admineditinv/:id'
+							element={
+								<ReqAdminAuth>
+									<AdminEditInvoice />
 								</ReqAdminAuth>
 							}
 						/>
@@ -199,6 +209,14 @@ function App() {
 							element={
 								<ReqStaffAuth>
 									<StaffPasswordChange />
+								</ReqStaffAuth>
+							}
+						/>
+							<Route
+							path='/staffeditinv/:id'
+							element={
+								<ReqStaffAuth>
+									<StaffEditInvoice />
 								</ReqStaffAuth>
 							}
 						/>

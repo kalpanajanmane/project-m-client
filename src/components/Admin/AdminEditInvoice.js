@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./UserEditInvoice.css";
-import UserNavbar from './UserNavbar';
+import "./AdminEditInvoice.css";
+import AdminNavbar from './AdminNavbar';
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import A from '../images/v.png';
@@ -16,7 +16,7 @@ import background from '../images/Desktop.png';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const UserEditInvoice = () => {
+const AdminEditInvoice = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
@@ -362,7 +362,7 @@ const UserEditInvoice = () => {
 
   const closePdfViewer = () => {
 		setIsModalOpen(false);
-    navigate('/userinman')
+    navigate('/admininman')
 	};
   const handleView = () => {
 		window.open(formData.pdfUrl);
@@ -457,7 +457,7 @@ const UserEditInvoice = () => {
       minHeight: '100vh',
     }}
     >
-      <UserNavbar />
+      <AdminNavbar />
       <h1 className="admin-create-invoice-title">EDIT INVOICE</h1>
       <form className="admin-create-invoice-form-all" onSubmit={handleSubmit}>
         <div className="admin-create-invoice-container">
@@ -1347,4 +1347,4 @@ const UserEditInvoice = () => {
   );
 };
 
-export default UserEditInvoice;
+export default AdminEditInvoice;

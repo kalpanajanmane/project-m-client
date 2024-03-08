@@ -10,7 +10,7 @@ import copy from "clipboard-copy";
 // import { useNavigate } from 'react-router-dom';
 // import Close from '../images/cross_icon.jpg';
 // import copy from 'clipboard-copy';
-import InvoiceAccordion from '../Admin/InvoiceAccordion';
+import UserInvoiceAccordion from './UserInvoiceAccordion';
 import { useUserAuth } from './UserAuth';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -42,6 +42,7 @@ function UserInvoiceManagement() {
 
 	const API = process.env.REACT_APP_API;
 	const API2 = process.env.REACT_APP_URL;
+	const hours = process.env.REACT_APP_TIME;
 
 	
 	// const pdfUrlOriginal = `${API}download/${selectedInvoiceId}`;
@@ -168,7 +169,7 @@ function UserInvoiceManagement() {
 				url: originalUrl,
 				workspace_id: workspaceId,
 				expiry_datetime: new Date(
-					Date.now() + 30 * 60 * 1000 // 30 minutes from now
+					Date.now() + hours * 60 * 60 * 1000 // 30 minutes from now
 				).toISOString(),
 			};
 	
@@ -255,12 +256,6 @@ function UserInvoiceManagement() {
 									<th className='invoice-management-data-body-table-header'>
 										Action
 									</th>
-									<th className='invoice-management-data-body-table-header'>
-										Edit
-									</th>
-									<th className='invoice-management-data-body-table-header'>
-										Copy Link 2
-									</th>
 								</tr>
 							</thead>
 							<tbody className='invoice-management-data-body-table-row-body'>
@@ -330,7 +325,7 @@ function UserInvoiceManagement() {
 											>
 												View
 											</button> */}
-											<InvoiceAccordion
+											<UserInvoiceAccordion
 												invoice={invoice._id}
 												pdfUrl={invoice.pdfUrl}
 												preSignedUrl={invoice.preSignedUrl}
@@ -349,26 +344,7 @@ function UserInvoiceManagement() {
 												}
 											/>
 										</td>
-										<td className='invoice-management-data-body-table-data'>
-											<button
-												onClick={() => {
-													handleEdit(invoice._id);
-												}}
-												className='invoice-management-data-body-table-data-button'
-											>
-												Edit
-											</button>
-										</td>
-										<td className='invoice-management-data-body-table-data'>
-											 <button
-												onClick={() => {
-													handleCopyLink(invoice._id);
-												}}
-												className='invoice-management-data-body-table-data-button'
-											>
-												Copy
-											</button>
-										</td>
+								
 									</tr>
 								))}
 							</tbody>

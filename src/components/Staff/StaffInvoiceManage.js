@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../Admin/AdminInvoiceManager.css';
 import background from '../images/Desktop.png';
 // import ReactPaginate from 'react-paginate';
 import StaffNavbar from './StaffNavbar';
@@ -10,9 +9,9 @@ import StaffNavbar from './StaffNavbar';
 // import Close from '../images/cross_icon.jpg';
 // import copy from 'clipboard-copy';
 import { useStaffAuth } from './StaffAuth';
-import InvoiceAccordion from '../Admin/InvoiceAccordion';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import StaffInvoiceAccordion from './StaffInvoiceAccordion';
 
 function formatDate(date) {
 	const day = date.getDate().toString().padStart(2, '0');
@@ -257,7 +256,7 @@ function StaffInvoiceManagement() {
 											>
 												View
 											</button> */}
-											<InvoiceAccordion
+											<StaffInvoiceAccordion
 												invoice={invoice._id}
 												pdfUrl={invoice.pdfUrl}
 												preSignedUrl={invoice.preSignedUrl}

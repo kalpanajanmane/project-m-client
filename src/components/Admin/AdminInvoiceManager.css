@@ -4,6 +4,23 @@
 	border: 2px solid #d2d2d2;
 }
 
+.date-label-inv {
+	font-family: 'Urbanist';
+	font-size: 20px;
+	margin-left: 10px;
+	margin-right: 2px;
+}
+
+.date-select-inv {
+	font-family: 'Urbanist';
+	font-size: 20px;
+	background-color: #fff;
+	width: auto;
+	height: 40px px;
+	border: 1px solid #767676;
+	border-radius: 10px;
+}
+
 .invoice-management-data-body {
 	height: 550px;
 	overflow-y: scroll;
@@ -194,6 +211,23 @@
 		border: 2px solid #d2d2d2;
 	}
 
+	.date-label-inv {
+		font-family: 'Urbanist';
+		font-size: 16px;
+		margin-left: 10px;
+		margin-right: 2px;
+	}
+
+	.date-select-inv {
+		font-family: 'Urbanist';
+		font-size: 16px;
+		background-color: #fff;
+		width: auto;
+		height: 40px px;
+		border: 1px solid #767676;
+		border-radius: 10px;
+	}
+
 	.invoice-management-data-body {
 		height: 550px;
 		overflow-y: scroll;
@@ -286,6 +320,23 @@
 		margin: 20px;
 		border-radius: 15px;
 		border: 2px solid #d2d2d2;
+	}
+
+	.date-label-inv {
+		font-family: 'Urbanist';
+		font-size: 12px;
+		margin-left: 10px;
+		margin-right: 2px;
+	}
+
+	.date-select-inv {
+		font-family: 'Urbanist';
+		font-size: 12px;
+		background-color: #fff;
+		width: auto;
+		height: 40px px;
+		border: 1px solid #767676;
+		border-radius: 10px;
 	}
 
 	.invoice-management-data-body {
@@ -406,6 +457,23 @@
 		border: 2px solid #d2d2d2;
 	}
 
+	.date-label-inv {
+		font-family: 'Urbanist';
+		font-size: 8px;
+		margin-left: 10px;
+		margin-right: 2px;
+	}
+
+	.date-select-inv {
+		font-family: 'Urbanist';
+		font-size: 8px;
+		background-color: #fff;
+		width: 100px;
+		height: 40px px;
+		border: 1px solid #767676;
+		border-radius: 10px;
+	}
+
 	.invoice-management-data-header {
 		text-align: left;
 		padding-left: 25px;
@@ -416,6 +484,8 @@
 		line-height: 38px;
 		letter-spacing: -0.578px;
 		text-transform: uppercase;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.invoice-management-data-body {

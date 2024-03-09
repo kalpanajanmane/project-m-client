@@ -4,7 +4,7 @@ import '../Admin/AdminInvoiceManage.css';
 import background from '../images/Desktop.png';
 // import ReactPaginate from 'react-paginate';
 import UserNavbar from './UserNavbar';
-import copy from "clipboard-copy";
+import copy from 'clipboard-copy';
 // import PdfViewer from './AdminInvoiceView';
 // import Modal from 'react-modal';
 // import { useNavigate } from 'react-router-dom';
@@ -12,10 +12,9 @@ import copy from "clipboard-copy";
 // import copy from 'clipboard-copy';
 import UserInvoiceAccordion from './UserInvoiceAccordion';
 import { useUserAuth } from './UserAuth';
-import { ToastContainer,toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
 
 import { ObjectId } from 'bson-objectid';
 function formatDate(date) {
@@ -44,7 +43,6 @@ function UserInvoiceManagement() {
 	const API2 = process.env.REACT_APP_URL;
 	const hours = process.env.REACT_APP_TIME;
 
-	
 	// const pdfUrlOriginal = `${API}download/${selectedInvoiceId}`;
 	// const pdfUrlDuplicate = `${API}download2/${selectedInvoiceId}`;
 	// const ViewURLOriginal = `https://docs.google.com/viewer?url=${encodeURIComponent(
@@ -135,34 +133,33 @@ function UserInvoiceManagement() {
 			});
 	}, [API]);
 
-
 	const handleCopyLink = async (urlinvoiceno) => {
 		try {
 			// Encode the urlinvoiceno to base64
 			const encodedUrl = btoa(urlinvoiceno);
-	
+
 			// Construct the original URL with the encoded urlinvoiceno
 			const originalUrl = `${API2}${encodedUrl}`;
-	
+
 			// Generate the short URL
 			const shortUrl = await generateShortUrl(originalUrl);
-	
+
 			// Copy the short URL
 			copy(shortUrl);
-	
+
 			// Show success message
-			toast.success("Shortened link copied to clipboard!");
+			toast.success('Shortened link copied to clipboard!');
 		} catch (error) {
-			console.error("Error:", error);
-			toast.error("Error copying the shortened link.");
+			console.error('Error:', error);
+			toast.error('Error copying the shortened link.');
 		}
 	};
-	
+
 	const generateShortUrl = async (originalUrl) => {
 		try {
-			const apiKey = encodeURIComponent("+tRfF6lilDDsaSv2SlTB1A==");
+			const apiKey = encodeURIComponent('+tRfF6lilDDsaSv2SlTB1A==');
 			const csrfToken = encodeURIComponent(
-				"dQoAMh4zBVIWHQNgKjo7bSxzGVQVOwQY0r4DZUr9BoT5bJo_y7k7QmGV"
+				'dQoAMh4zBVIWHQNgKjo7bSxzGVQVOwQY0r4DZUr9BoT5bJo_y7k7QmGV'
 			);
 			const workspaceId = 175208;
 			const requestData = {
@@ -172,33 +169,30 @@ function UserInvoiceManagement() {
 					Date.now() + hours * 60 * 60 * 1000 // 30 minutes from now
 				).toISOString(),
 			};
-	
+
 			const options = {
-				method: "POST",
+				method: 'POST',
 				url: `https://app.linklyhq.com/api/v1/link?api_key=${apiKey}`,
 				headers: {
-					accept: "application/json",
-					"Content-Type": "application/json",
-					"x-csrf-token": csrfToken,
+					accept: 'application/json',
+					'Content-Type': 'application/json',
+					'x-csrf-token': csrfToken,
 				},
 				data: requestData,
 			};
-	
+
 			const response = await axios.request(options);
 			return response.data.full_url;
 		} catch (error) {
-			console.error("Error generating short URL:", error);
+			console.error('Error generating short URL:', error);
 			throw error;
 		}
 	};
-	
 
 	const handleEdit = (id) => {
 		navigate(`/usereditinv/${id}`);
-	  }
-	
-	  
-	
+	};
+
 	return (
 		<div
 			style={{
@@ -220,13 +214,15 @@ function UserInvoiceManagement() {
 							value={searchInput}
 							onChange={(e) => setSearchInput(e.target.value)}
 						/>
-						<label className='date-label'>Date : </label>
-						<input
-							className='date-select'
-							type='date'
-							value={startDate}
-							onChange={handleFromDateSelect}
-						/>
+						<div>
+							<label className='date-label-inv'>Date : </label>
+							<input
+								className='date-select-inv'
+								type='date'
+								value={startDate}
+								onChange={handleFromDateSelect}
+							/>
+						</div>
 					</div>
 					<div className='invoice-management-data-body'>
 						<table className='invoice-management-data-body-table'>
@@ -344,7 +340,6 @@ function UserInvoiceManagement() {
 												}
 											/>
 										</td>
-								
 									</tr>
 								))}
 							</tbody>

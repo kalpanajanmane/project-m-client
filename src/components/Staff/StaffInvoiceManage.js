@@ -145,15 +145,13 @@ function StaffInvoiceManagement() {
 							value={searchInput}
 							onChange={(e) => setSearchInput(e.target.value)}
 						/>
-						<div>
-							<label className='date-label-inv'>Date : </label>
-							<input
-								className='date-select-inv'
-								type='date'
-								value={startDate}
-								onChange={handleFromDateSelect}
-							/>
-						</div>
+						<label className='date-label-inv'>Date : </label>
+						<input
+							className='date-select-inv'
+							type='date'
+							value={startDate}
+							onChange={handleFromDateSelect}
+						/>
 					</div>
 					<div className='invoice-management-data-body'>
 						<table className='invoice-management-data-body-table'>

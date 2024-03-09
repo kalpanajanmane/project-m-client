@@ -214,15 +214,13 @@ function UserInvoiceManagement() {
 							value={searchInput}
 							onChange={(e) => setSearchInput(e.target.value)}
 						/>
-						<div>
-							<label className='date-label-inv'>Date : </label>
-							<input
-								className='date-select-inv'
-								type='date'
-								value={startDate}
-								onChange={handleFromDateSelect}
-							/>
-						</div>
+						<label className='date-label-inv'>Date : </label>
+						<input
+							className='date-select-inv'
+							type='date'
+							value={startDate}
+							onChange={handleFromDateSelect}
+						/>
 					</div>
 					<div className='invoice-management-data-body'>
 						<table className='invoice-management-data-body-table'>
@@ -264,9 +262,7 @@ function UserInvoiceManagement() {
 											{idx + 1}
 										</td>
 										<td className='invoice-management-data-body-table-data'>
-											{invoice.invoicedetails.invoiceno.slice(0, 6) +
-												' ' +
-												invoice.invoicedetails.invoiceno.slice(-4) ?? 'N/A'}
+											{invoice.invoicedetails.invoiceno ?? 'N/A'}
 										</td>
 										<td className='invoice-management-data-body-table-data'>
 											{invoice.companydetails?.companyname?.substring(0, 12) ??

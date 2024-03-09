@@ -201,6 +201,11 @@ const AdminInvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl}) => {
     }
   };
   
+  const handleView2 = () => {
+    const encodedUrl = btoa(selectedInvoiceId);
+      const originalUrl = `${API2}${encodedUrl}`;
+    window.open(originalUrl);
+  }
   return (
     <div>
       <div>
@@ -236,6 +241,9 @@ const AdminInvoiceAccordion = ({ invoice, code, pdfUrl, preSignedUrl}) => {
                 </button>
                 <button className="modal-btn-inv" onClick={handleCopy2}>
                   Copy Link 2
+                </button>
+                <button className="modal-btn-inv" onClick={handleView2}>
+                  View Invoice 2
                 </button>
               </div>
             </div>

@@ -31,6 +31,7 @@
 
 .invoice-management-data-header {
 	text-align: left;
+	display: flex;
 	padding-left: 50px;
 	font-family: 'Urbanist';
 	font-size: 26px;
@@ -245,6 +246,7 @@
 
 	.invoice-management-data-header {
 		text-align: left;
+		flex-direction: column;
 		padding-left: 50px;
 		font-family: 'Urbanist';
 		font-size: 20px;
@@ -315,7 +317,7 @@
 	.date-label-inv {
 		font-family: 'Urbanist';
 		font-size: 8px;
-		margin-left: 10px;
+		margin-left: 60px;
 		margin-right: 2px;
 	}
 

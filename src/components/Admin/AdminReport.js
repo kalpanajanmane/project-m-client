@@ -724,9 +724,7 @@ function AdminReports() {
 									const itemDetails = invoice.consignmentdetails.itemdetails;
 									return [
 										invoice.invoicedetails && invoice.invoicedetails.invoiceno
-											? invoice.invoicedetails.invoiceno.slice(0, 6) +
-											  ' ' +
-											  invoice.invoicedetails.invoiceno.slice(-4)
+											? invoice.invoicedetails.invoiceno
 											: 'N/A',
 										invoice.invoicedetails && invoice.invoicedetails.invoicedate
 											? new Date(
@@ -789,9 +787,7 @@ function AdminReports() {
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 					dataItem.invoicedetails && dataItem.invoicedetails.invoiceno
-						? dataItem.invoicedetails.invoiceno.slice(0, 6) +
-						  ' ' +
-						  dataItem.invoicedetails.invoiceno.slice(-4)
+						? dataItem.invoicedetails.invoiceno
 						: 'N/A'
 				}</td>`
 			);
@@ -847,54 +843,48 @@ function AdminReports() {
 		// console.log('handleShowMisDataByDate',groupedData);
 		if (filteredDataByDate) {
 			//console.log('inside first loop')
-			datatoIterate = filteredDataByDate
-			.map((item) => {
-				
+			datatoIterate = filteredDataByDate.map((item) => {
 				// Calculate total quantity for each item
 				let totalQuantity = 0;
 				if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
-				item.consignmentdetails.itemdetails.forEach((itemDetail) => {
-					totalQuantity += itemDetail.itemquantity;
-				});
+					item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+						totalQuantity += itemDetail.itemquantity;
+					});
 				}
 				// Assign totalQuantity to the item
 				item.totalQuantity = totalQuantity;
 				return {
 					...item,
 					totalQuantity: totalQuantity,
-					
 				};
 			});
 			// console.log('ihandleShowMisDataByDate n first if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch) {
 			//console.log('inside this loop')
-			datatoIterate = displayedMisInvoiceSearch
-			.map((item) => {
-				
+			datatoIterate = displayedMisInvoiceSearch.map((item) => {
 				// Calculate total quantity for each item
 				let totalQuantity = 0;
 				if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
-				item.consignmentdetails.itemdetails.forEach((itemDetail) => {
-					totalQuantity += itemDetail.itemquantity;
-				});
+					item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+						totalQuantity += itemDetail.itemquantity;
+					});
 				}
 				// Assign totalQuantity to the item
 				item.totalQuantity = totalQuantity;
 				return {
 					...item,
 					totalQuantity: totalQuantity,
-					
 				};
 			});
 			// console.log('handleShowMisDataByDate in second if');
 		}
 		if (searchInput !== '' && displayedMisInvoiceSearch && filteredDataByDate) {
 			let grouptoIterate;
-			grouptoIterate = displayedMisInvoiceSearch
+			grouptoIterate = displayedMisInvoiceSearch;
 
 			datatoIterate = displayedMisInvoiceSearch
-			// datatoIterate = groupedData[displayedMisInvoiceSearch[0].vehicledetails.vechiclenumber].items[0]
+				// datatoIterate = groupedData[displayedMisInvoiceSearch[0].vehicledetails.vechiclenumber].items[0]
 				.filter((item) => {
 					const itemDate = new Date(item.invoicedetails.invoicedate);
 					// console.log('handleShowMisDataByDate Item date:', itemDate);
@@ -935,9 +925,9 @@ function AdminReports() {
 					// Calculate total quantity for each item
 					let totalQuantity = 0;
 					if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
-					item.consignmentdetails.itemdetails.forEach((itemDetail) => {
-						totalQuantity += itemDetail.itemquantity;
-					});
+						item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+							totalQuantity += itemDetail.itemquantity;
+						});
 					}
 
 					// Assign totalQuantity to the item
@@ -949,7 +939,7 @@ function AdminReports() {
 						toDate: toDate || null,
 					};
 				});
-				//console.log('Final Data:', datatoIterate);
+			//console.log('Final Data:', datatoIterate);
 		}
 
 		const newWindow = window.open('', '_blank');
@@ -986,180 +976,194 @@ function AdminReports() {
 					'Transport Cost',
 					'Total',
 				];
-				console.log('datatoIterate',datatoIterate)
-			// 	const csvContent =
-			// 		'data:text/csv;charset=utf-8,' +
-			// 		[columnNames.join(',')]
-			// 			.concat(
-			// 				// datatoIterate.map((invoice) =>
-			// 				datatoIterate
-			// 				.map((item) => {
-				
-			// 					// Calculate total quantity for each item
-			// 					let totalQuantity = 0;
-			// 					if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
-			// 					item.consignmentdetails.itemdetails.forEach((itemDetail) => {
-			// 						totalQuantity += itemDetail.itemquantity;
-			// 					});
-			// 					}
-			// 					// Assign totalQuantity to the item
-			// 					item.totalQuantity = totalQuantity;
-			// 					return {
-			// 						...item,
-			// 						totalQuantity: totalQuantity,
-									
-			// 					};
-			// 				}),
-			// 				// datatoIterate.map((invoice) =>
-			// 				// 	invoice.consignmentdetails &&
-			// 				// 	invoice.consignmentdetails.itemdetails
-			// 				// 		? invoice.consignmentdetails.itemdetails
-								
-			// 				// 				.map((item) =>
-			// 				// 					[
-			// 										invoice.invoicedetails &&
-			// 										invoice.invoicedetails.invoicedate
-			// 											? new Date(
-			// 													invoice.invoicedetails.invoicedate
-			// 											  ).toLocaleDateString('en-GB', {
-			// 													day: '2-digit',
-			// 													month: '2-digit',
-			// 													year: 'numeric',
-			// 											  })
-			// 											: 'N/A',
-			// 										invoice.invoicedetails &&
-			// 										invoice.invoicedetails.invoiceid
-			// 											? invoice.invoicedetails.invoiceid
-			// 											: 'N/A',
-			// 										invoice.sellerdetails &&
-			// 										invoice.sellerdetails.sellercompanyname
-			// 											? invoice.sellerdetails.sellercompanyname
-			// 											: 'N/A',
-			// 										invoice.buyerdetails &&
-			// 										invoice.buyerdetails.buyercompanyname
-			// 											? invoice.buyerdetails.buyercompanyname
-			// 											: 'N/A',
-			// 										invoice.loadingdetails &&
-			// 										invoice.loadingdetails.startpoint
-			// 											? invoice.loadingdetails.startpoint
-			// 											: 'N/A',
-			// 										invoice.loadingdetails &&
-			// 										invoice.loadingdetails.endpoint
-			// 											? invoice.loadingdetails.endpoint
-			// 											: 'N/A',
-			// 										invoice.vehicledetails &&
-			// 										invoice.vehicledetails.vechiclenumber
-			// 											? invoice.vehicledetails.vechiclenumber
-			// 											: 'N/A',
-			// 										item.itemquantity ? item.itemquantity : '0',
-			// 										invoice.boardingdetails &&
-			// 										invoice.boardingdetails.partyname
-			// 											? invoice.boardingdetails.partyname
-			// 											: 'N/A',
-			// 										invoice.boardingdetails &&
-			// 										invoice.boardingdetails.partyref
-			// 											? invoice.boardingdetails.partyref
-			// 											: 'N/A',
-			// 										invoice.invoicedetails &&
-			// 										invoice.invoicedetails.invoicemakername
-			// 											? invoice.invoicedetails.invoicemakername
-			// 											: 'N/A',
-			// 										invoice.boardingdetails &&
-			// 										invoice.boardingdetails.partyrate
-			// 											? invoice.boardingdetails.partyrate
-			// 											: 'N/A',
-			// 										typeof item.itemquantity === 'number' &&
-			// 										typeof invoice.boardingdetails.partyrate === 'number'
-			// 											? (
-			// 													item.itemquantity *
-			// 													invoice.boardingdetails.partyrate
-			// 											  ).toFixed(2)
-			// 											: 'N/A',
-			// 			// 						].join(',')
-			// 			// 					)
-			// 			// 					.join('\n')
-			// 			// 			: ''
-			// 				)
-			// 			// )
-			// 			.join('\n');
+				console.log('datatoIterate', datatoIterate);
+				// 	const csvContent =
+				// 		'data:text/csv;charset=utf-8,' +
+				// 		[columnNames.join(',')]
+				// 			.concat(
+				// 				// datatoIterate.map((invoice) =>
+				// 				datatoIterate
+				// 				.map((item) => {
 
-			// 	// Encode CSV content
-			// 	const encodedUri = encodeURI(csvContent);
+				// 					// Calculate total quantity for each item
+				// 					let totalQuantity = 0;
+				// 					if (item.consignmentdetails && item.consignmentdetails.itemdetails) {
+				// 					item.consignmentdetails.itemdetails.forEach((itemDetail) => {
+				// 						totalQuantity += itemDetail.itemquantity;
+				// 					});
+				// 					}
+				// 					// Assign totalQuantity to the item
+				// 					item.totalQuantity = totalQuantity;
+				// 					return {
+				// 						...item,
+				// 						totalQuantity: totalQuantity,
 
-			// 	// Create a link element and trigger download
-			// 	const link = document.createElement('a');
-			// 	link.setAttribute('href', encodedUri);
-			// 	link.setAttribute('download', 'mis_report.csv');
-			// 	newWindow.document.body.appendChild(link); // Append to new window's body
-			// 	link.click();
-			// });
-			// end of sai given code
-			// start of shobha code 3/4/2024
-			const csvContent =
-			'data:text/csv;charset=utf-8,' +
-			[columnNames.join(',')].concat(
-			  datatoIterate.map((invoice) => [
-				invoice.invoicedetails && invoice.invoicedetails.invoicedate
-				  ? new Date(invoice.invoicedetails.invoicedate).toLocaleDateString('en-GB', {
-					  day: '2-digit',
-					  month: '2-digit',
-					  year: 'numeric',
-					})
-				  : 'N/A',
-				invoice.invoicedetails && invoice.invoicedetails.invoiceid
-				  ? invoice.invoicedetails.invoiceid
-				  : 'N/A',
-				invoice.sellerdetails && invoice.sellerdetails.sellercompanyname
-				  ? invoice.sellerdetails.sellercompanyname
-				  : 'N/A',
-				invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
-				  ? invoice.buyerdetails.buyercompanyname
-				  : 'N/A',
-				invoice.loadingdetails && invoice.loadingdetails.startpoint
-				  ? invoice.loadingdetails.startpoint
-				  : 'N/A',
-				invoice.loadingdetails && invoice.loadingdetails.endpoint
-				  ? invoice.loadingdetails.endpoint
-				  : 'N/A',
-				invoice.vehicledetails && invoice.vehicledetails.vechiclenumber
-				  ? invoice.vehicledetails.vechiclenumber
-				  : 'N/A',
-				invoice.totalQuantity !== undefined ? invoice.totalQuantity : 'N/A', // Using the updated totalQuantity from the previous code
-				invoice.boardingdetails && invoice.boardingdetails.partyname
-				  ? invoice.boardingdetails.partyname
-				  : 'N/A',
-				invoice.boardingdetails && invoice.boardingdetails.partyref
-				  ? invoice.boardingdetails.partyref
-				  : 'N/A',
-				invoice.invoicedetails && invoice.invoicedetails.invoicemakername
-				  ? invoice.invoicedetails.invoicemakername
-				  : 'N/A',
-				invoice.boardingdetails && invoice.boardingdetails.partyrate
-				  ? invoice.boardingdetails.partyrate
-				  : 'N/A',
-				typeof invoice.totalQuantity === 'number' &&
-				typeof invoice.boardingdetails.partyrate === 'number'
-				  ? (invoice.totalQuantity * invoice.boardingdetails.partyrate).toFixed(2)
-				  : 'N/A',
-			  ].join(','))
-			).join('\n');
-		
-		  // Encode CSV content
-		  const encodedUri = encodeURI(csvContent);
-		
-		  // Create a link element and trigger download
-		  const link = document.createElement('a');
-		  link.setAttribute('href', encodedUri)
+				// 					};
+				// 				}),
+				// 				// datatoIterate.map((invoice) =>
+				// 				// 	invoice.consignmentdetails &&
+				// 				// 	invoice.consignmentdetails.itemdetails
+				// 				// 		? invoice.consignmentdetails.itemdetails
 
-		  // Generate datetime string
-		  const currentDatetime = new Date().toISOString().replace(/:/g, '-'); // Example: 2022-03-01T14-35-45.123Z
+				// 				// 				.map((item) =>
+				// 				// 					[
+				// 										invoice.invoicedetails &&
+				// 										invoice.invoicedetails.invoicedate
+				// 											? new Date(
+				// 													invoice.invoicedetails.invoicedate
+				// 											  ).toLocaleDateString('en-GB', {
+				// 													day: '2-digit',
+				// 													month: '2-digit',
+				// 													year: 'numeric',
+				// 											  })
+				// 											: 'N/A',
+				// 										invoice.invoicedetails &&
+				// 										invoice.invoicedetails.invoiceid
+				// 											? invoice.invoicedetails.invoiceid
+				// 											: 'N/A',
+				// 										invoice.sellerdetails &&
+				// 										invoice.sellerdetails.sellercompanyname
+				// 											? invoice.sellerdetails.sellercompanyname
+				// 											: 'N/A',
+				// 										invoice.buyerdetails &&
+				// 										invoice.buyerdetails.buyercompanyname
+				// 											? invoice.buyerdetails.buyercompanyname
+				// 											: 'N/A',
+				// 										invoice.loadingdetails &&
+				// 										invoice.loadingdetails.startpoint
+				// 											? invoice.loadingdetails.startpoint
+				// 											: 'N/A',
+				// 										invoice.loadingdetails &&
+				// 										invoice.loadingdetails.endpoint
+				// 											? invoice.loadingdetails.endpoint
+				// 											: 'N/A',
+				// 										invoice.vehicledetails &&
+				// 										invoice.vehicledetails.vechiclenumber
+				// 											? invoice.vehicledetails.vechiclenumber
+				// 											: 'N/A',
+				// 										item.itemquantity ? item.itemquantity : '0',
+				// 										invoice.boardingdetails &&
+				// 										invoice.boardingdetails.partyname
+				// 											? invoice.boardingdetails.partyname
+				// 											: 'N/A',
+				// 										invoice.boardingdetails &&
+				// 										invoice.boardingdetails.partyref
+				// 											? invoice.boardingdetails.partyref
+				// 											: 'N/A',
+				// 										invoice.invoicedetails &&
+				// 										invoice.invoicedetails.invoicemakername
+				// 											? invoice.invoicedetails.invoicemakername
+				// 											: 'N/A',
+				// 										invoice.boardingdetails &&
+				// 										invoice.boardingdetails.partyrate
+				// 											? invoice.boardingdetails.partyrate
+				// 											: 'N/A',
+				// 										typeof item.itemquantity === 'number' &&
+				// 										typeof invoice.boardingdetails.partyrate === 'number'
+				// 											? (
+				// 													item.itemquantity *
+				// 													invoice.boardingdetails.partyrate
+				// 											  ).toFixed(2)
+				// 											: 'N/A',
+				// 			// 						].join(',')
+				// 			// 					)
+				// 			// 					.join('\n')
+				// 			// 			: ''
+				// 				)
+				// 			// )
+				// 			.join('\n');
 
-		  // Create filename with datetime
-		  link.setAttribute('download', `mis_report_${currentDatetime}.csv`);
-		//   link.setAttribute('download', 'mis_report.csv');
-		  newWindow.document.body.appendChild(link); // Append to new window's body
-		  link.click();
-		});
+				// 	// Encode CSV content
+				// 	const encodedUri = encodeURI(csvContent);
+
+				// 	// Create a link element and trigger download
+				// 	const link = document.createElement('a');
+				// 	link.setAttribute('href', encodedUri);
+				// 	link.setAttribute('download', 'mis_report.csv');
+				// 	newWindow.document.body.appendChild(link); // Append to new window's body
+				// 	link.click();
+				// });
+				// end of sai given code
+				// start of shobha code 3/4/2024
+				const csvContent =
+					'data:text/csv;charset=utf-8,' +
+					[columnNames.join(',')]
+						.concat(
+							datatoIterate.map((invoice) =>
+								[
+									invoice.invoicedetails && invoice.invoicedetails.invoicedate
+										? new Date(
+												invoice.invoicedetails.invoicedate
+										  ).toLocaleDateString('en-GB', {
+												day: '2-digit',
+												month: '2-digit',
+												year: 'numeric',
+										  })
+										: 'N/A',
+									invoice.invoicedetails && invoice.invoicedetails.invoiceid
+										? invoice.invoicedetails.invoiceid
+										: 'N/A',
+									invoice.sellerdetails &&
+									invoice.sellerdetails.sellercompanyname
+										? invoice.sellerdetails.sellercompanyname
+										: 'N/A',
+									invoice.buyerdetails && invoice.buyerdetails.buyercompanyname
+										? invoice.buyerdetails.buyercompanyname
+										: 'N/A',
+									invoice.loadingdetails && invoice.loadingdetails.startpoint
+										? invoice.loadingdetails.startpoint
+										: 'N/A',
+									invoice.loadingdetails && invoice.loadingdetails.endpoint
+										? invoice.loadingdetails.endpoint
+										: 'N/A',
+									invoice.vehicledetails &&
+									invoice.vehicledetails.vechiclenumber
+										? invoice.vehicledetails.vechiclenumber
+										: 'N/A',
+									invoice.totalQuantity !== undefined
+										? invoice.totalQuantity
+										: 'N/A', // Using the updated totalQuantity from the previous code
+									invoice.boardingdetails && invoice.boardingdetails.partyname
+										? invoice.boardingdetails.partyname
+										: 'N/A',
+									invoice.boardingdetails && invoice.boardingdetails.partyref
+										? invoice.boardingdetails.partyref
+										: 'N/A',
+									invoice.invoicedetails &&
+									invoice.invoicedetails.invoicemakername
+										? invoice.invoicedetails.invoicemakername
+										: 'N/A',
+									invoice.boardingdetails && invoice.boardingdetails.partyrate
+										? invoice.boardingdetails.partyrate
+										: 'N/A',
+									typeof invoice.totalQuantity === 'number' &&
+									typeof invoice.boardingdetails.partyrate === 'number'
+										? (
+												invoice.totalQuantity *
+												invoice.boardingdetails.partyrate
+										  ).toFixed(2)
+										: 'N/A',
+								].join(',')
+							)
+						)
+						.join('\n');
+
+				// Encode CSV content
+				const encodedUri = encodeURI(csvContent);
+
+				// Create a link element and trigger download
+				const link = document.createElement('a');
+				link.setAttribute('href', encodedUri);
+
+				// Generate datetime string
+				const currentDatetime = new Date().toISOString().replace(/:/g, '-'); // Example: 2022-03-01T14-35-45.123Z
+
+				// Create filename with datetime
+				link.setAttribute('download', `mis_report_${currentDatetime}.csv`);
+				//   link.setAttribute('download', 'mis_report.csv');
+				newWindow.document.body.appendChild(link); // Append to new window's body
+				link.click();
+			});
 
 		// end of shobha given code  4/3/2024
 
@@ -1217,139 +1221,140 @@ function AdminReports() {
 		datatoIterate.forEach((dataItem, index) => {
 			// dataItem.consignmentdetails.itemdetails.forEach((item, index) => {
 			// dataItem.vehicledetails.vechiclenumber.forEach((item, index) => {
-				newWindow.document.write('<tr>');
+			newWindow.document.write('<tr>');
 
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.invoicedetails && dataItem.invoicedetails.invoicedate
-							? new Date(
-									dataItem.invoicedetails.invoicedate
-							  ).toLocaleDateString('en-GB', {
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.invoicedetails && dataItem.invoicedetails.invoicedate
+						? new Date(dataItem.invoicedetails.invoicedate).toLocaleDateString(
+								'en-GB',
+								{
 									day: '2-digit',
 									month: '2-digit',
 									year: 'numeric',
-							  })
-							: 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.invoicedetails && dataItem.invoicedetails.invoiceid
-							? dataItem.invoicedetails.invoiceid
-							: 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.sellerdetails && dataItem.sellerdetails.sellercompanyname
-							? dataItem.sellerdetails.sellercompanyname.substring(0, 12)
-							: 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.buyerdetails && dataItem.buyerdetails.buyercompanyname
-							? dataItem.buyerdetails.buyercompanyname.substring(0, 12)
-							: 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.loadingdetails && dataItem.loadingdetails.startpoint
-							? dataItem.loadingdetails.startpoint.substring(0, 12)
-							: 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.loadingdetails && dataItem.loadingdetails.endpoint
-							? dataItem.loadingdetails.endpoint.substring(0, 12)
-							: 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.vehicledetails && dataItem.vehicledetails.vechiclenumber
-							? dataItem.vehicledetails.vechiclenumber.substring(0, 12)
-							: 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						// item.itemquantity ? item.itemquantity : 'N/A'
-						dataItem.totalQuantity ? dataItem.totalQuantity : 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.boardingdetails && dataItem.boardingdetails.partyname
-							? dataItem.boardingdetails.partyname
-							: 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.boardingdetails && dataItem.boardingdetails.partyref
-							? dataItem.boardingdetails.partyref
-							: 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.invoicedetails && dataItem.invoicedetails.invoicemakername
-							? dataItem.invoicedetails.invoicemakername.substring(0, 12)
-							: 'N/A'
-					}</td>`
-				);
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						dataItem.boardingdetails && dataItem.boardingdetails.partyrate
-							? dataItem.boardingdetails.partyrate
-							: 'N/A'
-					}</td>`
-				);
-				// newWindow.document.write(
-				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-				// 		// item.itemweight ? item.itemweight : 'N/A'
-				// 		dataItem.itemweight ? dataItem.itemweight : 'N/A'
-				// 	}</td>`
-				// );
-				// newWindow.document.write(
-				// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-				// 		// item.itemtaxrate ? item.itemtaxrate : 'N/A'
-				// 		dataItem.itemweight ? dataItem.itemweight : 'N/A'
-				// 	}</td>`
-				// );
-				newWindow.document.write(
-					`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
-						// typeof item.itemquantity === 'number' &&
-						// typeof dataItem.boardingdetails.partyrate === 'number'
-						// 	? (
-						// 			item.itemquantity * dataItem.boardingdetails.partyrate
-						// 	  ).toFixed(2)
-						// 	: 'N/A'
-						typeof dataItem.totalQuantity === 'number' &&
-						typeof dataItem.boardingdetails.partyrate === 'number'
-							? (
-									dataItem.totalQuantity * dataItem.boardingdetails.partyrate
-							  ).toFixed(2)
-							: 'N/A'
-					}</td>`
-				);
-				// Calculate and update the total amount
-				const itemTotal =
+								}
+						  )
+						: 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.invoicedetails && dataItem.invoicedetails.invoiceid
+						? dataItem.invoicedetails.invoiceid
+						: 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.sellerdetails && dataItem.sellerdetails.sellercompanyname
+						? dataItem.sellerdetails.sellercompanyname.substring(0, 12)
+						: 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.buyerdetails && dataItem.buyerdetails.buyercompanyname
+						? dataItem.buyerdetails.buyercompanyname.substring(0, 12)
+						: 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.loadingdetails && dataItem.loadingdetails.startpoint
+						? dataItem.loadingdetails.startpoint.substring(0, 12)
+						: 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.loadingdetails && dataItem.loadingdetails.endpoint
+						? dataItem.loadingdetails.endpoint.substring(0, 12)
+						: 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.vehicledetails && dataItem.vehicledetails.vechiclenumber
+						? dataItem.vehicledetails.vechiclenumber.substring(0, 12)
+						: 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					// item.itemquantity ? item.itemquantity : 'N/A'
+					dataItem.totalQuantity ? dataItem.totalQuantity : 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.boardingdetails && dataItem.boardingdetails.partyname
+						? dataItem.boardingdetails.partyname
+						: 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.boardingdetails && dataItem.boardingdetails.partyref
+						? dataItem.boardingdetails.partyref
+						: 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.invoicedetails && dataItem.invoicedetails.invoicemakername
+						? dataItem.invoicedetails.invoicemakername.substring(0, 12)
+						: 'N/A'
+				}</td>`
+			);
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+					dataItem.boardingdetails && dataItem.boardingdetails.partyrate
+						? dataItem.boardingdetails.partyrate
+						: 'N/A'
+				}</td>`
+			);
+			// newWindow.document.write(
+			// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+			// 		// item.itemweight ? item.itemweight : 'N/A'
+			// 		dataItem.itemweight ? dataItem.itemweight : 'N/A'
+			// 	}</td>`
+			// );
+			// newWindow.document.write(
+			// 	`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
+			// 		// item.itemtaxrate ? item.itemtaxrate : 'N/A'
+			// 		dataItem.itemweight ? dataItem.itemweight : 'N/A'
+			// 	}</td>`
+			// );
+			newWindow.document.write(
+				`<td style="padding: 4px; font-size: 14px; text-align: center; border: 1px solid #ddd;">${
 					// typeof item.itemquantity === 'number' &&
 					// typeof dataItem.boardingdetails.partyrate === 'number'
-					// 	? item.itemquantity * dataItem.boardingdetails.partyrate
-					// 	: 0;
+					// 	? (
+					// 			item.itemquantity * dataItem.boardingdetails.partyrate
+					// 	  ).toFixed(2)
+					// 	: 'N/A'
 					typeof dataItem.totalQuantity === 'number' &&
 					typeof dataItem.boardingdetails.partyrate === 'number'
-						? dataItem.totalQuantity * dataItem.boardingdetails.partyrate
-						: 0;
+						? (
+								dataItem.totalQuantity * dataItem.boardingdetails.partyrate
+						  ).toFixed(2)
+						: 'N/A'
+				}</td>`
+			);
+			// Calculate and update the total amount
+			const itemTotal =
+				// typeof item.itemquantity === 'number' &&
+				// typeof dataItem.boardingdetails.partyrate === 'number'
+				// 	? item.itemquantity * dataItem.boardingdetails.partyrate
+				// 	: 0;
+				typeof dataItem.totalQuantity === 'number' &&
+				typeof dataItem.boardingdetails.partyrate === 'number'
+					? dataItem.totalQuantity * dataItem.boardingdetails.partyrate
+					: 0;
 
-				totalAmount += itemTotal;
+			totalAmount += itemTotal;
 
-				newWindow.document.write('</tr>');
+			newWindow.document.write('</tr>');
 			// });
 		});
 
@@ -1416,9 +1421,7 @@ function AdminReports() {
 											  })
 											: 'N/A',
 										invoice.invoicedetails && invoice.invoicedetails.invoiceno
-											? invoice.invoicedetails.invoiceno.slice(0, 6) +
-											  ' ' +
-											  invoice.invoicedetails.invoiceno.slice(-4)
+											? invoice.invoicedetails.invoiceno
 											: 'N/A',
 										invoice.invoicedetails && invoice.invoicedetails.invoicedate
 											? new Date(
@@ -1501,9 +1504,7 @@ function AdminReports() {
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 					dataItem.invoicedetails && dataItem.invoicedetails.invoiceno
-						? dataItem.invoicedetails.invoiceno.slice(0, 6) +
-						  ' ' +
-						  dataItem.invoicedetails.invoiceno.slice(-4)
+						? dataItem.invoicedetails.invoiceno
 						: 'N/A'
 				}</td>`
 			);
@@ -1603,9 +1604,7 @@ function AdminReports() {
 														: 'N/A',
 													invoice.invoicedetails &&
 													invoice.invoicedetails.invoiceno
-														? invoice.invoicedetails.invoiceno.slice(0, 6) +
-														  ' ' +
-														  invoice.invoicedetails.invoiceno.slice(-4)
+														? invoice.invoicedetails.invoiceno
 														: 'N/A',
 													item.itemname ? item.itemname : 'N/A',
 													item.itemprice ? item.itemprice : 'N/A',
@@ -1674,9 +1673,7 @@ function AdminReports() {
 				newWindow.document.write(
 					`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 						dataItem.invoicedetails && dataItem.invoicedetails.invoiceno
-							? dataItem.invoicedetails.invoiceno.slice(0, 6) +
-							  ' ' +
-							  dataItem.invoicedetails.invoiceno.slice(-4)
+							? dataItem.invoicedetails.invoiceno
 							: 'N/A'
 					}</td>`
 				);
@@ -1765,9 +1762,7 @@ function AdminReports() {
 											  })
 											: 'N/A',
 										invoice.invoicedetails && invoice.invoicedetails.invoiceno
-											? invoice.invoicedetails.invoiceno.slice(0, 6) +
-											  ' ' +
-											  invoice.invoicedetails.invoiceno.slice(-4)
+											? invoice.invoicedetails.invoiceno
 											: 'N/A',
 										invoice.boardingdetails && invoice.boardingdetails.partyrate
 											? invoice.boardingdetails.partyrate
@@ -1848,9 +1843,7 @@ function AdminReports() {
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 					dataItem.invoicedetails && dataItem.invoicedetails.invoiceno
-						? dataItem.invoicedetails.invoiceno.slice(0, 6) +
-						  ' ' +
-						  dataItem.invoicedetails.invoiceno.slice(-4)
+						? dataItem.invoicedetails.invoiceno
 						: 'N/A'
 				}</td>`
 			);
@@ -1934,9 +1927,7 @@ function AdminReports() {
 											? invoice.vehicledetails.vechiclenumber
 											: 'N/A',
 										invoice.invoicedetails && invoice.invoicedetails.invoiceno
-											? invoice.invoicedetails.invoiceno.slice(0, 6) +
-											  ' ' +
-											  invoice.invoicedetails.invoiceno.slice(-4)
+											? invoice.invoicedetails.invoiceno
 											: 'N/A',
 										invoice.invoicedetails && invoice.invoicedetails.invoicedate
 											? new Date(
@@ -2020,9 +2011,7 @@ function AdminReports() {
 			newWindow.document.write(
 				`<td style="padding: 8px; font-size: 16px; text-align: center; border: 1px solid #ddd;">${
 					dataItem.invoicedetails && dataItem.invoicedetails.invoiceno
-						? dataItem.invoicedetails.invoiceno.slice(0, 6) +
-						  ' ' +
-						  dataItem.invoicedetails.invoiceno.slice(-4)
+						? dataItem.invoicedetails.invoiceno
 						: 'N/A'
 				}</td>`
 			);
@@ -3147,9 +3136,7 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													<td className='reports-data-body-table-load-body-row-item'>
 														{invoice.invoicedetails &&
 														invoice.invoicedetails.invoiceno
-															? invoice.invoicedetails.invoiceno.slice(0, 6) +
-															  ' ' +
-															  invoice.invoicedetails.invoiceno.slice(-4)
+															? invoice.invoicedetails.invoiceno
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-load-body-row-item'>
@@ -3281,9 +3268,7 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													<td className='reports-data-body-table-day-body-row-item'>
 														{invoice.invoicedetails &&
 														invoice.invoicedetails.invoiceno
-															? invoice.invoicedetails.invoiceno.slice(0, 6) +
-															  ' ' +
-															  invoice.invoicedetails.invoiceno.slice(-4)
+															? invoice.invoicedetails.invoiceno
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-day-body-row-item'>
@@ -3413,12 +3398,7 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 															<td className='reports-data-body-table-load-body-row-item'>
 																{invoice.invoicedetails &&
 																invoice.invoicedetails.invoiceno
-																	? invoice.invoicedetails.invoiceno.slice(
-																			0,
-																			6
-																	  ) +
-																	  ' ' +
-																	  invoice.invoicedetails.invoiceno.slice(-4)
+																	? invoice.invoicedetails.invoiceno
 																	: 'N/A'}
 															</td>
 															<td className='reports-data-body-table-item-body-row-item'>
@@ -3541,9 +3521,7 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													<td className='reports-data-body-table-load-body-row-item'>
 														{invoice.invoicedetails &&
 														invoice.invoicedetails.invoiceno
-															? invoice.invoicedetails.invoiceno.slice(0, 6) +
-															  ' ' +
-															  invoice.invoicedetails.invoiceno.slice(-4)
+															? invoice.invoicedetails.invoiceno
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-day-body-row-item'>
@@ -3665,9 +3643,7 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													<td className='reports-data-body-table-load-body-row-item'>
 														{invoice.invoicedetails &&
 														invoice.invoicedetails.invoiceno
-															? invoice.invoicedetails.invoiceno.slice(0, 6) +
-															  ' ' +
-															  invoice.invoicedetails.invoiceno.slice(-4)
+															? invoice.invoicedetails.invoiceno
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-day-body-row-item'>
@@ -3816,9 +3792,7 @@ item.itemtaxrate ? item.itemtaxrate : 'N/A'
 													<td className='reports-data-body-table-load-body-row-item'>
 														{invoice.invoicedetails &&
 														invoice.invoicedetails.invoiceno
-															? invoice.invoicedetails.invoiceno.slice(0, 6) +
-															  ' ' +
-															  invoice.invoicedetails.invoiceno.slice(-4)
+															? invoice.invoicedetails.invoiceno
 															: 'N/A'}
 													</td>
 													<td className='reports-data-body-table-driver-body-row-item'>

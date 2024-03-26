@@ -1204,7 +1204,7 @@ const StaffEditInvoice = () => {
                 type="text"
                 required
                 name="boardingdetails.partyrefno"
-                value={formData.boardingdetails?.partyrefno || ''}
+                value={formData.boardingdetails?.partyref || ''}
                 onChange={handleChange1}
 
               />

@@ -1204,7 +1204,7 @@ const UserEditInvoice = () => {
                 type="text"
                 required
                 name="boardingdetails.partyrefno"
-                value={formData.boardingdetails?.partyref || ''}
+                value={formData.boardingdetails?.partyrefno || ''}
                 onChange={handleChange1}
 
               />

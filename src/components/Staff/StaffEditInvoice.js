@@ -201,7 +201,7 @@ const StaffEditInvoice = () => {
         boardingdetails: {
           ...prevState.boardingdetails,
           partyname: selectedParty?.partyname || '',
-          partyrefno: selectedParty?.partyrefno || '',
+          partyref: selectedParty?.partyrefno || '',
           partyrate: selectedParty?.partyrate || '',
         }
       }));
@@ -1203,7 +1203,7 @@ const StaffEditInvoice = () => {
                 className="admin-create-invoice-form-input-v"
                 type="text"
                 required
-                name="boardingdetails.partyrefno"
+                name="boardingdetails.partyref"
                 value={formData.boardingdetails?.partyref || ''}
                 onChange={handleChange1}
 

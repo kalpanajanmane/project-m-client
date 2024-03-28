@@ -748,7 +748,7 @@ const StaffEditInvoice = () => {
                 <input
                   className="admin-create-invoice-form-input"
                   type="text"
-                  required
+                <!-- required -->
                   name="sellerdetails.sellercompanygstno"
                   value={formData.sellerdetails?.sellercompanygstno || ""}
                   onChange={handleChange1}

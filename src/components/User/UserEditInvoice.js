@@ -645,7 +645,7 @@ const UserEditInvoice = () => {
                 <input
                   className="admin-create-invoice-form-input"
                   type="text"
-                  required
+                <!--  required  -->
                   name="buyerdetails.buyercompanygstno"
                   value={formData.buyerdetails?.buyercompanygstno || ""}
                   onChange={handleChange1}
@@ -748,7 +748,7 @@ const UserEditInvoice = () => {
                 <input
                   className="admin-create-invoice-form-input"
                   type="text"
-                  required
+               <!--   required  -->
                   name="sellerdetails.sellercompanygstno"
                   value={formData.sellerdetails?.sellercompanygstno || ""}
                   onChange={handleChange1}
